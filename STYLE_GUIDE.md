@@ -398,3 +398,476 @@ Variants: `bg-success/10 text-success`, `bg-status-2/10 text-status-2`, `bg-erro
 - **Contrast:** Minimum 4.5:1 for normal text, 3:1 for large text
 - **Keyboard:** All interactive elements must be reachable and operable via keyboard
 - **Labels:** All form inputs have associated `<label>` elements
+
+---
+
+## 7. Icon System (Lucide React)
+
+### Library
+
+Use **Lucide React** (`lucide-react`) exclusively. No emoji, no PNG/raster icons, no mixing icon libraries.
+
+### Sizing Convention
+
+| Context | Size | Tailwind |
+|---------|------|----------|
+| Nav items, inline with text | `20px` | `w-5 h-5` |
+| Buttons (inside) | `16px` | `w-4 h-4` |
+| Card headers, feature icons | `24px` | `w-6 h-6` |
+| Hero / empty state illustrations | `48px` | `w-12 h-12` |
+
+### Color Rules
+
+- Icons inherit text color via `currentColor` (default Lucide behavior)
+- Nav icons: `text-text-secondary`, active: `text-accent`
+- Semantic icons: match their semantic color (`text-error`, `text-success`, etc.)
+- Never use a color that doesn't come from the design token system
+
+### Usage Pattern
+
+```jsx
+import { Home, Settings, Bell } from 'lucide-react';
+
+<Home className="w-5 h-5" />            {/* Nav icon */}
+<Settings className="w-4 h-4" />        {/* Button icon */}
+<Bell className="w-5 h-5 text-accent" /> {/* Highlighted */}
+```
+
+### Rules
+
+- Always use Lucide icons — no exceptions
+- Every icon-only button must have an `aria-label`
+- Prefer outline style (default). Filled variants only for active indicator states
+- Maintain consistent `2px` stroke width — don't mix with other icon sets
+
+---
+
+## 8. Sidebar Navigation
+
+### Structure
+
+Fixed left sidebar. `240px` wide expanded, `64px` collapsed (icon-only). Background: `bg-bg-secondary` with `1px` right border (`border-border`). Three vertical zones: Header, Nav Body (scrollable), Footer.
+
+### Header
+
+```jsx
+<div className="flex items-center justify-between h-[56px] px-md border-b border-border">
+  <div className="flex items-center gap-sm">
+    <img src="/logo.svg" alt="App" className="h-8 w-8" />
+    {!collapsed && <span className="text-label font-semibold text-text-primary">App Name</span>}
+  </div>
+  <button
+    onClick={() => setCollapsed(!collapsed)}
+    aria-expanded={!collapsed}
+    aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+    className="text-text-secondary hover:text-text-primary hover:bg-bg-elevated rounded-ds-sm p-xs transition-all duration-150"
+  >
+    {collapsed ? <PanelLeftOpen className="w-5 h-5" /> : <PanelLeftClose className="w-5 h-5" />}
+  </button>
+</div>
+```
+
+### Nav Body
+
+```jsx
+<nav aria-label="Main navigation" className="flex-1 overflow-y-auto py-lg px-sm">
+  <div className="mb-xl">
+    <span className="text-overline font-semibold uppercase tracking-widest text-text-tertiary px-md mb-xs block">
+      MAIN
+    </span>
+    <div className="flex flex-col gap-xs">
+      {/* Active Item */}
+      <a
+        href="/dashboard"
+        aria-current="page"
+        className="flex items-center gap-sm h-[36px] px-md rounded-ds-sm bg-accent-muted text-accent border-l-2 border-accent transition-all duration-150"
+      >
+        <LayoutDashboard className="w-5 h-5" />
+        {!collapsed && <span className="text-label">Dashboard</span>}
+      </a>
+      {/* Resting Item */}
+      <a
+        href="/projects"
+        className="flex items-center gap-sm h-[36px] px-md rounded-ds-sm text-text-secondary hover:bg-bg-elevated hover:text-text-primary transition-all duration-150"
+      >
+        <FolderOpen className="w-5 h-5" />
+        {!collapsed && <span className="text-label">Projects</span>}
+        {!collapsed && <span className="ml-auto inline-flex items-center px-sm py-[0.1rem] text-overline rounded-full bg-accent-muted text-accent">12</span>}
+      </a>
+    </div>
+  </div>
+</nav>
+```
+
+### Footer
+
+```jsx
+<div className="h-[64px] px-md flex items-center gap-sm border-t border-border">
+  <img src="/avatar.jpg" alt="" className="w-8 h-8 rounded-full object-cover" />
+  {!collapsed && (
+    <div className="flex-1 min-w-0">
+      <div className="text-label font-medium text-text-primary truncate">John Doe</div>
+      <div className="text-caption text-text-tertiary truncate">john@example.com</div>
+    </div>
+  )}
+</div>
+```
+
+Clicking the avatar area opens a dropdown with: Profile, Settings, Theme toggle (dark/light), Logout.
+
+### States
+
+| State | Classes |
+|-------|---------|
+| Resting | `text-text-secondary bg-transparent` |
+| Hover | `bg-bg-elevated text-text-primary` |
+| Active | `bg-accent-muted text-accent border-l-2 border-accent` |
+| Collapsed icon | Centered icon only, tooltip on hover shows label |
+
+### Mobile (< 768px)
+
+- Sidebar hidden by default
+- Hamburger button (`Menu` icon) triggers off-canvas drawer
+- Drawer: `fixed inset-y-0 left-0 w-[280px] z-overlay bg-bg-secondary shadow-ds-lg`
+- Overlay backdrop: `fixed inset-0 bg-black/50 z-overlay`
+- Transition: `200ms ease` slide + fade
+- Focus trapped inside drawer when open, `Escape` closes it
+
+### Accessibility
+
+- `<nav>` landmark with `aria-label="Main navigation"`
+- Active item: `aria-current="page"`
+- Collapse toggle: `aria-expanded` state
+- Skip link as first focusable element: `Skip to main content`
+- Mobile drawer: focus trapped, `Escape` closes
+
+---
+
+## 9. Top Navigation
+
+### Structure
+
+Full-width horizontal bar, `56px` height, fixed to top (`z-sticky`). Background: `bg-bg-secondary` with bottom border (`border-border`), `shadow-ds-sm`. Three zones: Left (logo + links), Center (optional search), Right (actions).
+
+### Pattern
+
+```jsx
+<header className="fixed top-0 left-0 right-0 h-[56px] bg-bg-secondary border-b border-border shadow-ds-sm z-sticky">
+  <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-xl">
+    <div className="flex items-center gap-xs">
+      <img src="/logo.svg" alt="App" className="h-7 w-7" />
+      <span className="text-h3 font-semibold text-text-primary mr-lg">AppName</span>
+      <nav aria-label="Primary navigation" className="hidden md:flex items-center gap-xs">
+        <a href="/features" aria-current="page" className="text-label font-medium px-md py-sm rounded-ds-sm text-accent relative after:absolute after:bottom-0 after:left-md after:right-md after:h-[2px] after:bg-accent transition-all duration-150">
+          Features
+        </a>
+        <a href="/pricing" className="text-label font-medium px-md py-sm rounded-ds-sm text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-all duration-150">
+          Pricing
+        </a>
+      </nav>
+    </div>
+    <div className="flex items-center gap-sm">
+      <button aria-label="Search" className="text-text-secondary hover:text-text-primary hover:bg-bg-elevated rounded-ds-sm p-sm transition-all duration-150">
+        <Search className="w-5 h-5" />
+      </button>
+      <button aria-label="Notifications, 3 unread" className="relative text-text-secondary hover:text-text-primary hover:bg-bg-elevated rounded-ds-sm p-sm transition-all duration-150">
+        <Bell className="w-5 h-5" />
+        <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-error" />
+      </button>
+      <img src="/avatar.jpg" alt="User menu" className="w-7 h-7 rounded-full cursor-pointer" />
+    </div>
+  </div>
+</header>
+```
+
+### States
+
+| State | Classes |
+|-------|---------|
+| Resting link | `text-text-secondary` |
+| Hover link | `text-text-primary bg-bg-elevated` |
+| Active link | `text-accent` with `2px` bottom accent border (pseudo-element) |
+
+### When to Use
+
+- Public-facing pages (landing, pricing, docs, blog)
+- Simpler apps with ≤ 6 top-level routes
+- For dashboards with 7+ routes, use the sidebar shell instead
+
+### Mobile (< 768px)
+
+- Nav links collapse into hamburger menu (`Menu` icon, right side)
+- Hamburger opens full-width dropdown: `bg-bg-card shadow-ds-md`
+- Links stack vertically, `44px` min height touch targets
+- Right zone shrinks to: hamburger + avatar only
+- Transition: panel slides down `200ms ease`
+- `aria-expanded` on menu button, `aria-controls` pointing to panel
+
+### Accessibility
+
+- `<nav>` landmark with `aria-label="Primary navigation"`
+- Active link: `aria-current="page"`
+- Notification badge: `aria-label="Notifications, 3 unread"` (dynamic count)
+- All icon buttons have `aria-label`
+
+---
+
+## 10. Page Shell Layouts
+
+### Sidebar Shell
+
+```jsx
+<div className="flex min-h-screen">
+  <aside className={`fixed inset-y-0 left-0 bg-bg-secondary border-r border-border transition-all duration-200 ${collapsed ? 'w-[64px]' : 'w-[240px]'}`}>
+    {/* Sidebar content (see Section 8) */}
+  </aside>
+  <main className={`flex-1 transition-all duration-200 ${collapsed ? 'ml-[64px]' : 'ml-[240px]'}`}>
+    {/* Top Bar + Content */}
+  </main>
+</div>
+```
+
+- Sidebar: fixed left, full viewport height
+- Main area scrolls independently
+- Mobile (< 768px): sidebar becomes drawer, main area is full-width (`ml-0`)
+
+### Top Nav Shell
+
+```jsx
+<div className="min-h-screen">
+  <header className="fixed top-0 left-0 right-0 h-[56px] z-sticky ...">
+    {/* Top nav content (see Section 9) */}
+  </header>
+  <main className="pt-[56px]">
+    <div className="max-w-6xl mx-auto px-xl py-3xl">
+      {/* Page content */}
+    </div>
+  </main>
+</div>
+```
+
+- Top nav: fixed top, full viewport width
+- Main area: `pt-[56px]` to offset fixed nav (no content overlap)
+- Content centered, `max-w-6xl` (1152px) or `max-w-7xl` (1280px)
+
+### Top Bar (In-Page Header)
+
+Works with **both** shells. Sits at the top of the main content area.
+
+```jsx
+<div className="flex items-start justify-between py-lg px-xl border-b border-border">
+  <div>
+    <nav aria-label="Breadcrumb" className="flex items-center gap-xs mb-xs">
+      <a href="/home" className="text-caption text-text-tertiary hover:text-text-primary transition-all duration-150">Home</a>
+      <ChevronRight className="w-3 h-3 text-text-muted" />
+      <a href="/projects" className="text-caption text-text-tertiary hover:text-text-primary transition-all duration-150">Projects</a>
+      <ChevronRight className="w-3 h-3 text-text-muted" />
+      <span className="text-caption text-text-primary">Settings</span>
+    </nav>
+    <h1 className="text-h1 font-semibold text-text-primary">Project Settings</h1>
+  </div>
+  <div className="flex items-center gap-sm">
+    <button className="btn-default">Export</button>
+    <button className="btn-primary">Create New</button>
+  </div>
+</div>
+```
+
+- Breadcrumbs: `text-caption text-text-tertiary`, separator `ChevronRight` icon, last item `text-text-primary`
+- Sticky option: add `sticky top-0 z-sticky bg-bg-primary` to prevent content showing through
+
+---
+
+## 11. Form Controls
+
+All form controls share these rules:
+- Visible `<label>` for every input (never placeholder-only)
+- `focus-visible` ring: `border-accent ring-2 ring-accent-muted`
+- Disabled: `opacity-40 cursor-not-allowed pointer-events-none`
+- Error: `border-error` + error message below in `text-caption text-error`
+- Transitions: `transition-all duration-150`
+- Minimum touch target: `44px` height on mobile
+
+### Toggle / Switch
+
+```jsx
+<label className="inline-flex items-center gap-md cursor-pointer">
+  <button
+    role="switch"
+    aria-checked={enabled}
+    onClick={() => setEnabled(!enabled)}
+    className={`relative inline-flex items-center w-[36px] h-[20px] rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted ${enabled ? 'bg-accent' : 'bg-bg-elevated border border-border'}`}
+  >
+    <span className={`inline-block w-[14px] h-[14px] rounded-full transition-transform duration-200 ease-in-out ${enabled ? 'translate-x-[18px] bg-white' : 'translate-x-[2px] bg-text-muted'}`} />
+  </button>
+  <div>
+    <span className="text-body text-text-primary">Email Notifications</span>
+    <span className="block text-caption text-text-tertiary">Receive updates about your projects</span>
+  </div>
+</label>
+```
+
+- Track: `36px` wide, `20px` tall, `rounded-full`
+- Off: track `bg-bg-elevated border border-border`, thumb `bg-text-muted`
+- On: track `bg-accent`, thumb `#ffffff` (always white for contrast against gold)
+- Thumb: `14px` circle, translates `16px` right when on
+- Keyboard: `Space` toggles
+
+### Checkbox
+
+```jsx
+<label className="inline-flex items-center gap-sm cursor-pointer">
+  <input
+    type="checkbox"
+    checked={checked}
+    onChange={(e) => setChecked(e.target.checked)}
+    className="peer sr-only"
+  />
+  <span className="w-4 h-4 rounded-ds-sm border border-border bg-bg-surface flex items-center justify-center transition-all duration-150 peer-checked:bg-accent peer-checked:border-accent peer-hover:border-border-hover peer-focus-visible:ring-2 peer-focus-visible:ring-accent-muted">
+    {checked && <Check className="w-3 h-3 text-white" strokeWidth={2.5} />}
+  </span>
+  <span className="text-body text-text-primary">Remember me</span>
+</label>
+```
+
+- Box: `16px` square, `rounded-ds-sm` (6px)
+- Checked: `bg-accent border-accent`, white `Check` icon (`12px`, stroke-width 2.5)
+- Indeterminate: `bg-accent border-accent`, white `Minus` icon
+- Group: vertical stack with `gap-md`, optional group label as overline above
+- Aria: native `<input type="checkbox">` with `aria-checked` (supports `"mixed"`)
+
+### Radio Group
+
+```jsx
+<fieldset>
+  <legend className="text-label font-medium text-text-primary mb-md">Notification Frequency</legend>
+  <div role="radiogroup" className="flex flex-col gap-md">
+    {options.map(option => (
+      <label key={option.value} className="inline-flex items-center gap-sm cursor-pointer">
+        <input
+          type="radio"
+          name="frequency"
+          value={option.value}
+          checked={selected === option.value}
+          onChange={() => setSelected(option.value)}
+          className="peer sr-only"
+        />
+        <span className="w-4 h-4 rounded-full border border-border bg-bg-surface flex items-center justify-center transition-all duration-150 peer-checked:border-accent peer-hover:border-border-hover peer-focus-visible:ring-2 peer-focus-visible:ring-accent-muted">
+          {selected === option.value && <span className="w-2 h-2 rounded-full bg-accent" />}
+        </span>
+        <span className="text-body text-text-primary">{option.label}</span>
+      </label>
+    ))}
+  </div>
+</fieldset>
+```
+
+- Circle: `16px`, `rounded-full`, `border border-border bg-bg-surface`
+- Selected: `border-accent` with inner `8px` circle in `bg-accent`
+- Horizontal variant: `flex-row gap-xl` for 2-4 options
+- Keyboard: arrow keys navigate within group
+
+### Select Dropdown (Custom)
+
+```jsx
+<div className="relative">
+  <button
+    role="combobox"
+    aria-expanded={open}
+    aria-haspopup="listbox"
+    onClick={() => setOpen(!open)}
+    className="w-full flex items-center justify-between bg-bg-surface border border-border rounded-ds-md px-md py-sm text-body text-text-primary hover:border-border-hover focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150"
+  >
+    <span className={selected ? 'text-text-primary' : 'text-text-muted'}>{selected || 'Select an option...'}</span>
+    <ChevronDown className={`w-4 h-4 text-text-muted transition-transform duration-150 ${open ? 'rotate-180' : ''}`} />
+  </button>
+
+  {open && (
+    <ul
+      role="listbox"
+      className="absolute top-full left-0 right-0 mt-xs bg-bg-card border border-border rounded-ds-md shadow-ds-md z-dropdown max-h-[240px] overflow-y-auto animate-fade-in-up"
+    >
+      {options.map(option => (
+        <li
+          key={option}
+          role="option"
+          aria-selected={selected === option}
+          onClick={() => { setSelected(option); setOpen(false); }}
+          className="flex items-center justify-between px-md py-sm text-body cursor-pointer hover:bg-bg-elevated transition-all duration-150"
+        >
+          <span>{option}</span>
+          {selected === option && <Check className="w-4 h-4 text-accent" />}
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
+```
+
+- Trigger: same styling as text input
+- Chevron rotates `180deg` when open
+- Dropdown: `bg-bg-card border rounded-ds-md shadow-ds-md z-dropdown`
+- Max height: `240px`, scrollable
+- Keyboard: `Enter`/`Space` opens, arrows navigate, `Enter` selects, `Escape` closes
+- Click outside closes
+
+---
+
+## 12. Toast / Notification System
+
+### Container
+
+```jsx
+<div
+  aria-live="polite"
+  role="status"
+  className="fixed bottom-xl right-xl z-modal flex flex-col gap-sm max-w-sm"
+>
+  {/* Toast items stack here, newest on top */}
+</div>
+```
+
+- Position: bottom-right desktop, bottom-center mobile (full-width minus `space-lg` margin)
+- Max visible: 3 toasts. Additional queue and appear as earlier ones dismiss.
+
+### Individual Toast
+
+```jsx
+<div className="flex items-start gap-md bg-bg-card border border-border rounded-ds-md shadow-ds-lg px-lg py-md animate-fade-in-up">
+  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-[1px]" />
+  <div className="flex-1 min-w-0">
+    <p className="text-label font-medium text-text-primary">Changes saved</p>
+    <p className="text-caption text-text-secondary">Your project settings have been updated.</p>
+  </div>
+  <button
+    aria-label="Dismiss notification"
+    className="text-text-muted hover:text-text-primary flex-shrink-0 transition-all duration-150"
+  >
+    <X className="w-4 h-4" />
+  </button>
+</div>
+```
+
+### Variants
+
+| Variant | Icon | Color |
+|---------|------|-------|
+| Success | `CheckCircle` | `text-success` |
+| Error | `XCircle` | `text-error` |
+| Warning | `AlertTriangle` | `text-warning` |
+| Info | `Info` | `text-status-2` |
+
+### Behavior
+
+- Auto-dismiss: **5 seconds** default (configurable)
+- Hover pauses auto-dismiss timer
+- Entrance: slide from right + fade (`translateX(100%) → 0`, `200ms ease`)
+- Exit: fade + slide right (`150ms ease`) — exit faster than enter
+- Swipe right to dismiss on mobile
+
+### Accessibility
+
+- Container: `aria-live="polite"`, `role="status"`
+- Toasts don't steal focus
+- Close button: `aria-label="Dismiss notification"`
+- `Escape` dismisses the most recent toast if focused
