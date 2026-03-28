@@ -15,7 +15,7 @@ These principles guide every decision. When in doubt, refer back here.
 
 ### Core Tenets
 
-1. **Dark-First, Light-Ready.** The default canvas is deep navy/charcoal. Every application must support both dark and light themes. All color references use CSS variables — never raw hex values in components.
+1. **Light-First, Dark-Ready.** The default canvas is clean light grays and whites. Every application must still support both light and dark themes. All color references use CSS variables — never raw hex values in components.
 
 2. **Consistency Over Novelty.** Every app should feel like it belongs to the same family. Use the tokens. Follow the patterns. Resist the urge to "improve" a component for one app — if it needs to change, change it in the design system for all apps.
 
@@ -45,66 +45,7 @@ These principles guide every decision. When in doubt, refer back here.
 
 ## 2. Design Tokens
 
-### Color Palette — Dark Theme (Default)
-
-**Backgrounds (Deepest → Lightest)**
-
-| Token | Hex | Tailwind Class | Usage |
-|-------|-----|----------------|-------|
-| `--bg-primary` | `#0c0d12` | `bg-bg-primary` | App background, deepest canvas |
-| `--bg-secondary` | `#12131a` | `bg-bg-secondary` | Alternating sections, secondary navs |
-| `--bg-surface` | `#161720` | `bg-bg-surface` | Input fields, inner surfaces |
-| `--bg-card` | `#1a1b24` | `bg-bg-card` | Cards, modals, panels |
-| `--bg-elevated` | `#22232e` | `bg-bg-elevated` | Hover states, popovers, skeletons |
-
-**Text Hierarchy**
-
-| Token | Hex | Tailwind Class | Usage |
-|-------|-----|----------------|-------|
-| `--text-primary` | `#e8e8ec` | `text-text-primary` | Headings, body text |
-| `--text-secondary` | `#8e8fa1` | `text-text-secondary` | Labels, descriptions, subtitles |
-| `--text-tertiary` | `#8b8c9e` | `text-text-tertiary` | Metadata, counters |
-| `--text-muted` | `#838495` | `text-text-muted` | Hints, placeholders, disabled |
-| `--text-on-accent` | `#0c0d12` | `text-text-on-accent` | Dark text on gold backgrounds |
-
-**Signature Accent**
-
-| Token | Hex | Tailwind Class | Usage |
-|-------|-----|----------------|-------|
-| `--accent` | `#c9a267` | `bg-accent`, `text-accent`, `border-accent` | Primary buttons, active tabs, links |
-| `--accent-hover` | `#dbb57e` | `hover:bg-accent-hover` | Hover state for accent elements |
-| `--accent-muted` | `rgba(201,162,103,0.12)` | `bg-accent-muted` | Chip backgrounds, focus ring spreads |
-
-**Semantic States**
-
-| Token | Hex | Tailwind Class | Usage |
-|-------|-----|----------------|-------|
-| `--error` | `#e5484d` | `text-error`, `border-error` | Destructive actions, validation errors |
-| `--success` | `#30a46c` | `text-success`, `border-success` | Success states, positive trends |
-| `--warning` | `#f5a623` | `text-warning`, `border-warning` | Warning states, usage alerts |
-| `--warning-muted` | `#e8a838` | `text-warning-muted` | Non-critical warnings |
-
-**Status Sequence (Charts, Badges, Levels)**
-
-| Token | Hex | Name |
-|-------|-----|------|
-| `--status-1` | `#30a46c` | Green |
-| `--status-2` | `#3498db` | Blue |
-| `--status-3` | `#d4873f` | Amber |
-| `--status-4` | `#bb7fe2` | Purple |
-| `--status-5` | `#e5484d` | Red |
-| `--status-premium` | `#FFD700` | Gold |
-
-**Borders**
-
-| Token | Hex | Tailwind Class | Usage |
-|-------|-----|----------------|-------|
-| `--border` | `#1f2029` | `border-border` | Default borders |
-| `--border-hover` | `#2e2f3d` | `hover:border-border-hover` | Interactive hover states |
-
----
-
-### Color Palette — Light Theme
+### Color Palette — Light Theme (Default)
 
 Applied via `data-theme="light"` on `<html>`. Same CSS variable names, different values.
 
@@ -173,18 +114,77 @@ Applied via `data-theme="light"` on `<html>`. Same CSS variable names, different
 
 ---
 
+### Color Palette — Dark Theme
+
+**Backgrounds (Deepest → Lightest)**
+
+| Token | Hex | Tailwind Class | Usage |
+|-------|-----|----------------|-------|
+| `--bg-primary` | `#0c0d12` | `bg-bg-primary` | App background, deepest canvas |
+| `--bg-secondary` | `#12131a` | `bg-bg-secondary` | Alternating sections, secondary navs |
+| `--bg-surface` | `#161720` | `bg-bg-surface` | Input fields, inner surfaces |
+| `--bg-card` | `#1a1b24` | `bg-bg-card` | Cards, modals, panels |
+| `--bg-elevated` | `#22232e` | `bg-bg-elevated` | Hover states, popovers, skeletons |
+
+**Text Hierarchy**
+
+| Token | Hex | Tailwind Class | Usage |
+|-------|-----|----------------|-------|
+| `--text-primary` | `#e8e8ec` | `text-text-primary` | Headings, body text |
+| `--text-secondary` | `#8e8fa1` | `text-text-secondary` | Labels, descriptions, subtitles |
+| `--text-tertiary` | `#8b8c9e` | `text-text-tertiary` | Metadata, counters |
+| `--text-muted` | `#838495` | `text-text-muted` | Hints, placeholders, disabled |
+| `--text-on-accent` | `#0c0d12` | `text-text-on-accent` | Dark text on gold backgrounds |
+
+**Signature Accent**
+
+| Token | Hex | Tailwind Class | Usage |
+|-------|-----|----------------|-------|
+| `--accent` | `#c9a267` | `bg-accent`, `text-accent`, `border-accent` | Primary buttons, active tabs, links |
+| `--accent-hover` | `#dbb57e` | `hover:bg-accent-hover` | Hover state for accent elements |
+| `--accent-muted` | `rgba(201,162,103,0.12)` | `bg-accent-muted` | Chip backgrounds, focus ring spreads |
+
+**Semantic States**
+
+| Token | Hex | Tailwind Class | Usage |
+|-------|-----|----------------|-------|
+| `--error` | `#e5484d` | `text-error`, `border-error` | Destructive actions, validation errors |
+| `--success` | `#30a46c` | `text-success`, `border-success` | Success states, positive trends |
+| `--warning` | `#f5a623` | `text-warning`, `border-warning` | Warning states, usage alerts |
+| `--warning-muted` | `#e8a838` | `text-warning-muted` | Non-critical warnings |
+
+**Status Sequence (Charts, Badges, Levels)**
+
+| Token | Hex | Name |
+|-------|-----|------|
+| `--status-1` | `#30a46c` | Green |
+| `--status-2` | `#3498db` | Blue |
+| `--status-3` | `#d4873f` | Amber |
+| `--status-4` | `#bb7fe2` | Purple |
+| `--status-5` | `#e5484d` | Red |
+| `--status-premium` | `#FFD700` | Gold |
+
+**Borders**
+
+| Token | Hex | Tailwind Class | Usage |
+|-------|-----|----------------|-------|
+| `--border` | `#1f2029` | `border-border` | Default borders |
+| `--border-hover` | `#2e2f3d` | `hover:border-border-hover` | Interactive hover states |
+
+---
+
 ### Theme Switching
 
 Apply themes with the `data-theme` attribute:
 
 ```html
-<html data-theme="dark">
+<html data-theme="light">
 ```
 
 Toggle in React:
 
 ```jsx
-const [theme, setTheme] = useState(() => localStorage.getItem('ds-theme') || 'dark');
+const [theme, setTheme] = useState(() => localStorage.getItem('ds-theme') || 'light');
 
 useEffect(() => {
   document.documentElement.setAttribute('data-theme', theme);

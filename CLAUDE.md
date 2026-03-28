@@ -6,7 +6,7 @@ This repository is the single source of truth for all SaaS application styling. 
 
 - **Apps:** MERN (MongoDB, Express, React, Node.js)
 - **Styling:** Tailwind CSS with this design system's preset
-- **Theming:** Dark/light via `data-theme` attribute + CSS custom properties
+- **Theming:** Light/dark via `data-theme` attribute + CSS custom properties
 
 ## Repository Structure
 
@@ -118,7 +118,7 @@ import '../path-to-design-system/globals.css';
 
 ```html
 <!-- index.html or root template -->
-<html data-theme="dark">
+<html data-theme="light">
 ```
 
 ## Component Patterns
