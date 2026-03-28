@@ -309,7 +309,7 @@
     }
 
     /* ========================================
-       NAV (Sticky Section Nav)
+       NAV (Sticky Grouped Section Nav)
        ======================================== */
     .section-nav {
       position: sticky;
@@ -318,21 +318,55 @@
       background: var(--bg-primary);
       border-bottom: 1px solid var(--border);
       margin-bottom: var(--space-3xl);
-      padding: var(--space-md) 0;
+      padding: var(--space-sm) 0;
       display: flex;
-      gap: var(--space-xs);
+      align-items: center;
+      gap: 0;
       overflow-x: auto;
       scrollbar-width: none;
     }
 
     .section-nav::-webkit-scrollbar { display: none; }
 
+    .nav-group {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 0 var(--space-xs);
+    }
+
+    .nav-group:not(:last-child)::after {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 3px;
+      border-radius: var(--radius-full);
+      background: var(--accent);
+      opacity: 0.5;
+      margin-left: var(--space-sm);
+      flex-shrink: 0;
+    }
+
+    .nav-group-label {
+      font-size: 0.5625rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      padding: 2px var(--space-xs);
+      margin-right: 2px;
+      opacity: 0.7;
+      pointer-events: none;
+      user-select: none;
+    }
+
     .nav-link {
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       font-weight: 500;
       color: var(--text-muted);
       text-decoration: none;
-      padding: var(--space-sm) var(--space-md);
+      padding: var(--space-xs) var(--space-sm);
       border-radius: var(--radius-sm);
       white-space: nowrap;
       transition: color 150ms ease, background 150ms ease;
@@ -1751,23 +1785,32 @@
 
     <!-- ====== NAV ====== -->
     <nav class="section-nav animate-in delay-1" aria-label="Section navigation">
-      <a class="nav-link" href="#colors">Colors</a>
-      <a class="nav-link" href="#typography">Typography</a>
-      <a class="nav-link" href="#spacing">Spacing</a>
-      <a class="nav-link" href="#radii">Radii</a>
-      <a class="nav-link" href="#elevation">Elevation</a>
-      <a class="nav-link" href="#buttons">Buttons</a>
-      <a class="nav-link" href="#inputs">Inputs</a>
-      <a class="nav-link" href="#cards">Cards</a>
-      <a class="nav-link" href="#badges">Status &amp; Badges</a>
-      <a class="nav-link" href="#states">States</a>
-      <a class="nav-link" href="#modal">Modal</a>
-      <a class="nav-link" href="#table">Table</a>
-      <a class="nav-link" href="#dashboard">Dashboard</a>
-      <a class="nav-link" href="#sidebar">Sidebar Nav</a>
-      <a class="nav-link" href="#topnav">Top Nav</a>
-      <a class="nav-link" href="#forms">Form Controls</a>
-      <a class="nav-link" href="#toasts">Toasts</a>
+      <div class="nav-group">
+        <span class="nav-group-label">Tokens</span>
+        <a class="nav-link" href="#colors">Colors</a>
+        <a class="nav-link" href="#typography">Type</a>
+        <a class="nav-link" href="#spacing">Spacing</a>
+        <a class="nav-link" href="#radii">Radii</a>
+        <a class="nav-link" href="#elevation">Elevation</a>
+      </div>
+      <div class="nav-group">
+        <span class="nav-group-label">Components</span>
+        <a class="nav-link" href="#buttons">Buttons</a>
+        <a class="nav-link" href="#inputs">Inputs</a>
+        <a class="nav-link" href="#cards">Cards</a>
+        <a class="nav-link" href="#badges">Badges</a>
+        <a class="nav-link" href="#states">States</a>
+        <a class="nav-link" href="#modal">Modal</a>
+        <a class="nav-link" href="#table">Table</a>
+      </div>
+      <div class="nav-group">
+        <span class="nav-group-label">Patterns</span>
+        <a class="nav-link" href="#sidebar">Sidebar</a>
+        <a class="nav-link" href="#topnav">Top Nav</a>
+        <a class="nav-link" href="#forms">Forms</a>
+        <a class="nav-link" href="#toasts">Toasts</a>
+        <a class="nav-link" href="#dashboard">Dashboard</a>
+      </div>
     </nav>
 
     <!-- ====== COLORS ====== -->
