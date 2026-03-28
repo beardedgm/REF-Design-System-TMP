@@ -1,0 +1,170 @@
+/*
+ * Signature Design System — Global Styles
+ *
+ * Import this file in your root layout (e.g., App.jsx or layout.tsx):
+ *   import './globals.css';
+ *
+ * This file provides:
+ *   1. CSS custom properties for dark and light themes
+ *   2. Base reset and body defaults
+ *   3. Reduced-motion and accessibility defaults
+ *
+ * Theme is controlled by data-theme="dark|light" on <html>.
+ * All Tailwind classes from tailwind.preset.js resolve to these variables.
+ */
+
+/* ========================================
+   DARK THEME (Default)
+   ======================================== */
+:root,
+[data-theme="dark"] {
+  /* Backgrounds */
+  --bg-primary: #0c0d12;
+  --bg-secondary: #12131a;
+  --bg-surface: #161720;
+  --bg-card: #1a1b24;
+  --bg-elevated: #22232e;
+
+  /* Text */
+  --text-primary: #e8e8ec;
+  --text-secondary: #8e8fa1;
+  --text-tertiary: #8b8c9e;
+  --text-muted: #838495;
+  --text-on-accent: #0c0d12;
+
+  /* Accent */
+  --accent: #c9a267;
+  --accent-hover: #dbb57e;
+  --accent-muted: rgba(201, 162, 103, 0.12);
+
+  /* Semantic */
+  --error: #e5484d;
+  --success: #30a46c;
+  --warning: #f5a623;
+  --warning-muted: #e8a838;
+
+  /* Status Sequence */
+  --status-1: #30a46c;
+  --status-2: #3498db;
+  --status-3: #d4873f;
+  --status-4: #bb7fe2;
+  --status-5: #e5484d;
+  --status-premium: #FFD700;
+
+  /* Borders */
+  --border: #1f2029;
+  --border-hover: #2e2f3d;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 0.75rem;
+  --space-lg: 1rem;
+  --space-xl: 1.5rem;
+  --space-2xl: 2rem;
+  --space-3xl: 3rem;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  /* Z-Index */
+  --z-dropdown: 50;
+  --z-sticky: 100;
+  --z-overlay: 900;
+  --z-modal: 1000;
+}
+
+/* ========================================
+   LIGHT THEME
+   ======================================== */
+[data-theme="light"] {
+  /* Backgrounds */
+  --bg-primary: #f4f4f6;
+  --bg-secondary: #eaeaee;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-elevated: #f0f0f4;
+
+  /* Text */
+  --text-primary: #1a1b24;
+  --text-secondary: #5c5d6e;
+  --text-tertiary: #72738a;
+  --text-muted: #9394a5;
+  --text-on-accent: #ffffff;
+
+  /* Accent — deepened for contrast */
+  --accent: #a8843e;
+  --accent-hover: #c9a267;
+  --accent-muted: rgba(168, 132, 62, 0.10);
+
+  /* Semantic — darkened for readability */
+  --error: #cd2b31;
+  --success: #218358;
+  --warning: #c47d0a;
+  --warning-muted: #d49a2e;
+
+  /* Status — darkened */
+  --status-1: #218358;
+  --status-2: #2271a1;
+  --status-3: #a86520;
+  --status-4: #8b4fc0;
+  --status-5: #cd2b31;
+  --status-premium: #9a7800;
+
+  /* Borders */
+  --border: #d8d9e0;
+  --border-hover: #bcbdc8;
+
+  /* Shadows — softer for light context */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* ========================================
+   BASE RESET & DEFAULTS
+   ======================================== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
