@@ -14,10 +14,10 @@
  */
 
 /* ========================================
-   DARK THEME (Default)
+   LIGHT THEME (Default)
    ======================================== */
 :root,
-[data-theme="dark"] {
+[data-theme="light"] {
   /* Backgrounds */
   --bg-primary: #0c0d12;
   --bg-secondary: #12131a;
@@ -83,9 +83,9 @@
 }
 
 /* ========================================
-   LIGHT THEME
+   DARK THEME
    ======================================== */
-[data-theme="light"] {
+[data-theme="dark"] {
   /* Backgrounds */
   --bg-primary: #f4f4f6;
   --bg-secondary: #eaeaee;
