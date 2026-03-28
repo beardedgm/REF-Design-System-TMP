@@ -66,6 +66,39 @@ All spacing values: `xs` (4px), `sm` (8px), `md` (12px), `lg` (16px), `xl` (24px
 - Minimum 4.5:1 contrast ratio for text
 - All inputs have associated labels
 
+### 8. Icons Use Lucide React Only
+
+- Use `lucide-react` for all icons — no emoji, no PNG, no mixing libraries
+- Sizes: `w-5 h-5` (nav/inline), `w-4 h-4` (buttons), `w-6 h-6` (cards), `w-12 h-12` (hero)
+- Icons inherit color via `currentColor` — use semantic text colors
+- Every icon-only button must have `aria-label`
+
+### 9. Navigation Shell Selection
+
+- **Sidebar shell**: Dashboard apps with 7+ routes, grouped navigation, workspace-style apps
+- **Top nav shell**: Public pages, marketing sites, simpler apps with ≤ 6 routes
+- Sidebar: `240px` expanded, `64px` collapsed, `200ms ease` transitions
+- Top nav: `56px` height, fixed to top with `z-sticky`
+- Both shells use `<nav>` landmarks with `aria-label`, `aria-current="page"` on active items
+- Mobile (< 768px): sidebar becomes off-canvas drawer, top nav links collapse to hamburger
+
+### 10. Form Controls Have Visible Labels
+
+- Every form input has a visible `<label>` — never rely on placeholder alone
+- Toggle/Switch: `role="switch"`, `aria-checked`, `Space` to toggle
+- Checkbox: native `<input type="checkbox">`, supports `aria-checked="mixed"`
+- Radio: native `<input type="radio">` with shared `name`, arrow key navigation
+- Select: `role="listbox"`, `aria-expanded`, `Escape` closes
+- Error messages appear below the field in `text-caption text-error`
+
+### 11. Toast Notifications Are Non-Blocking
+
+- Container: `fixed bottom-xl right-xl z-modal`, `aria-live="polite"`, `role="status"`
+- Max 3 visible, auto-dismiss 5 seconds, hover pauses timer
+- Variants: success (`CheckCircle`), error (`XCircle`), warning (`AlertTriangle`), info (`Info`)
+- Toasts never steal focus
+- Exit animation faster than enter (150ms vs 200ms)
+
 ## How to Use in a New App
 
 ```js
@@ -90,13 +123,21 @@ import '../path-to-design-system/globals.css';
 
 ## Component Patterns
 
-See `STYLE_GUIDE.md` section 3 for complete React + Tailwind component patterns including:
+See `STYLE_GUIDE.md` for complete React + Tailwind component patterns including:
 - Buttons (Primary, Default, Danger × 3 sizes)
 - Text inputs with validation states
 - Cards with hover elevation
 - Badges and status indicators
 - Modal dialogs
 - Table rows with hover highlighting
+- **Sidebar Navigation** (expanded/collapsed, section groups, mobile drawer)
+- **Top Navigation** (horizontal bar, icon buttons, mobile hamburger)
+- **Page Shell Layouts** (sidebar shell, top nav shell, top bar with breadcrumbs)
+- **Toggle / Switch** (on/off with label + description)
+- **Checkbox** (single + group, indeterminate state)
+- **Radio Group** (vertical + horizontal variants)
+- **Select Dropdown** (custom, with search, multi-select variant)
+- **Toast Notifications** (success/error/warning/info, auto-dismiss, stacking)
 
 ## Quick Reference — Tailwind Class Naming
 
@@ -112,3 +153,7 @@ See `STYLE_GUIDE.md` section 3 for complete React + Tailwind component patterns 
 | Spacing | `p-{size}`, `m-{size}`, `gap-{size}` | `p-xl`, `gap-lg`, `m-sm` |
 | Font size | `text-{role}` | `text-h1`, `text-body`, `text-caption` |
 | Z-index | `z-{level}` | `z-modal`, `z-dropdown` |
+| Nav items | `sidebar-nav-item`, `topnav-link` | `hover:bg-bg-elevated`, `.active` |
+| Form controls | `role="switch"`, `role="listbox"` | Toggle, checkbox, radio, select |
+| Toasts | `aria-live="polite"` | Success, error, warning, info variants |
+| Icons | `w-{size} h-{size}` from Lucide | `w-5 h-5` nav, `w-4 h-4` btn |
