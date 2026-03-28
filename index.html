@@ -1187,6 +1187,533 @@
     .delay-3 { animation-delay: 150ms; }
     .delay-4 { animation-delay: 200ms; }
     .delay-5 { animation-delay: 250ms; }
+
+    /* ========================================
+       SIDEBAR NAV DEMO
+       ======================================== */
+    .sidebar-demo {
+      display: flex;
+      gap: var(--space-xl);
+      align-items: flex-start;
+    }
+    .sidebar-demo-panel {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 480px;
+    }
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-lg) var(--space-lg);
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+    .sidebar-logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      color: var(--text-on-accent);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .sidebar-collapse-btn {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: var(--space-xs);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 150ms ease, background 150ms ease;
+    }
+    .sidebar-collapse-btn:hover {
+      color: var(--text-primary);
+      background: var(--bg-elevated);
+    }
+    .sidebar-body {
+      flex: 1;
+      padding: var(--space-md) var(--space-sm);
+      overflow-y: auto;
+    }
+    .sidebar-section-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      padding: var(--space-md) var(--space-md) var(--space-xs);
+    }
+    .sidebar-nav-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .sidebar-nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease;
+      border-left: 3px solid transparent;
+      text-decoration: none;
+    }
+    .sidebar-nav-item:hover {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+    }
+    .sidebar-nav-item.active {
+      background: var(--accent-muted);
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+    .sidebar-badge {
+      margin-left: auto;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: var(--accent-muted);
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+    }
+    .sidebar-footer {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      border-top: 1px solid var(--border);
+    }
+    .sidebar-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: var(--accent-muted);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .sidebar-user-info {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sidebar-user-info .name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .sidebar-user-info .email {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    /* ========================================
+       TOP NAV DEMO
+       ======================================== */
+    .topnav-demo {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--bg-card);
+    }
+    .topnav-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xl);
+      padding: 0 var(--space-xl);
+      height: 56px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-secondary);
+    }
+    .topnav-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xl);
+    }
+    .topnav-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .topnav-brand .sidebar-logo-icon {
+      width: 28px;
+      height: 28px;
+      font-size: 0.75rem;
+    }
+    .topnav-link {
+      position: relative;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: var(--space-lg) 0;
+      transition: color 150ms ease;
+      cursor: pointer;
+    }
+    .topnav-link:hover {
+      color: var(--text-primary);
+    }
+    .topnav-link.active {
+      color: var(--accent);
+    }
+    .topnav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      border-radius: var(--radius-full);
+    }
+    .topnav-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .topnav-icon-btn {
+      position: relative;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 150ms ease, color 150ms ease;
+    }
+    .topnav-icon-btn:hover {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+    }
+    .topnav-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      background: var(--error);
+      border-radius: var(--radius-full);
+      border: 2px solid var(--bg-secondary);
+    }
+    .topnav-content-area {
+      padding: var(--space-xl);
+      min-height: 100px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* ========================================
+       FORM CONTROLS DEMO
+       ======================================== */
+    .form-controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-xl);
+    }
+    .form-control-demo {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+    }
+    .form-control-demo h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Toggle / Switch */
+    .toggle-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      padding: var(--space-sm) 0;
+    }
+    .toggle-row + .toggle-row {
+      border-top: 1px solid var(--border);
+      margin-top: var(--space-sm);
+      padding-top: var(--space-md);
+    }
+    .toggle-track {
+      width: 40px;
+      height: 22px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-hover);
+      border-radius: var(--radius-full);
+      position: relative;
+      cursor: pointer;
+      transition: background 150ms ease, border-color 150ms ease;
+      flex-shrink: 0;
+    }
+    .toggle-thumb {
+      width: 16px;
+      height: 16px;
+      background: var(--text-muted);
+      border-radius: var(--radius-full);
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: transform 150ms ease, background 150ms ease;
+    }
+    .toggle-track.active {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .toggle-track.active .toggle-thumb {
+      transform: translateX(18px);
+      background: #ffffff;
+    }
+    .toggle-track.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .toggle-label {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .toggle-label .label-text {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .toggle-label .label-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Checkbox */
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-sm) 0;
+      cursor: pointer;
+    }
+    .checkbox-row + .checkbox-row {
+      border-top: 1px solid var(--border);
+      margin-top: var(--space-xs);
+      padding-top: var(--space-sm);
+    }
+    .checkbox-box {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--border-hover);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 150ms ease, border-color 150ms ease;
+    }
+    .checkbox-box svg {
+      display: none;
+    }
+    .checkbox-row.checked .checkbox-box {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .checkbox-row.checked .checkbox-box svg {
+      display: block;
+    }
+    .checkbox-row .label-text {
+      font-size: 0.85rem;
+      color: var(--text-primary);
+    }
+
+    /* Radio */
+    .radio-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-sm) 0;
+      cursor: pointer;
+    }
+    .radio-row + .radio-row {
+      border-top: 1px solid var(--border);
+      margin-top: var(--space-xs);
+      padding-top: var(--space-sm);
+    }
+    .radio-circle {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--border-hover);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: border-color 150ms ease;
+    }
+    .radio-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: var(--radius-full);
+      background: transparent;
+      transition: background 150ms ease;
+    }
+    .radio-row.selected .radio-circle {
+      border-color: var(--accent);
+    }
+    .radio-row.selected .radio-dot {
+      background: var(--accent);
+    }
+    .radio-row .label-text {
+      font-size: 0.85rem;
+      color: var(--text-primary);
+    }
+    .radio-row .label-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Select */
+    .select-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: border-color 150ms ease;
+    }
+    .select-trigger:hover {
+      border-color: var(--border-hover);
+    }
+    .select-trigger.has-value {
+      color: var(--text-primary);
+    }
+    .select-dropdown {
+      display: none;
+      margin-top: var(--space-xs);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .select-dropdown.open {
+      display: block;
+    }
+    .select-option {
+      padding: var(--space-sm) var(--space-md);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease;
+    }
+    .select-option:hover {
+      background: var(--accent-muted);
+      color: var(--text-primary);
+    }
+    .select-option.selected {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ========================================
+       TOAST DEMO
+       ======================================== */
+    .toast-demo-container {
+      max-width: 420px;
+    }
+    .toast-demo-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .toast-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-md);
+    }
+    .toast-item .toast-icon {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .toast-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .toast-content .toast-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+    .toast-content .toast-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .toast-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: var(--space-xs);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 150ms ease, background 150ms ease;
+      flex-shrink: 0;
+    }
+    .toast-close:hover {
+      color: var(--text-primary);
+      background: var(--bg-elevated);
+    }
+
   </style>
 </head>
 <body>
@@ -1233,6 +1760,10 @@
       <a class="nav-link" href="#modal">Modal</a>
       <a class="nav-link" href="#table">Table</a>
       <a class="nav-link" href="#dashboard">Dashboard</a>
+      <a class="nav-link" href="#sidebar">Sidebar Nav</a>
+      <a class="nav-link" href="#topnav">Top Nav</a>
+      <a class="nav-link" href="#forms">Form Controls</a>
+      <a class="nav-link" href="#toasts">Toasts</a>
     </nav>
 
     <!-- ====== COLORS ====== -->
@@ -1899,6 +2430,309 @@
       </div>
     </section>
 
+    <!-- ====== SIDEBAR NAV ====== -->
+    <section class="section animate-in" id="sidebar">
+      <div class="section-header">
+        <div class="overline">Navigation</div>
+        <h2 class="heading-2">Sidebar Nav</h2>
+        <p class="subtitle">Expandable sidebar with grouped navigation, badges, and user footer. Shown expanded (240px) and collapsed (64px).</p>
+      </div>
+
+      <div class="sidebar-demo">
+        <!-- Expanded Sidebar -->
+        <div class="sidebar-demo-panel" style="width: 240px;">
+          <div class="sidebar-header">
+            <div class="sidebar-logo">
+              <div class="sidebar-logo-icon">S</div>
+              <span>Signature</span>
+            </div>
+            <button class="sidebar-collapse-btn" aria-label="Collapse sidebar">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
+            </button>
+          </div>
+          <div class="sidebar-body">
+            <div class="sidebar-section-label">Main</div>
+            <div class="sidebar-nav-group">
+              <a class="sidebar-nav-item active" href="#">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                <span>Dashboard</span>
+              </a>
+              <a class="sidebar-nav-item" href="#">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <span>Projects</span>
+                <span class="sidebar-badge">12</span>
+              </a>
+              <a class="sidebar-nav-item" href="#">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>Team</span>
+              </a>
+            </div>
+            <div class="sidebar-section-label">Workspace</div>
+            <div class="sidebar-nav-group">
+              <a class="sidebar-nav-item" href="#">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span>Search</span>
+              </a>
+              <a class="sidebar-nav-item" href="#">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                <span>Settings</span>
+              </a>
+            </div>
+          </div>
+          <div class="sidebar-footer">
+            <div class="sidebar-avatar">JD</div>
+            <div class="sidebar-user-info">
+              <span class="name">Jane Doe</span>
+              <span class="email">jane@signature.io</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Collapsed Sidebar -->
+        <div class="sidebar-demo-panel" style="width: 64px; align-items: center;">
+          <div class="sidebar-header" style="padding: var(--space-md); justify-content: center;">
+            <div class="sidebar-logo-icon" style="width: 32px; height: 32px;">S</div>
+          </div>
+          <div class="sidebar-body" style="display: flex; flex-direction: column; align-items: center; gap: var(--space-xs); padding: var(--space-md) var(--space-xs);">
+            <a class="sidebar-nav-item active" href="#" style="justify-content: center; padding: var(--space-sm); border-left: none; border-radius: var(--radius-md);" title="Dashboard">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </a>
+            <a class="sidebar-nav-item" href="#" style="justify-content: center; padding: var(--space-sm); border-left: none; border-radius: var(--radius-md);" title="Projects">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            </a>
+            <a class="sidebar-nav-item" href="#" style="justify-content: center; padding: var(--space-sm); border-left: none; border-radius: var(--radius-md);" title="Team">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </a>
+            <a class="sidebar-nav-item" href="#" style="justify-content: center; padding: var(--space-sm); border-left: none; border-radius: var(--radius-md);" title="Search">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </a>
+            <a class="sidebar-nav-item" href="#" style="justify-content: center; padding: var(--space-sm); border-left: none; border-radius: var(--radius-md);" title="Settings">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </a>
+          </div>
+          <div class="sidebar-footer" style="justify-content: center; padding: var(--space-md);">
+            <div class="sidebar-avatar">JD</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== TOP NAV ====== -->
+    <section class="section animate-in" id="topnav">
+      <div class="section-header">
+        <div class="overline">Navigation</div>
+        <h2 class="heading-2">Top Nav</h2>
+        <p class="subtitle">Horizontal navigation bar with brand, links, icon actions, and notification indicator.</p>
+      </div>
+
+      <div class="topnav-demo">
+        <div class="topnav-bar">
+          <div class="topnav-left">
+            <a class="topnav-brand" href="#">
+              <div class="sidebar-logo-icon" style="width: 28px; height: 28px; font-size: 0.75rem;">S</div>
+              <span>AppName</span>
+            </a>
+            <a class="topnav-link active" href="#">Features</a>
+            <a class="topnav-link" href="#">Pricing</a>
+            <a class="topnav-link" href="#">Docs</a>
+            <a class="topnav-link" href="#">Blog</a>
+          </div>
+          <div class="topnav-right">
+            <button class="topnav-icon-btn" aria-label="Search">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+            <button class="topnav-icon-btn" aria-label="Notifications">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              <span class="topnav-dot"></span>
+            </button>
+            <button class="topnav-icon-btn" aria-label="Toggle theme">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <div class="sidebar-avatar" style="width: 28px; height: 28px; font-size: 0.7rem; cursor: pointer;">JD</div>
+          </div>
+        </div>
+        <div class="topnav-content-area">
+          <p>Page content goes here. The top nav stays fixed while this area scrolls.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== FORM CONTROLS ====== -->
+    <section class="section animate-in" id="forms">
+      <div class="section-header">
+        <div class="overline">Components</div>
+        <h2 class="heading-2">Form Controls</h2>
+        <p class="subtitle">Toggle switches, checkboxes, radio groups, and select dropdowns. All interactive — click to toggle.</p>
+      </div>
+
+      <div class="form-controls-grid">
+        <!-- Toggle / Switch -->
+        <div class="form-control-demo">
+          <h4>Toggle / Switch</h4>
+          <div class="toggle-row">
+            <div class="toggle-track active" onclick="this.classList.toggle('active')">
+              <div class="toggle-thumb"></div>
+            </div>
+            <div class="toggle-label">
+              <span class="label-text">Email notifications</span>
+              <span class="label-desc">Receive emails for important updates</span>
+            </div>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-track" onclick="this.classList.toggle('active')">
+              <div class="toggle-thumb"></div>
+            </div>
+            <div class="toggle-label">
+              <span class="label-text">Marketing emails</span>
+              <span class="label-desc">Get product news and offers</span>
+            </div>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-track disabled">
+              <div class="toggle-thumb"></div>
+            </div>
+            <div class="toggle-label">
+              <span class="label-text">Two-factor auth</span>
+              <span class="label-desc">Enforced by admin policy</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Checkbox -->
+        <div class="form-control-demo">
+          <h4>Checkbox</h4>
+          <div class="checkbox-row checked" onclick="this.classList.toggle('checked')">
+            <div class="checkbox-box">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="label-text">Terms and conditions</span>
+          </div>
+          <div class="checkbox-row checked" onclick="this.classList.toggle('checked')">
+            <div class="checkbox-box">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="label-text">Subscribe to newsletter</span>
+          </div>
+          <div class="checkbox-row" onclick="this.classList.toggle('checked')">
+            <div class="checkbox-box">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="label-text">Remember my preferences</span>
+          </div>
+        </div>
+
+        <!-- Radio Group -->
+        <div class="form-control-demo">
+          <h4>Radio Group</h4>
+          <div class="radio-row selected" onclick="selectRadio(this)">
+            <div class="radio-circle"><div class="radio-dot"></div></div>
+            <div>
+              <div class="label-text">Instant</div>
+              <div class="label-desc">Get notified immediately</div>
+            </div>
+          </div>
+          <div class="radio-row" onclick="selectRadio(this)">
+            <div class="radio-circle"><div class="radio-dot"></div></div>
+            <div>
+              <div class="label-text">Daily digest</div>
+              <div class="label-desc">One summary per day</div>
+            </div>
+          </div>
+          <div class="radio-row" onclick="selectRadio(this)">
+            <div class="radio-circle"><div class="radio-dot"></div></div>
+            <div>
+              <div class="label-text">Weekly summary</div>
+              <div class="label-desc">Catch up once a week</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Select Dropdown -->
+        <div class="form-control-demo">
+          <h4>Select Dropdown</h4>
+          <div class="select-trigger" onclick="toggleSelect(this)">
+            <span class="select-value">Choose a framework...</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="select-dropdown">
+            <div class="select-option" onclick="pickOption(this, 'React')">React</div>
+            <div class="select-option" onclick="pickOption(this, 'Vue')">Vue</div>
+            <div class="select-option" onclick="pickOption(this, 'Svelte')">Svelte</div>
+            <div class="select-option" onclick="pickOption(this, 'Angular')">Angular</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== TOASTS ====== -->
+    <section class="section animate-in" id="toasts">
+      <div class="section-header">
+        <div class="overline">Feedback</div>
+        <h2 class="heading-2">Toasts</h2>
+        <p class="subtitle">Notification toasts for success, error, warning, and info states with icon, title, description, and dismiss button.</p>
+      </div>
+
+      <div class="toast-demo-container">
+        <div class="toast-demo-stack">
+          <!-- Success -->
+          <div class="toast-item">
+            <div class="toast-icon" style="color: var(--success);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="toast-content">
+              <div class="toast-title">Changes saved</div>
+              <div class="toast-desc">Your profile has been updated successfully.</div>
+            </div>
+            <button class="toast-close" aria-label="Dismiss">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <!-- Error -->
+          <div class="toast-item">
+            <div class="toast-icon" style="color: var(--error);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            </div>
+            <div class="toast-content">
+              <div class="toast-title">Upload failed</div>
+              <div class="toast-desc">The file exceeds the 10MB size limit. Please compress and retry.</div>
+            </div>
+            <button class="toast-close" aria-label="Dismiss">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <!-- Warning -->
+          <div class="toast-item">
+            <div class="toast-icon" style="color: var(--warning);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div class="toast-content">
+              <div class="toast-title">Storage almost full</div>
+              <div class="toast-desc">You have used 92% of your storage quota. Upgrade your plan for more space.</div>
+            </div>
+            <button class="toast-close" aria-label="Dismiss">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <!-- Info -->
+          <div class="toast-item">
+            <div class="toast-icon" style="color: var(--status-2);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
+            <div class="toast-content">
+              <div class="toast-title">New version available</div>
+              <div class="toast-desc">Version 2.4.0 is ready. Refresh the page to update.</div>
+            </div>
+            <button class="toast-close" aria-label="Dismiss">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ====== FOOTER ====== -->
     <footer style="text-align: center; padding: var(--space-2xl) 0; border-top: 1px solid var(--border);">
       <p class="caption" style="margin-bottom: var(--space-xs);">Signature Dark Aesthetic &mdash; Design System v1.0</p>
@@ -1907,6 +2741,26 @@
 
   </div>
   <script>
+    /* Form Controls — interactive helpers */
+    function selectRadio(el) {
+      var group = el.parentElement.querySelectorAll('.radio-row');
+      group.forEach(function(r) { r.classList.remove('selected'); });
+      el.classList.add('selected');
+    }
+    function toggleSelect(trigger) {
+      var dropdown = trigger.nextElementSibling;
+      dropdown.classList.toggle('open');
+    }
+    function pickOption(optionEl, value) {
+      var dropdown = optionEl.parentElement;
+      var trigger = dropdown.previousElementSibling;
+      dropdown.querySelectorAll('.select-option').forEach(function(o) { o.classList.remove('selected'); });
+      optionEl.classList.add('selected');
+      trigger.querySelector('.select-value').textContent = value;
+      trigger.classList.add('has-value');
+      dropdown.classList.remove('open');
+    }
+
     (function() {
       const root = document.documentElement;
       const toggle = document.getElementById('themeToggle');
