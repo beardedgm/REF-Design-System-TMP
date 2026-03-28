@@ -1,6 +1,6 @@
 # Signature Design System
 
-A unified visual design system for all SaaS applications. Dark-first with full light theme support, built for MERN + Tailwind CSS.
+A unified visual design system for all SaaS applications. Light-first with full dark theme support, built for MERN + Tailwind CSS.
 
 ## What's Inside
 
@@ -36,14 +36,14 @@ import '../path-to-design-system/globals.css';
 **3. Set the theme on your root element:**
 
 ```html
-<html data-theme="dark">
+<html data-theme="light">
 ```
 
 Toggle with JS: `document.documentElement.setAttribute('data-theme', 'light')`
 
 ## Design Principles
 
-1. **Dark-First, Light-Ready** — Every app supports both themes via CSS variables
+1. **Light-First, Dark-Ready** — Every app supports both themes via CSS variables
 2. **Consistency Over Novelty** — Same tokens, same patterns, every app
 3. **Warm Gold Signature** — `#c9a267` is the brand accent threading through all interactions
 4. **Density Over Sprawl** — Compact, information-rich layouts on an 8-point grid

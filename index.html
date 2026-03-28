@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Signature Design System — Dark &amp; Light</title>
+  <title>Signature Design System — Showcase</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -11,75 +11,11 @@
     /* ========================================
        DESIGN TOKENS
        ======================================== */
-    :root {
-      /* Backgrounds */
-      --bg-primary: #0c0d12;
-      --bg-secondary: #12131a;
-      --bg-surface: #161720;
-      --bg-card: #1a1b24;
-      --bg-elevated: #22232e;
-
-      /* Text */
-      --text-primary: #e8e8ec;
-      --text-secondary: #8e8fa1;
-      --text-tertiary: #8b8c9e;
-      --text-muted: #838495;
-      --text-on-accent: #0c0d12;
-
-      /* Accent */
-      --accent: #c9a267;
-      --accent-hover: #dbb57e;
-      --accent-muted: rgba(201, 162, 103, 0.12);
-
-      /* Semantic */
-      --error: #e5484d;
-      --success: #30a46c;
-      --warning: #f5a623;
-      --warning-muted: #e8a838;
-
-      /* Status */
-      --status-1: #30a46c;
-      --status-2: #3498db;
-      --status-3: #d4873f;
-      --status-4: #bb7fe2;
-      --status-5: #e5484d;
-      --status-premium: #FFD700;
-
-      /* Borders */
-      --border: #1f2029;
-      --border-hover: #2e2f3d;
-
-      /* Spacing */
-      --space-xs: 0.25rem;
-      --space-sm: 0.5rem;
-      --space-md: 0.75rem;
-      --space-lg: 1rem;
-      --space-xl: 1.5rem;
-      --space-2xl: 2rem;
-      --space-3xl: 3rem;
-
-      /* Radii */
-      --radius-sm: 6px;
-      --radius-md: 8px;
-      --radius-lg: 12px;
-      --radius-full: 9999px;
-
-      /* Shadows */
-      --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-      --shadow-md: 0 2px 8px rgba(0,0,0,0.4);
-      --shadow-lg: 0 8px 24px rgba(0,0,0,0.5);
-
-      /* Z-Index */
-      --z-dropdown: 50;
-      --z-sticky: 100;
-      --z-overlay: 900;
-      --z-modal: 1000;
-    }
 
     /* ========================================
-       LIGHT MODE TOKENS
+       LIGHT THEME (Default)
        ======================================== */
-    [data-theme="light"] {
+    :root {
       /* Backgrounds */
       --bg-primary: #f4f4f6;
       --bg-secondary: #eaeaee;
@@ -117,10 +53,78 @@
       --border: #d8d9e0;
       --border-hover: #bcbdc8;
 
+      /* Spacing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 0.75rem;
+      --space-lg: 1rem;
+      --space-xl: 1.5rem;
+      --space-2xl: 2rem;
+      --space-3xl: 3rem;
+
+      /* Radii */
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-full: 9999px;
+
       /* Shadows — softer for light context */
       --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
       --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
       --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+
+      /* Z-Index */
+      --z-dropdown: 50;
+      --z-sticky: 100;
+      --z-overlay: 900;
+      --z-modal: 1000;
+    }
+
+    /* ========================================
+       DARK THEME
+       ======================================== */
+    [data-theme="dark"] {
+      /* Backgrounds */
+      --bg-primary: #0c0d12;
+      --bg-secondary: #12131a;
+      --bg-surface: #161720;
+      --bg-card: #1a1b24;
+      --bg-elevated: #22232e;
+
+      /* Text */
+      --text-primary: #e8e8ec;
+      --text-secondary: #8e8fa1;
+      --text-tertiary: #8b8c9e;
+      --text-muted: #838495;
+      --text-on-accent: #0c0d12;
+
+      /* Accent */
+      --accent: #c9a267;
+      --accent-hover: #dbb57e;
+      --accent-muted: rgba(201, 162, 103, 0.12);
+
+      /* Semantic */
+      --error: #e5484d;
+      --success: #30a46c;
+      --warning: #f5a623;
+      --warning-muted: #e8a838;
+
+      /* Status */
+      --status-1: #30a46c;
+      --status-2: #3498db;
+      --status-3: #d4873f;
+      --status-4: #bb7fe2;
+      --status-5: #e5484d;
+      --status-premium: #FFD700;
+
+      /* Borders */
+      --border: #1f2029;
+      --border-hover: #2e2f3d;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+      --shadow-md: 0 2px 8px rgba(0,0,0,0.4);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.5);
     }
 
     /* ========================================
@@ -1734,9 +1738,9 @@
     <!-- ====== HERO ====== -->
     <header class="hero animate-in">
       <div class="overline" style="color: var(--accent); margin-bottom: var(--space-lg);">Design System v1.0</div>
-      <h1 class="display-1">Signature <span class="accent-text">Dark</span> Aesthetic</h1>
+      <h1 class="display-1">Signature <span class="accent-text">Design</span> System</h1>
       <hr class="hero-rule">
-      <p class="subtitle">A complete, app-agnostic visual design system for MERN + Tailwind. Deep navy canvas, warm gold accents, restrained motion, and universal accessibility.</p>
+      <p class="subtitle">A unified visual language for all SaaS applications. Clean, warm gold accents, restrained motion, and universal accessibility.</p>
       <div style="display: flex; gap: var(--space-sm); justify-content: center; margin-top: var(--space-xl); flex-wrap: wrap;">
         <span class="badge badge-info" style="font-size: 0.75rem; padding: 0.3rem 0.75rem;"><span class="badge-dot"></span> Tailwind</span>
         <span class="badge badge-success" style="font-size: 0.75rem; padding: 0.3rem 0.75rem;"><span class="badge-dot"></span> React</span>
@@ -2735,7 +2739,7 @@
 
     <!-- ====== FOOTER ====== -->
     <footer style="text-align: center; padding: var(--space-2xl) 0; border-top: 1px solid var(--border);">
-      <p class="caption" style="margin-bottom: var(--space-xs);">Signature Dark Aesthetic &mdash; Design System v1.0</p>
+      <p class="caption" style="margin-bottom: var(--space-xs);">Signature Design System &mdash; v1.0</p>
       <p class="caption" style="color: var(--text-muted);">Built with CSS custom properties. No dependencies.</p>
     </footer>
 
@@ -2777,10 +2781,10 @@
         try { localStorage.setItem('ds-theme', theme); } catch(e) {}
       }
 
-      // Init from stored preference or default to dark
+      // Init from stored preference or default to light
       var stored = null;
       try { stored = localStorage.getItem('ds-theme'); } catch(e) {}
-      setTheme(stored || 'dark');
+      setTheme(stored || 'light');
 
       toggle.addEventListener('click', function() {
         var current = root.getAttribute('data-theme');
