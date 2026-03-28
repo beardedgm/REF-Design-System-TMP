@@ -570,9 +570,12 @@ Full-width horizontal bar, `56px` height, fixed to top (`z-sticky`). Background:
       <button aria-label="Search" className="text-text-secondary hover:text-text-primary hover:bg-bg-elevated rounded-ds-sm p-sm transition-all duration-150">
         <Search className="w-5 h-5" />
       </button>
-      <button aria-label="Notifications, 3 unread" className="relative text-text-secondary hover:text-text-primary hover:bg-bg-elevated rounded-ds-sm p-sm transition-all duration-150">
+      <button aria-label="Notifications, 3 unread" className="relative min-w-[44px] min-h-[44px] flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-elevated rounded-ds-sm p-sm transition-all duration-150">
         <Bell className="w-5 h-5" />
         <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-error" />
+      </button>
+      <button aria-label="Toggle theme" className="min-w-[44px] min-h-[44px] flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-elevated rounded-ds-sm p-sm transition-all duration-150">
+        <Moon className="w-5 h-5" /> {/* Or <Sun /> in light mode */}
       </button>
       <img src="/avatar.jpg" alt="User menu" className="w-7 h-7 rounded-full cursor-pointer" />
     </div>
@@ -870,4 +873,4 @@ All form controls share these rules:
 - Container: `aria-live="polite"`, `role="status"`
 - Toasts don't steal focus
 - Close button: `aria-label="Dismiss notification"`
-- `Escape` dismisses the most recent toast if focused
+- `Escape` dismisses the most recent toast
