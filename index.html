@@ -1161,7 +1161,7 @@
       border-radius: var(--radius-full);
       box-shadow: var(--shadow-md);
       cursor: pointer;
-      transition: all 150ms ease;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
     }
 
     .theme-toggle:hover {
@@ -1182,6 +1182,7 @@
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       position: relative;
+      pointer-events: none;
       transition: background 200ms ease;
     }
 
@@ -1193,6 +1194,7 @@
       height: 14px;
       border-radius: 50%;
       background: var(--accent);
+      pointer-events: none;
       transition: transform 200ms ease;
     }
 
@@ -1205,12 +1207,14 @@
       font-weight: 500;
       color: var(--text-secondary);
       min-width: 32px;
+      pointer-events: none;
     }
 
     .theme-toggle-icon {
       width: 16px;
       height: 16px;
       color: var(--text-secondary);
+      pointer-events: none;
     }
 
     /* Light mode badge adjustments */
@@ -2425,7 +2429,7 @@
 </head>
 <body>
   <!-- Theme Toggle -->
-  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
     <svg class="theme-toggle-icon" id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
       <!-- Moon (dark mode icon) -->
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
