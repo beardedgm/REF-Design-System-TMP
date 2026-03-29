@@ -324,15 +324,13 @@
       background: var(--bg-primary);
       border-bottom: 1px solid var(--border);
       margin-bottom: var(--space-3xl);
-      padding: var(--space-sm) 0;
+      padding: var(--space-xs) 0;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       gap: 0;
-      overflow-x: auto;
-      scrollbar-width: none;
+      row-gap: 2px;
     }
-
-    .section-nav::-webkit-scrollbar { display: none; }
 
     .nav-group {
       display: flex;
@@ -2450,18 +2448,21 @@
         <a class="nav-link" href="#table">Table</a>
       </div>
       <div class="nav-group">
-        <span class="nav-group-label">Patterns</span>
+        <span class="nav-group-label">Navigation</span>
         <a class="nav-link" href="#sidebar">Sidebar</a>
         <a class="nav-link" href="#topnav">Top Nav</a>
-        <a class="nav-link" href="#forms">Forms</a>
         <a class="nav-link" href="#tabs">Tabs</a>
-        <a class="nav-link" href="#pagination">Pagination</a>
+        <a class="nav-link" href="#pagination">Pages</a>
+      </div>
+      <div class="nav-group">
+        <span class="nav-group-label">Patterns</span>
+        <a class="nav-link" href="#forms">Forms</a>
         <a class="nav-link" href="#avatars">Avatars</a>
-        <a class="nav-link" href="#tooltips">Tooltips</a>
+        <a class="nav-link" href="#tooltips">Tips</a>
+        <a class="nav-link" href="#toasts">Toasts</a>
         <a class="nav-link" href="#empty-states">Empty</a>
         <a class="nav-link" href="#error-pages">Errors</a>
-        <a class="nav-link" href="#toasts">Toasts</a>
-        <a class="nav-link" href="#dashboard">Dashboard</a>
+        <a class="nav-link" href="#dashboard">Dash</a>
       </div>
     </nav>
 

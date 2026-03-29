@@ -99,6 +99,38 @@ All spacing values: `xs` (4px), `sm` (8px), `md` (12px), `lg` (16px), `xl` (24px
 - Toasts never steal focus
 - Exit animation faster than enter (150ms vs 200ms)
 
+### 12. Tabs Use ARIA Tablist Pattern
+
+- Container: `role="tablist"` with `aria-label`
+- Each tab: `role="tab"`, `aria-selected`, `aria-controls` pointing to panel ID
+- Each panel: `role="tabpanel"`, `aria-labelledby` pointing to tab ID
+- Keyboard: arrow keys switch tabs, `Home`/`End` for first/last
+- Three variants: underline (section switching), pill (view toggling), vertical (settings)
+- Active indicator: `border-accent` underline or `bg-accent text-text-on-accent` pill
+
+### 13. Avatars Always Have Fallbacks
+
+- Image avatars: `rounded-full object-cover` with `alt="User Name"`
+- Initials fallback: `bg-accent text-text-on-accent` circle with 1-2 letter initials
+- Sizes: `xs` (24px), `sm` (32px), `md` (40px), `lg` (56px)
+- Status dot: positioned `absolute bottom-0 right-0` with ring `ring-2 ring-bg-card`
+- Avatar groups: `-space-x-2` overlap, `+N` overflow badge
+
+### 14. Tooltips Are Accent-Tinted
+
+- Background: `bg-tooltip-bg` (accent-tinted), border: `border-tooltip-border`
+- Position: top/right/bottom/left with CSS arrow pointer
+- Trigger: hover + `focus-visible`, `150ms` delay-in, `0ms` delay-out
+- `role="tooltip"`, triggered element has `aria-describedby`
+- Max width `240px`, `text-caption`, `z-dropdown`
+
+### 15. Empty States and Error Pages Are Centered
+
+- Empty states: centered icon (`w-12 h-12 text-text-muted`) + heading + description + optional CTA
+- Error pages: full-screen centered, status code in `font-display text-display-1 text-accent`
+- Variants: 404 (not found), 500 (server error), 503 (maintenance)
+- CTA always present on error pages (user needs an escape route)
+
 ## How to Use in a New App
 
 ```js
@@ -138,6 +170,12 @@ See `STYLE_GUIDE.md` for complete React + Tailwind component patterns including:
 - **Radio Group** (vertical + horizontal variants)
 - **Select Dropdown** (custom, with search, multi-select variant)
 - **Toast Notifications** (success/error/warning/info, auto-dismiss, stacking)
+- **Tabs** (underline, pill, vertical variants with ARIA tablist)
+- **Pagination** (full numbered + compact prev/next)
+- **Avatars** (image, initials fallback, status dots, group stacking)
+- **Tooltips** (accent-tinted, 4 positions, arrow pointer)
+- **Empty States** (centered icon + heading + CTA)
+- **Error Pages** (404, 500, 503 full-page centered)
 
 ## Quick Reference — Tailwind Class Naming
 
@@ -157,3 +195,7 @@ See `STYLE_GUIDE.md` for complete React + Tailwind component patterns including:
 | Form controls | `role="switch"`, `role="listbox"` | Toggle, checkbox, radio, select |
 | Toasts | `aria-live="polite"` | Success, error, warning, info variants |
 | Icons | `w-{size} h-{size}` from Lucide | `w-5 h-5` nav, `w-4 h-4` btn |
+| Tabs | `role="tablist"`, `role="tab"` | `aria-selected`, arrow key nav |
+| Pagination | `aria-label="Pagination"` | `aria-current="page"` on active |
+| Avatars | `rounded-full object-cover` | `w-6`/`w-8`/`w-10`/`w-14` sizes |
+| Tooltips | `role="tooltip"`, `bg-tooltip-bg` | `aria-describedby`, 4 positions |
