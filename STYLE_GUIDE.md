@@ -874,3 +874,112 @@ All form controls share these rules:
 - Toasts don't steal focus
 - Close button: `aria-label="Dismiss notification"`
 - `Escape` dismisses the most recent toast
+
+---
+
+## 13. Tabs
+
+Horizontal and vertical tab bars for switching between views within a page. Three visual variants to suit different contexts.
+
+### Variants
+
+#### Underline
+
+Horizontal tab bar with accent bottom-border indicator. Best for: page-level section switching, dashboard views.
+
+```jsx
+{/* Container */}
+<div role="tablist" aria-label="Section tabs" className="flex border-b border-border">
+  {/* Active tab */}
+  <button role="tab" aria-selected="true" id="tab-overview" aria-controls="panel-overview" className="inline-flex items-center gap-sm px-lg py-sm text-body font-semibold text-accent border-b-[3px] border-accent -mb-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    <LayoutDashboard className="w-4 h-4" /> {/* optional icon */}
+    Overview
+  </button>
+  {/* Inactive tab */}
+  <button role="tab" aria-selected="false" id="tab-settings" aria-controls="panel-settings" tabIndex={-1} className="inline-flex items-center gap-sm px-lg py-sm text-body text-text-secondary hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    Settings
+  </button>
+</div>
+
+{/* Tab panel */}
+<div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview" className="py-xl">
+  Panel content here
+</div>
+```
+
+- Track line: `border-b border-border` on the container
+- Active indicator: `border-b-[3px] border-accent -mb-px` (3px accent bottom border, overlaps track)
+- Active text: `text-accent font-semibold`
+- Inactive text: `text-text-secondary`, hover → `text-text-primary`
+
+#### Pill
+
+Horizontal tab bar with filled background indicator. Best for: toolbars, compact filter bars, inline content switching.
+
+```jsx
+<div role="tablist" aria-label="View tabs" className="inline-flex p-xs bg-bg-secondary rounded-ds-md">
+  {/* Active */}
+  <button role="tab" aria-selected="true" id="tab-grid" aria-controls="panel-grid" className="inline-flex items-center gap-sm px-lg py-sm text-body font-semibold text-accent bg-accent-muted rounded-ds-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    Grid View
+  </button>
+  {/* Inactive */}
+  <button role="tab" aria-selected="false" id="tab-list" aria-controls="panel-list" tabIndex={-1} className="inline-flex items-center gap-sm px-lg py-sm text-body text-text-secondary hover:bg-bg-elevated rounded-ds-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    List View
+  </button>
+</div>
+```
+
+- Track: `bg-bg-secondary rounded-ds-md p-xs`
+- Active pill: `bg-accent-muted text-accent font-semibold rounded-ds-sm`
+- Inactive hover: `bg-bg-elevated`
+
+#### Vertical
+
+Stacked tabs for sidebar-style content switching. Best for: settings panels, multi-section forms.
+
+```jsx
+<div role="tablist" aria-label="Settings sections" aria-orientation="vertical" className="flex flex-col gap-xs">
+  {/* Active */}
+  <button role="tab" aria-selected="true" id="tab-general" aria-controls="panel-general" className="inline-flex items-center gap-sm px-lg py-sm text-body font-semibold text-accent bg-accent-muted rounded-ds-sm text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    <Settings className="w-4 h-4" />
+    General
+  </button>
+  {/* Inactive */}
+  <button role="tab" aria-selected="false" id="tab-security" aria-controls="panel-security" tabIndex={-1} className="inline-flex items-center gap-sm px-lg py-sm text-body text-text-secondary hover:bg-bg-elevated rounded-ds-sm text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    <Shield className="w-4 h-4" />
+    Security
+  </button>
+</div>
+```
+
+- No track border — items float in a vertical stack
+- Active highlight: `bg-accent-muted text-accent rounded-ds-sm`
+- Inactive hover: `bg-bg-elevated rounded-ds-sm`
+- Add `aria-orientation="vertical"` to the tablist
+
+### Icons
+
+- Optional Lucide icon before label: `w-4 h-4`, inherits `currentColor`
+- Use `gap-sm` between icon and text (provided by `inline-flex items-center gap-sm`)
+- Icon-only tabs are NOT supported — always include a text label
+
+### Keyboard Navigation
+
+| Key | Action |
+|-----|--------|
+| `←` / `→` | Move focus to previous/next tab (underline, pill) |
+| `↑` / `↓` | Move focus to previous/next tab (vertical) |
+| `Home` | Move focus to first tab |
+| `End` | Move focus to last tab |
+| `Enter` / `Space` | Activate focused tab |
+| `Tab` | Move focus out of tablist to tab panel |
+
+Arrow keys wrap: pressing `→` on the last tab returns focus to the first.
+
+### Accessibility Checklist
+
+- Container: `role="tablist"` + `aria-label`
+- Each tab: `role="tab"` + `aria-selected` + `id` + `aria-controls`
+- Panel: `role="tabpanel"` + `id` + `aria-labelledby`
+- Only active tab in tab order (`tabindex="0"`), others `tabindex="-1"`
+- Vertical variant: add `aria-orientation="vertical"` to tablist
