@@ -3183,6 +3183,29 @@
       dropdown.classList.remove('open');
     }
 
+    function switchTab(el, variant) {
+      var tablist = el.parentElement;
+      tablist.querySelectorAll('.tab-item').forEach(function(t) {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      el.classList.add('active');
+      el.setAttribute('aria-selected', 'true');
+    }
+
+    function switchPage(el) {
+      var nav = el.closest('.pagination');
+      if (!nav) return;
+      nav.querySelectorAll('.page-btn').forEach(function(b) {
+        b.classList.remove('active');
+        b.removeAttribute('aria-current');
+      });
+      if (el.classList.contains('page-btn')) {
+        el.classList.add('active');
+        el.setAttribute('aria-current', 'page');
+      }
+    }
+
     (function() {
       const root = document.documentElement;
       const toggle = document.getElementById('themeToggle');
