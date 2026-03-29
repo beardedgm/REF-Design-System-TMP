@@ -5,23 +5,28 @@ This repository is the single source of truth for all SaaS application styling. 
 ## Tech Stack
 
 - **Apps:** MERN (MongoDB, Express, React, Node.js)
-- **Styling:** Tailwind CSS with this design system's preset
+- **Styling:** Tailwind CSS with this design system's preset, OR plain CSS with variables
 - **Theming:** Light/dark via `data-theme` attribute + CSS custom properties
+- **Foundation:** `globals.css` is the framework-agnostic base — works with or without Tailwind
 
 ## Repository Structure
 
 | File | Purpose |
 |------|---------|
-| `STYLE_GUIDE.md` | Complete design spec — tokens, principles, component patterns, Tailwind classes. The LLM-readable reference. |
-| `tailwind.preset.js` | Tailwind theme preset. Import into any app's `tailwind.config.js` via `presets: [require('./path/tailwind.preset.js')]`. |
-| `globals.css` | CSS custom properties (dark + light themes) + base reset. Import into root layout. |
-| `index.html` | Interactive visual showcase. Open in browser to see all tokens and components rendered. |
+| `globals.css` | **The foundation.** CSS custom properties (dark + light themes), typography variables, spacing, base reset. Works independently — no Tailwind required. Import into any app's root layout. |
+| `tailwind.preset.js` | **Optional convenience layer.** Maps `globals.css` variables to Tailwind utility classes. Import into any app's `tailwind.config.js` via `presets: [require('./path/tailwind.preset.js')]`. |
+| `STYLE_GUIDE.md` | Complete design spec — tokens, principles, component patterns in both Tailwind and plain CSS. The LLM-readable reference. |
+| `index.html` | Interactive visual showcase. Open in browser to see all tokens and components rendered. Uses plain CSS (no Tailwind). |
 
 ## Critical Rules
 
 ### 1. Always Use Tokens — Never Hardcode
 
-Every color, spacing, radius, and shadow must come from the design system. In Tailwind classes, use the custom utility names (`bg-bg-card`, `text-accent`, `rounded-ds-md`, `shadow-ds-lg`). In raw CSS, use `var(--token-name)`. Never write a raw hex value in a component.
+Every color, spacing, radius, and shadow must come from the design system. Never write a raw hex value in a component.
+
+- **With Tailwind:** Use the custom utility names (`bg-bg-card`, `text-accent`, `rounded-ds-md`, `shadow-ds-lg`)
+- **Without Tailwind:** Use CSS variables (`var(--bg-card)`, `var(--accent)`, `var(--radius-md)`, `var(--shadow-lg)`)
+- **Either way:** `globals.css` must be imported — it defines all the variables both approaches rely on
 
 ### 2. Always Support Both Themes
 
@@ -133,6 +138,8 @@ All spacing values: `xs` (4px), `sm` (8px), `md` (12px), `lg` (16px), `xl` (24px
 
 ## How to Use in a New App
 
+### With Tailwind (recommended for React apps)
+
 ```js
 // tailwind.config.js
 const designSystem = require('../path-to-design-system/tailwind.preset.js');
@@ -152,6 +159,31 @@ import '../path-to-design-system/globals.css';
 <!-- index.html or root template -->
 <html data-theme="light">
 ```
+
+### Without Tailwind (plain CSS)
+
+```html
+<!-- Link globals.css in your HTML head or import in your bundler -->
+<link rel="stylesheet" href="path-to-design-system/globals.css" />
+```
+
+```html
+<!-- Set theme on root element -->
+<html data-theme="light">
+```
+
+```css
+/* Use CSS variables in your stylesheets */
+.my-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+}
+```
+
+See `STYLE_GUIDE.md` Section 19 for full plain-CSS component examples and the Tailwind ↔ CSS Variable mapping table.
 
 ## Component Patterns
 

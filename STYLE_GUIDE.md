@@ -1,10 +1,10 @@
 # Signature Design System — Style Guide
 
-The single source of truth for all SaaS applications. This document defines the visual language, design tokens, component patterns, and implementation rules for a MERN stack with Tailwind CSS.
+The single source of truth for all SaaS applications. This document defines the visual language, design tokens, component patterns, and implementation rules. Works with **or without** Tailwind CSS.
 
 **Companion files:**
-- `tailwind.preset.js` — Tailwind theme preset (import into any app)
-- `globals.css` — CSS custom properties + base styles (import into root layout)
+- `globals.css` — CSS custom properties + base reset (the foundation — works independently)
+- `tailwind.preset.js` — Tailwind theme preset (optional convenience layer over globals.css)
 - `index.html` — Interactive visual showcase
 
 ---
@@ -47,70 +47,70 @@ These principles guide every decision. When in doubt, refer back here.
 
 ### Color Palette — Light Theme (Default)
 
-Applied via `data-theme="light"` on `<html>`. Same CSS variable names, different values.
+Applied via `data-theme="light"` on `<html>` (also the `:root` default). Same CSS variable names as dark, different values.
 
 **Backgrounds**
 
-| Token | Hex | Usage |
-|-------|-----|-------|
-| `--bg-primary` | `#f4f4f6` | App background |
-| `--bg-secondary` | `#eaeaee` | Alternating sections |
-| `--bg-surface` | `#ffffff` | Input fields, surfaces |
-| `--bg-card` | `#ffffff` | Cards, modals |
-| `--bg-elevated` | `#f0f0f4` | Hover states, popovers |
+| Token | Hex | Tailwind Class | CSS Usage | Purpose |
+|-------|-----|----------------|-----------|---------|
+| `--bg-primary` | `#f4f4f6` | `bg-bg-primary` | `var(--bg-primary)` | App background, outermost canvas |
+| `--bg-secondary` | `#eaeaee` | `bg-bg-secondary` | `var(--bg-secondary)` | Alternating sections, secondary panels |
+| `--bg-surface` | `#ffffff` | `bg-bg-surface` | `var(--bg-surface)` | Input fields, inner surfaces |
+| `--bg-card` | `#ffffff` | `bg-bg-card` | `var(--bg-card)` | Cards, modals, panels |
+| `--bg-elevated` | `#f0f0f4` | `bg-bg-elevated` | `var(--bg-elevated)` | Hover states, popovers, skeletons |
 
 **Text**
 
-| Token | Hex |
-|-------|-----|
-| `--text-primary` | `#1a1b24` |
-| `--text-secondary` | `#5c5d6e` |
-| `--text-tertiary` | `#72738a` |
-| `--text-muted` | `#9394a5` |
-| `--text-on-accent` | `#ffffff` |
+| Token | Hex | Tailwind Class | CSS Usage | Purpose |
+|-------|-----|----------------|-----------|---------|
+| `--text-primary` | `#1a1b24` | `text-text-primary` | `var(--text-primary)` | Headings, body text |
+| `--text-secondary` | `#5c5d6e` | `text-text-secondary` | `var(--text-secondary)` | Labels, descriptions, subtitles |
+| `--text-tertiary` | `#72738a` | `text-text-tertiary` | `var(--text-tertiary)` | Metadata, counters |
+| `--text-muted` | `#9394a5` | `text-text-muted` | `var(--text-muted)` | Hints, placeholders, disabled text |
+| `--text-on-accent` | `#ffffff` | `text-text-on-accent` | `var(--text-on-accent)` | White text on gold accent backgrounds |
 
 **Accent (Deepened for light contrast)**
 
-| Token | Hex |
-|-------|-----|
-| `--accent` | `#a8843e` |
-| `--accent-hover` | `#c9a267` |
-| `--accent-muted` | `rgba(168,132,62,0.10)` |
+| Token | Hex | Tailwind Class | CSS Usage | Purpose |
+|-------|-----|----------------|-----------|---------|
+| `--accent` | `#a8843e` | `bg-accent`, `text-accent`, `border-accent` | `var(--accent)` | Primary buttons, active tabs, links |
+| `--accent-hover` | `#c9a267` | `hover:bg-accent-hover` | `var(--accent-hover)` | Hover state for accent elements |
+| `--accent-muted` | `rgba(168,132,62,0.10)` | `bg-accent-muted` | `var(--accent-muted)` | Chip backgrounds, focus ring spreads |
 
 **Semantic (Darkened for readability)**
 
-| Token | Hex |
-|-------|-----|
-| `--error` | `#cd2b31` |
-| `--success` | `#218358` |
-| `--warning` | `#c47d0a` |
-| `--warning-muted` | `#d49a2e` |
+| Token | Hex | Tailwind Class | CSS Usage |
+|-------|-----|----------------|-----------|
+| `--error` | `#cd2b31` | `text-error`, `border-error` | `var(--error)` |
+| `--success` | `#218358` | `text-success`, `border-success` | `var(--success)` |
+| `--warning` | `#c47d0a` | `text-warning`, `border-warning` | `var(--warning)` |
+| `--warning-muted` | `#d49a2e` | `text-warning-muted` | `var(--warning-muted)` |
 
 **Status (Darkened)**
 
-| Token | Hex |
-|-------|-----|
-| `--status-1` | `#218358` |
-| `--status-2` | `#2271a1` |
-| `--status-3` | `#a86520` |
-| `--status-4` | `#8b4fc0` |
-| `--status-5` | `#cd2b31` |
-| `--status-premium` | `#9a7800` |
+| Token | Hex | Tailwind Class | CSS Usage |
+|-------|-----|----------------|-----------|
+| `--status-1` | `#218358` | `text-status-1`, `bg-status-1` | `var(--status-1)` |
+| `--status-2` | `#2271a1` | `text-status-2`, `bg-status-2` | `var(--status-2)` |
+| `--status-3` | `#a86520` | `text-status-3`, `bg-status-3` | `var(--status-3)` |
+| `--status-4` | `#8b4fc0` | `text-status-4`, `bg-status-4` | `var(--status-4)` |
+| `--status-5` | `#cd2b31` | `text-status-5`, `bg-status-5` | `var(--status-5)` |
+| `--status-premium` | `#9a7800` | `text-status-premium`, `bg-status-premium` | `var(--status-premium)` |
 
 **Borders**
 
-| Token | Hex |
-|-------|-----|
-| `--border` | `#d8d9e0` |
-| `--border-hover` | `#bcbdc8` |
+| Token | Hex | Tailwind Class | CSS Usage |
+|-------|-----|----------------|-----------|
+| `--border` | `#d8d9e0` | `border-border` | `var(--border)` |
+| `--border-hover` | `#bcbdc8` | `hover:border-border-hover` | `var(--border-hover)` |
 
 **Shadows (Softer)**
 
-| Token | Value |
-|-------|-------|
-| `--shadow-sm` | `0 1px 2px rgba(0,0,0,0.06)` |
-| `--shadow-md` | `0 2px 8px rgba(0,0,0,0.08)` |
-| `--shadow-lg` | `0 8px 24px rgba(0,0,0,0.12)` |
+| Token | Value | Tailwind Class | CSS Usage |
+|-------|-------|----------------|-----------|
+| `--shadow-sm` | `0 1px 2px rgba(0,0,0,0.06)` | `shadow-ds-sm` | `var(--shadow-sm)` |
+| `--shadow-md` | `0 2px 8px rgba(0,0,0,0.08)` | `shadow-ds-md` | `var(--shadow-md)` |
+| `--shadow-lg` | `0 8px 24px rgba(0,0,0,0.12)` | `shadow-ds-lg` | `var(--shadow-lg)` |
 
 ---
 
@@ -1349,3 +1349,369 @@ Full-page centered error screens for 404, 500, and maintenance states.
 - Status code: decorative (heading conveys meaning)
 - Heading: `h1` (standalone pages)
 - CTA: `<a>` tag for navigation
+
+---
+
+## 19. Using Without Tailwind (CSS Variables Only)
+
+The design system's foundation is `globals.css` — a standalone file of CSS custom properties that works with **any** framework or no framework at all. Tailwind is an optional convenience layer on top.
+
+### Setup
+
+**Step 1: Import or link `globals.css`**
+
+```html
+<!-- HTML -->
+<link rel="stylesheet" href="path-to-design-system/globals.css" />
+```
+
+```jsx
+// React / any bundler
+import 'path-to-design-system/globals.css';
+```
+
+**Step 2: Set the theme on `<html>`**
+
+```html
+<html data-theme="light">
+```
+
+Light is the default (`:root`). Switch to dark by changing the attribute:
+
+```js
+document.documentElement.setAttribute('data-theme', 'dark');
+```
+
+**Step 3: Use CSS variables in your styles**
+
+Every token in this design system is available as a CSS variable. No Tailwind required.
+
+### Token Reference — CSS Variable Syntax
+
+All the tokens documented in Section 2 are usable as `var(--token-name)`:
+
+```css
+/* Colors */
+background: var(--bg-card);
+color: var(--text-primary);
+border-color: var(--border);
+
+/* Accent */
+background: var(--accent);
+color: var(--text-on-accent);
+
+/* Semantic */
+color: var(--error);
+color: var(--success);
+
+/* Spacing (8-point grid) */
+padding: var(--space-lg);           /* 16px */
+margin-bottom: var(--space-xl);     /* 24px */
+gap: var(--space-sm);               /* 8px */
+
+/* Border radii */
+border-radius: var(--radius-md);    /* 8px */
+
+/* Shadows */
+box-shadow: var(--shadow-md);
+
+/* Typography */
+font-size: var(--text-body);        /* 0.875rem */
+line-height: var(--lh-body);        /* 1.6 */
+font-size: var(--text-h1);          /* 1.75rem */
+letter-spacing: var(--ls-h1);       /* -0.01em */
+
+/* Transitions */
+transition: all var(--duration-fast) ease;  /* 150ms */
+
+/* Z-index */
+z-index: var(--z-modal);            /* 1000 */
+```
+
+### Component Examples — Plain CSS
+
+These examples show how to build the same components documented in Section 3, using CSS variables instead of Tailwind classes.
+
+**Primary Button**
+
+```css
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--accent);
+  color: var(--text-on-accent);
+  font-size: var(--text-body);
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: background var(--duration-fast) ease;
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-muted);
+}
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+```
+
+**Default Button (Ghost)**
+
+```css
+.btn-default {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: var(--text-body);
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+.btn-default:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-hover);
+}
+.btn-default:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-muted);
+}
+```
+
+**Danger Button**
+
+```css
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  background: transparent;
+  color: var(--error);
+  font-size: var(--text-body);
+  font-weight: 500;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+.btn-danger:hover {
+  border-color: var(--error);
+  background: rgba(229, 72, 77, 0.08);
+}
+.btn-danger:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(229, 72, 77, 0.2);
+}
+```
+
+**Text Input**
+
+```css
+.input {
+  width: 100%;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: var(--text-body);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  transition: all var(--duration-fast) ease;
+}
+.input::placeholder {
+  color: var(--text-muted);
+}
+.input:hover {
+  border-color: var(--border-hover);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-muted);
+}
+.input--error {
+  border-color: var(--error);
+}
+.input--error:focus {
+  border-color: var(--error);
+  box-shadow: 0 0 0 2px rgba(229, 72, 77, 0.1);
+}
+```
+
+**Card**
+
+```css
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  transition: all var(--duration-fast) ease;
+}
+.card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-md);
+}
+.card__title {
+  font-size: var(--text-h3);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: var(--lh-h3);
+}
+.card__description {
+  font-size: var(--text-subtitle);
+  color: var(--text-secondary);
+  margin-top: var(--space-xs);
+}
+```
+
+**Badge**
+
+```css
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--text-overline);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+}
+.badge--success {
+  background: rgba(48, 164, 108, 0.1);
+  color: var(--success);
+}
+.badge--error {
+  background: rgba(229, 72, 77, 0.1);
+  color: var(--error);
+}
+.badge--accent {
+  background: var(--accent-muted);
+  color: var(--accent);
+}
+```
+
+**Modal**
+
+```css
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+.modal {
+  position: relative;
+  max-width: 28rem;
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg) var(--space-xl);
+  border-bottom: 1px solid var(--border);
+}
+.modal__body {
+  padding: var(--space-xl);
+}
+.modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-xl);
+  border-top: 1px solid var(--border);
+}
+```
+
+### Tailwind ↔ CSS Variable Mapping
+
+Every Tailwind class in this design system maps to a CSS variable. Use this table to translate:
+
+| Tailwind Class | CSS Equivalent |
+|----------------|---------------|
+| `bg-bg-card` | `background: var(--bg-card)` |
+| `bg-bg-primary` | `background: var(--bg-primary)` |
+| `bg-bg-elevated` | `background: var(--bg-elevated)` |
+| `bg-accent` | `background: var(--accent)` |
+| `text-text-primary` | `color: var(--text-primary)` |
+| `text-text-secondary` | `color: var(--text-secondary)` |
+| `text-text-muted` | `color: var(--text-muted)` |
+| `text-accent` | `color: var(--accent)` |
+| `text-error` | `color: var(--error)` |
+| `border-border` | `border-color: var(--border)` |
+| `border-accent` | `border-color: var(--accent)` |
+| `rounded-ds-sm` | `border-radius: var(--radius-sm)` |
+| `rounded-ds-md` | `border-radius: var(--radius-md)` |
+| `rounded-ds-lg` | `border-radius: var(--radius-lg)` |
+| `shadow-ds-sm` | `box-shadow: var(--shadow-sm)` |
+| `shadow-ds-md` | `box-shadow: var(--shadow-md)` |
+| `shadow-ds-lg` | `box-shadow: var(--shadow-lg)` |
+| `p-lg` | `padding: var(--space-lg)` |
+| `gap-xl` | `gap: var(--space-xl)` |
+| `m-sm` | `margin: var(--space-sm)` |
+| `text-h1` | `font-size: var(--text-h1); line-height: var(--lh-h1)` |
+| `text-body` | `font-size: var(--text-body); line-height: var(--lh-body)` |
+| `text-caption` | `font-size: var(--text-caption)` |
+| `z-modal` | `z-index: var(--z-modal)` |
+| `duration-150` | `transition-duration: var(--duration-fast)` |
+
+### Theming Automatically Works
+
+Because all styles use CSS variables, switching `data-theme` on the root element propagates to every component — no class changes needed:
+
+```js
+// Toggle theme
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme') || 'light';
+  const next = current === 'light' ? 'dark' : 'light';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('ds-theme', next);
+}
+
+// Restore saved theme on load
+const saved = localStorage.getItem('ds-theme') || 'light';
+document.documentElement.setAttribute('data-theme', saved);
+```
+
+### When to Use Each Approach
+
+| Scenario | Recommendation |
+|----------|---------------|
+| React app with Tailwind already installed | Use `tailwind.preset.js` + `globals.css` |
+| React app without Tailwind | Import `globals.css`, use CSS variables in CSS modules or styled-components |
+| Express server-rendered HTML | Link `globals.css` in `<head>`, write plain CSS with variables |
+| Static HTML pages | Link `globals.css`, use inline styles or `<style>` blocks with variables |
+| Any non-JavaScript project | Link `globals.css`, use CSS variables everywhere |
+
+The key rule: **`globals.css` is always required.** `tailwind.preset.js` is optional — it just maps CSS variables to Tailwind utility classes for convenience.
