@@ -1252,3 +1252,48 @@ Arrow: 6px CSS border-triangle in `tooltip-border` color, with 5px inner triangl
 - Tooltip does not receive focus
 - Appears on `focus-visible` for keyboard access
 - Respects `prefers-reduced-motion`
+
+---
+
+## 17. Empty States
+
+Centered placeholder for views with no data. Used in tables, lists, dashboards, and search results.
+
+### Layout
+
+```jsx
+<div className="flex flex-col items-center justify-center text-center py-3xl px-xl">
+  <Inbox className="w-12 h-12 text-text-muted mb-lg" aria-hidden="true" />
+  <h3 className="text-h2 text-text-primary mb-xs">No projects yet</h3>
+  <p className="text-subtitle text-text-secondary max-w-[360px] mb-xl">
+    Create your first project to get started. Projects help you organize your work.
+  </p>
+  <button className="inline-flex items-center justify-center gap-sm px-lg py-sm bg-accent text-text-on-accent font-medium text-body rounded-ds-md shadow-ds-sm hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    <Plus className="w-4 h-4" />
+    Create Project
+  </button>
+</div>
+```
+
+### Structure
+
+| Element | Classes | Required |
+|---------|---------|----------|
+| Container | `flex flex-col items-center justify-center text-center py-3xl px-xl` | Yes |
+| Icon | `w-12 h-12 text-text-muted mb-lg` | Yes |
+| Heading | `text-h2 text-text-primary mb-xs` | Yes |
+| Description | `text-subtitle text-text-secondary max-w-[360px] mb-xl` | Yes |
+| CTA button | Primary button pattern | Optional |
+
+### Icon Guidelines
+
+- Lucide icon representing the empty content type
+- Common choices: `Inbox` (messages), `FolderOpen` (files), `Users` (team), `Search` (results), `BarChart3` (analytics)
+- Always `w-12 h-12 text-text-muted`, `aria-hidden="true"`
+
+### Accessibility
+
+- Icon: `aria-hidden="true"` (decorative)
+- Heading: appropriate level for page hierarchy
+- CTA: standard button accessibility
+
