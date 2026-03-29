@@ -1179,3 +1179,76 @@ Stacked avatars with right overlap. First avatar on top.
 - Initials fallback: `aria-label` with user's full name on container
 - Status dot: `aria-label` (e.g., "Online") or `aria-hidden="true"` if conveyed elsewhere
 - Group: `role="group"` + `aria-label`
+
+---
+
+## 16. Tooltips
+
+Contextual info popups triggered on hover and focus. Accent-tinted style with arrow pointer.
+
+### Style
+
+```jsx
+<div
+  role="tooltip"
+  id="tooltip-edit"
+  className="absolute z-dropdown px-md py-sm text-caption text-text-primary bg-tooltip-bg border border-tooltip-border rounded-ds-sm shadow-ds-sm max-w-[240px]"
+>
+  Edit your profile settings
+</div>
+```
+
+- Background: `bg-tooltip-bg` (accent-tinted, theme-aware)
+- Border: `border-tooltip-border`
+- Text: `text-caption text-text-primary`
+- Radius: `rounded-ds-sm`
+- Shadow: `shadow-ds-sm`
+- Max width: `max-w-[240px]`
+- Z-index: `z-dropdown` (50)
+
+### Positions
+
+| Position | Tooltip class | Arrow |
+|----------|--------------|-------|
+| Top | `bottom-full left-1/2 -translate-x-1/2 mb-sm` | Points down |
+| Right | `left-full top-1/2 -translate-y-1/2 ml-sm` | Points left |
+| Bottom | `top-full left-1/2 -translate-x-1/2 mt-sm` | Points up |
+| Left | `right-full top-1/2 -translate-y-1/2 mr-sm` | Points right |
+
+Arrow: 6px CSS border-triangle in `tooltip-border` color, with 5px inner triangle in `tooltip-bg`.
+
+### Trigger Pattern
+
+```jsx
+<div className="relative inline-flex group">
+  <button aria-describedby="tip-1" className="...">
+    <Pencil className="w-4 h-4" />
+  </button>
+  <div
+    role="tooltip"
+    id="tip-1"
+    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-sm z-dropdown px-md py-sm text-caption text-text-primary bg-tooltip-bg border border-tooltip-border rounded-ds-sm shadow-ds-sm max-w-[240px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-150"
+  >
+    Edit profile
+    <span className="absolute top-full left-1/2 -translate-x-1/2 border-[6px] border-transparent border-t-tooltip-border" />
+    <span className="absolute top-full left-1/2 -translate-x-1/2 mt-[-1px] border-[5px] border-transparent border-t-tooltip-bg" />
+  </div>
+</div>
+```
+
+### Behavior
+
+- **Show on:** `mouseenter` + `focus-visible`
+- **Hide on:** `mouseleave` + `blur`
+- **Delay in:** `150ms`
+- **Delay out:** `0ms`
+- **Animation:** Fade via `opacity` over `150ms ease`
+- **Dismiss:** `Escape` key hides tooltip
+
+### Accessibility
+
+- Tooltip: `role="tooltip"` + unique `id`
+- Trigger: `aria-describedby` referencing tooltip `id`
+- Tooltip does not receive focus
+- Appears on `focus-visible` for keyboard access
+- Respects `prefers-reduced-motion`
