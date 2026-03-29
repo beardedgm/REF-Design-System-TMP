@@ -1297,3 +1297,55 @@ Centered placeholder for views with no data. Used in tables, lists, dashboards, 
 - Heading: appropriate level for page hierarchy
 - CTA: standard button accessibility
 
+---
+
+## 18. Error Pages
+
+Full-page centered error screens for 404, 500, and maintenance states.
+
+### Layout
+
+```jsx
+<div className="flex flex-col items-center justify-center text-center min-h-screen py-3xl px-xl">
+  <span className="font-display text-display-1 text-accent mb-lg">404</span>
+  <h1 className="text-h1 text-text-primary mb-xs">Page not found</h1>
+  <p className="text-subtitle text-text-secondary max-w-[480px] mb-xl">
+    The page you're looking for doesn't exist or has been moved.
+  </p>
+  <a href="/" className="inline-flex items-center justify-center gap-sm px-lg py-sm bg-accent text-text-on-accent font-medium text-body rounded-ds-md shadow-ds-sm hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    <Home className="w-4 h-4" />
+    Go Home
+  </a>
+</div>
+```
+
+### Structure
+
+| Element | Classes | Required |
+|---------|---------|----------|
+| Container | `flex flex-col items-center justify-center text-center min-h-screen py-3xl px-xl` | Yes |
+| Status code | `font-display text-display-1 text-accent mb-lg` | Yes |
+| Heading | `text-h1 text-text-primary mb-xs` | Yes |
+| Description | `text-subtitle text-text-secondary max-w-[480px] mb-xl` | Yes |
+| CTA | Primary button as `<a>` | Yes |
+
+### Variants
+
+| Variant | Code | Heading | Description |
+|---------|------|---------|-------------|
+| Not Found | `404` | Page not found | The page you're looking for doesn't exist or has been moved. |
+| Server Error | `500` | Something went wrong | We're working on fixing this. Please try again later. |
+| Maintenance | `503` | Under maintenance | We're making improvements. We'll be back shortly. |
+
+### Design Details
+
+- Status code: `font-display` (Cinzel) at `text-display-1` — largest type in system
+- Status code color: `text-accent` (gold) — branded error pages
+- Description max-width: `480px` (wider than empty states)
+- CTA always present (user needs escape route)
+
+### Accessibility
+
+- Status code: decorative (heading conveys meaning)
+- Heading: `h1` (standalone pages)
+- CTA: `<a>` tag for navigation
