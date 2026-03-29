@@ -983,3 +983,105 @@ Arrow keys wrap: pressing `→` on the last tab returns focus to the first.
 - Panel: `role="tabpanel"` + `id` + `aria-labelledby`
 - Only active tab in tab order (`tabindex="0"`), others `tabindex="-1"`
 - Vertical variant: add `aria-orientation="vertical"` to tablist
+
+---
+
+## 14. Pagination
+
+Page navigation for lists and tables. Two variants: full numbered for data tables, compact for simpler lists.
+
+### Full (Numbered)
+
+All page numbers as bordered buttons with accent active state. Includes prev/next and ellipsis truncation.
+
+```jsx
+<nav aria-label="Pagination" className="flex items-center gap-xs">
+  {/* Prev — disabled on page 1 */}
+  <button
+    aria-disabled="true"
+    className="inline-flex items-center px-md py-sm text-label border border-border rounded-ds-md text-text-secondary opacity-40 cursor-not-allowed pointer-events-none"
+  >
+    <ChevronLeft className="w-4 h-4 mr-xs" />
+    Prev
+  </button>
+
+  {/* Page numbers */}
+  <button className="min-w-[36px] px-sm py-sm text-label text-text-secondary border border-border rounded-ds-md hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150 text-center">
+    1
+  </button>
+
+  {/* Ellipsis */}
+  <span className="px-xs text-text-muted" aria-hidden="true">…</span>
+
+  <button className="min-w-[36px] px-sm py-sm text-label text-text-secondary border border-border rounded-ds-md hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150 text-center">
+    4
+  </button>
+
+  {/* Active page */}
+  <button
+    aria-current="page"
+    className="min-w-[36px] px-sm py-sm text-label font-semibold text-accent border border-accent bg-accent-muted rounded-ds-md text-center"
+  >
+    5
+  </button>
+
+  <button className="min-w-[36px] px-sm py-sm text-label text-text-secondary border border-border rounded-ds-md hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150 text-center">
+    6
+  </button>
+
+  <span className="px-xs text-text-muted" aria-hidden="true">…</span>
+
+  <button className="min-w-[36px] px-sm py-sm text-label text-text-secondary border border-border rounded-ds-md hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150 text-center">
+    12
+  </button>
+
+  {/* Next */}
+  <button className="inline-flex items-center px-md py-sm text-label border border-border rounded-ds-md text-text-secondary hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    Next
+    <ChevronRight className="w-4 h-4 ml-xs" />
+  </button>
+</nav>
+```
+
+- Active page: `border-accent bg-accent-muted text-accent font-semibold`
+- Inactive page: `border-border text-text-secondary`, hover → `border-border-hover bg-bg-elevated`
+- Minimum button width: `min-w-[36px]` for consistent sizing and touch targets
+- Disabled: `opacity-40 cursor-not-allowed pointer-events-none` + `aria-disabled="true"`
+
+### Compact (Prev/Next)
+
+Simplified navigation with bordered prev/next buttons and page info text.
+
+```jsx
+<nav aria-label="Pagination" className="flex items-center gap-lg">
+  <button className="inline-flex items-center px-lg py-sm text-body border border-border rounded-ds-md text-text-secondary hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed">
+    <ChevronLeft className="w-4 h-4 mr-sm" />
+    Previous
+  </button>
+
+  <span className="text-caption text-text-muted">Page 3 of 12</span>
+
+  <button className="inline-flex items-center px-lg py-sm text-body border border-border rounded-ds-md text-text-secondary hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    Next
+    <ChevronRight className="w-4 h-4 ml-sm" />
+  </button>
+</nav>
+```
+
+### Truncation Logic
+
+Activates at 7+ total pages. Shows first page, last page, and a window of 3 centered on current page, with `…` ellipsis bridging gaps.
+
+| Current | Rendered |
+|---------|----------|
+| Page 1 of 12 | `[1] 2 3 … 12` |
+| Page 5 of 12 | `1 … 4 [5] 6 … 12` |
+| Page 12 of 12 | `1 … 10 11 [12]` |
+| Page 3 of 8 | `1 2 [3] 4 … 8` |
+
+### Accessibility
+
+- Wrapper: `<nav aria-label="Pagination">`
+- Active page: `aria-current="page"`
+- Disabled buttons: `aria-disabled="true"` (not `disabled` — screen readers still announce it)
+- Ellipsis: `aria-hidden="true"`
