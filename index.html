@@ -3017,6 +3017,75 @@
       </div>
     </section>
 
+    <!-- ====== PAGINATION ====== -->
+    <section class="section animate-in" id="pagination">
+      <div class="section-header">
+        <div class="overline">Navigation</div>
+        <h2 class="heading-2">Pagination</h2>
+        <p class="subtitle">Full numbered pagination for data tables and compact prev/next for simpler lists.</p>
+      </div>
+
+      <div class="pagination-demo-group">
+        <!-- Full numbered -->
+        <div>
+          <h4>Full (Numbered)</h4>
+          <nav class="pagination" aria-label="Full pagination demo">
+            <button class="page-btn-nav disabled" aria-disabled="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              Prev
+            </button>
+            <button class="page-btn active" aria-current="page">1</button>
+            <button class="page-btn" onclick="switchPage(this)">2</button>
+            <button class="page-btn" onclick="switchPage(this)">3</button>
+            <span class="page-ellipsis" aria-hidden="true">…</span>
+            <button class="page-btn" onclick="switchPage(this)">12</button>
+            <button class="page-btn-nav" onclick="switchPage(this)">
+              Next
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Full numbered — mid page -->
+        <div>
+          <h4>Full (Mid-page with truncation)</h4>
+          <nav class="pagination" aria-label="Truncated pagination demo">
+            <button class="page-btn-nav">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              Prev
+            </button>
+            <button class="page-btn">1</button>
+            <span class="page-ellipsis" aria-hidden="true">…</span>
+            <button class="page-btn">4</button>
+            <button class="page-btn active" aria-current="page">5</button>
+            <button class="page-btn">6</button>
+            <span class="page-ellipsis" aria-hidden="true">…</span>
+            <button class="page-btn">12</button>
+            <button class="page-btn-nav">
+              Next
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Compact -->
+        <div>
+          <h4>Compact</h4>
+          <nav class="pagination-compact" aria-label="Compact pagination demo">
+            <button class="page-btn-nav disabled" aria-disabled="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              Previous
+            </button>
+            <span class="page-info">Page 1 of 12</span>
+            <button class="page-btn-nav">
+              Next
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </section>
+
     <!-- ====== TOASTS ====== -->
     <section class="section animate-in" id="toasts">
       <div class="section-header">
