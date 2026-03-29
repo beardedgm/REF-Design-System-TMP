@@ -874,3 +874,478 @@ All form controls share these rules:
 - Toasts don't steal focus
 - Close button: `aria-label="Dismiss notification"`
 - `Escape` dismisses the most recent toast
+
+---
+
+## 13. Tabs
+
+Horizontal and vertical tab bars for switching between views within a page. Three visual variants to suit different contexts.
+
+### Variants
+
+#### Underline
+
+Horizontal tab bar with accent bottom-border indicator. Best for: page-level section switching, dashboard views.
+
+```jsx
+{/* Container */}
+<div role="tablist" aria-label="Section tabs" className="flex border-b border-border">
+  {/* Active tab */}
+  <button role="tab" aria-selected="true" id="tab-overview" aria-controls="panel-overview" className="inline-flex items-center gap-sm px-lg py-sm text-body font-semibold text-accent border-b-[3px] border-accent -mb-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    <LayoutDashboard className="w-4 h-4" /> {/* optional icon */}
+    Overview
+  </button>
+  {/* Inactive tab */}
+  <button role="tab" aria-selected="false" id="tab-settings" aria-controls="panel-settings" tabIndex={-1} className="inline-flex items-center gap-sm px-lg py-sm text-body text-text-secondary hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    Settings
+  </button>
+</div>
+
+{/* Tab panel */}
+<div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview" className="py-xl">
+  Panel content here
+</div>
+```
+
+- Track line: `border-b border-border` on the container
+- Active indicator: `border-b-[3px] border-accent -mb-px` (3px accent bottom border, overlaps track)
+- Active text: `text-accent font-semibold`
+- Inactive text: `text-text-secondary`, hover → `text-text-primary`
+
+#### Pill
+
+Horizontal tab bar with filled background indicator. Best for: toolbars, compact filter bars, inline content switching.
+
+```jsx
+<div role="tablist" aria-label="View tabs" className="inline-flex p-xs bg-bg-secondary rounded-ds-md">
+  {/* Active */}
+  <button role="tab" aria-selected="true" id="tab-grid" aria-controls="panel-grid" className="inline-flex items-center gap-sm px-lg py-sm text-body font-semibold text-accent bg-accent-muted rounded-ds-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    Grid View
+  </button>
+  {/* Inactive */}
+  <button role="tab" aria-selected="false" id="tab-list" aria-controls="panel-list" tabIndex={-1} className="inline-flex items-center gap-sm px-lg py-sm text-body text-text-secondary hover:bg-bg-elevated rounded-ds-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    List View
+  </button>
+</div>
+```
+
+- Track: `bg-bg-secondary rounded-ds-md p-xs`
+- Active pill: `bg-accent-muted text-accent font-semibold rounded-ds-sm`
+- Inactive hover: `bg-bg-elevated`
+
+#### Vertical
+
+Stacked tabs for sidebar-style content switching. Best for: settings panels, multi-section forms.
+
+```jsx
+<div role="tablist" aria-label="Settings sections" aria-orientation="vertical" className="flex flex-col gap-xs">
+  {/* Active */}
+  <button role="tab" aria-selected="true" id="tab-general" aria-controls="panel-general" className="inline-flex items-center gap-sm px-lg py-sm text-body font-semibold text-accent bg-accent-muted rounded-ds-sm text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    <Settings className="w-4 h-4" />
+    General
+  </button>
+  {/* Inactive */}
+  <button role="tab" aria-selected="false" id="tab-security" aria-controls="panel-security" tabIndex={-1} className="inline-flex items-center gap-sm px-lg py-sm text-body text-text-secondary hover:bg-bg-elevated rounded-ds-sm text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    <Shield className="w-4 h-4" />
+    Security
+  </button>
+</div>
+```
+
+- No track border — items float in a vertical stack
+- Active highlight: `bg-accent-muted text-accent rounded-ds-sm`
+- Inactive hover: `bg-bg-elevated rounded-ds-sm`
+- Add `aria-orientation="vertical"` to the tablist
+
+### Icons
+
+- Optional Lucide icon before label: `w-4 h-4`, inherits `currentColor`
+- Use `gap-sm` between icon and text (provided by `inline-flex items-center gap-sm`)
+- Icon-only tabs are NOT supported — always include a text label
+
+### Keyboard Navigation
+
+| Key | Action |
+|-----|--------|
+| `←` / `→` | Move focus to previous/next tab (underline, pill) |
+| `↑` / `↓` | Move focus to previous/next tab (vertical) |
+| `Home` | Move focus to first tab |
+| `End` | Move focus to last tab |
+| `Enter` / `Space` | Activate focused tab |
+| `Tab` | Move focus out of tablist to tab panel |
+
+Arrow keys wrap: pressing `→` on the last tab returns focus to the first.
+
+### Accessibility Checklist
+
+- Container: `role="tablist"` + `aria-label`
+- Each tab: `role="tab"` + `aria-selected` + `id` + `aria-controls`
+- Panel: `role="tabpanel"` + `id` + `aria-labelledby`
+- Only active tab in tab order (`tabindex="0"`), others `tabindex="-1"`
+- Vertical variant: add `aria-orientation="vertical"` to tablist
+
+---
+
+## 14. Pagination
+
+Page navigation for lists and tables. Two variants: full numbered for data tables, compact for simpler lists.
+
+### Full (Numbered)
+
+All page numbers as bordered buttons with accent active state. Includes prev/next and ellipsis truncation.
+
+```jsx
+<nav aria-label="Pagination" className="flex items-center gap-xs">
+  {/* Prev — disabled on page 1 */}
+  <button
+    aria-disabled="true"
+    className="inline-flex items-center px-md py-sm text-label border border-border rounded-ds-md text-text-secondary opacity-40 cursor-not-allowed pointer-events-none"
+  >
+    <ChevronLeft className="w-4 h-4 mr-xs" />
+    Prev
+  </button>
+
+  {/* Page numbers */}
+  <button className="min-w-[36px] px-sm py-sm text-label text-text-secondary border border-border rounded-ds-md hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150 text-center">
+    1
+  </button>
+
+  {/* Ellipsis */}
+  <span className="px-xs text-text-muted" aria-hidden="true">…</span>
+
+  <button className="min-w-[36px] px-sm py-sm text-label text-text-secondary border border-border rounded-ds-md hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150 text-center">
+    4
+  </button>
+
+  {/* Active page */}
+  <button
+    aria-current="page"
+    className="min-w-[36px] px-sm py-sm text-label font-semibold text-accent border border-accent bg-accent-muted rounded-ds-md text-center"
+  >
+    5
+  </button>
+
+  <button className="min-w-[36px] px-sm py-sm text-label text-text-secondary border border-border rounded-ds-md hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150 text-center">
+    6
+  </button>
+
+  <span className="px-xs text-text-muted" aria-hidden="true">…</span>
+
+  <button className="min-w-[36px] px-sm py-sm text-label text-text-secondary border border-border rounded-ds-md hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150 text-center">
+    12
+  </button>
+
+  {/* Next */}
+  <button className="inline-flex items-center px-md py-sm text-label border border-border rounded-ds-md text-text-secondary hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    Next
+    <ChevronRight className="w-4 h-4 ml-xs" />
+  </button>
+</nav>
+```
+
+- Active page: `border-accent bg-accent-muted text-accent font-semibold`
+- Inactive page: `border-border text-text-secondary`, hover → `border-border-hover bg-bg-elevated`
+- Minimum button width: `min-w-[36px]` for consistent sizing and touch targets
+- Disabled: `opacity-40 cursor-not-allowed pointer-events-none` + `aria-disabled="true"`
+
+### Compact (Prev/Next)
+
+Simplified navigation with bordered prev/next buttons and page info text.
+
+```jsx
+<nav aria-label="Pagination" className="flex items-center gap-lg">
+  <button className="inline-flex items-center px-lg py-sm text-body border border-border rounded-ds-md text-text-secondary hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed">
+    <ChevronLeft className="w-4 h-4 mr-sm" />
+    Previous
+  </button>
+
+  <span className="text-caption text-text-muted">Page 3 of 12</span>
+
+  <button className="inline-flex items-center px-lg py-sm text-body border border-border rounded-ds-md text-text-secondary hover:border-border-hover hover:bg-bg-elevated focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    Next
+    <ChevronRight className="w-4 h-4 ml-sm" />
+  </button>
+</nav>
+```
+
+### Truncation Logic
+
+Activates at 7+ total pages. Shows first page, last page, and a window of 3 centered on current page, with `…` ellipsis bridging gaps.
+
+| Current | Rendered |
+|---------|----------|
+| Page 1 of 12 | `[1] 2 3 … 12` |
+| Page 5 of 12 | `1 … 4 [5] 6 … 12` |
+| Page 12 of 12 | `1 … 10 11 [12]` |
+| Page 3 of 8 | `1 2 [3] 4 … 8` |
+
+### Accessibility
+
+- Wrapper: `<nav aria-label="Pagination">`
+- Active page: `aria-current="page"`
+- Disabled buttons: `aria-disabled="true"` (not `disabled` — screen readers still announce it)
+- Ellipsis: `aria-hidden="true"`
+
+---
+
+## 15. Avatars
+
+User identity indicators with image, initials fallback, status dot, and group/stack variants.
+
+### Sizes
+
+| Size | Class | Dimensions | Font Size | Status Dot |
+|------|-------|-----------|-----------|------------|
+| `xs` | `w-6 h-6` | 24px | `text-[0.625rem]` | `w-2 h-2` |
+| `sm` | `w-8 h-8` | 32px | `text-caption` | `w-2.5 h-2.5` |
+| `md` | `w-10 h-10` | 40px | `text-body` | `w-3 h-3` |
+| `lg` | `w-14 h-14` | 56px | `text-h3` | `w-3.5 h-3.5` |
+
+### Image Avatar
+
+```jsx
+<div className="relative inline-flex">
+  <img
+    src="/path/to/photo.jpg"
+    alt="John Doe"
+    className="w-10 h-10 rounded-full object-cover"
+  />
+</div>
+```
+
+- Always `rounded-full` (circle)
+- `object-cover` to prevent distortion
+- `alt` text is required (user's name)
+
+### Initials Fallback
+
+When no image is available, show two-letter initials (first + last name) on an accent circle.
+
+```jsx
+<div
+  className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent text-text-on-accent font-semibold text-body"
+  aria-label="John Doe"
+>
+  JD
+</div>
+```
+
+- Background: `bg-accent`
+- Text: `text-text-on-accent font-semibold`
+- Font size scales with avatar size (see Sizes table above)
+
+### Status Indicator
+
+Optional colored dot at bottom-right corner.
+
+```jsx
+<div className="relative inline-flex">
+  <img src="/photo.jpg" alt="John Doe" className="w-10 h-10 rounded-full object-cover" />
+  <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-success border-2 border-bg-primary" />
+</div>
+```
+
+- Ring: `border-2 border-bg-primary` (matches page background for cutout effect)
+
+| Status | Color |
+|--------|-------|
+| Online | `bg-success` |
+| Away | `bg-warning` |
+| Busy | `bg-error` |
+| Offline | `bg-text-muted` |
+
+### Avatar Group
+
+Stacked avatars with right overlap. First avatar on top.
+
+```jsx
+<div className="flex -space-x-3" role="group" aria-label="Team members">
+  <img src="/photo1.jpg" alt="John Doe" className="w-10 h-10 rounded-full object-cover ring-2 ring-bg-primary relative z-[3]" />
+  <img src="/photo2.jpg" alt="Anna Kim" className="w-10 h-10 rounded-full object-cover ring-2 ring-bg-primary relative z-[2]" />
+  <img src="/photo3.jpg" alt="Tom Smith" className="w-10 h-10 rounded-full object-cover ring-2 ring-bg-primary relative z-[1]" />
+  <div className="w-10 h-10 rounded-full bg-bg-elevated text-text-secondary font-semibold text-caption flex items-center justify-center ring-2 ring-bg-primary relative z-[0]">
+    +3
+  </div>
+</div>
+```
+
+- Overlap: `-space-x-3` (~12px)
+- Ring: `ring-2 ring-bg-primary`
+- Counter: `bg-bg-elevated text-text-secondary`
+
+### Accessibility
+
+- Image avatars: `alt` with user's name (required)
+- Initials fallback: `aria-label` with user's full name on container
+- Status dot: `aria-label` (e.g., "Online") or `aria-hidden="true"` if conveyed elsewhere
+- Group: `role="group"` + `aria-label`
+
+---
+
+## 16. Tooltips
+
+Contextual info popups triggered on hover and focus. Accent-tinted style with arrow pointer.
+
+### Style
+
+```jsx
+<div
+  role="tooltip"
+  id="tooltip-edit"
+  className="absolute z-dropdown px-md py-sm text-caption text-text-primary bg-tooltip-bg border border-tooltip-border rounded-ds-sm shadow-ds-sm max-w-[240px]"
+>
+  Edit your profile settings
+</div>
+```
+
+- Background: `bg-tooltip-bg` (accent-tinted, theme-aware)
+- Border: `border-tooltip-border`
+- Text: `text-caption text-text-primary`
+- Radius: `rounded-ds-sm`
+- Shadow: `shadow-ds-sm`
+- Max width: `max-w-[240px]`
+- Z-index: `z-dropdown` (50)
+
+### Positions
+
+| Position | Tooltip class | Arrow |
+|----------|--------------|-------|
+| Top | `bottom-full left-1/2 -translate-x-1/2 mb-sm` | Points down |
+| Right | `left-full top-1/2 -translate-y-1/2 ml-sm` | Points left |
+| Bottom | `top-full left-1/2 -translate-x-1/2 mt-sm` | Points up |
+| Left | `right-full top-1/2 -translate-y-1/2 mr-sm` | Points right |
+
+Arrow: 6px CSS border-triangle in `tooltip-border` color, with 5px inner triangle in `tooltip-bg`.
+
+### Trigger Pattern
+
+```jsx
+<div className="relative inline-flex group">
+  <button aria-describedby="tip-1" className="...">
+    <Pencil className="w-4 h-4" />
+  </button>
+  <div
+    role="tooltip"
+    id="tip-1"
+    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-sm z-dropdown px-md py-sm text-caption text-text-primary bg-tooltip-bg border border-tooltip-border rounded-ds-sm shadow-ds-sm max-w-[240px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-150"
+  >
+    Edit profile
+    <span className="absolute top-full left-1/2 -translate-x-1/2 border-[6px] border-transparent border-t-tooltip-border" />
+    <span className="absolute top-full left-1/2 -translate-x-1/2 mt-[-1px] border-[5px] border-transparent border-t-tooltip-bg" />
+  </div>
+</div>
+```
+
+### Behavior
+
+- **Show on:** `mouseenter` + `focus-visible`
+- **Hide on:** `mouseleave` + `blur`
+- **Delay in:** `150ms`
+- **Delay out:** `0ms`
+- **Animation:** Fade via `opacity` over `150ms ease`
+- **Dismiss:** `Escape` key hides tooltip
+
+### Accessibility
+
+- Tooltip: `role="tooltip"` + unique `id`
+- Trigger: `aria-describedby` referencing tooltip `id`
+- Tooltip does not receive focus
+- Appears on `focus-visible` for keyboard access
+- Respects `prefers-reduced-motion`
+
+---
+
+## 17. Empty States
+
+Centered placeholder for views with no data. Used in tables, lists, dashboards, and search results.
+
+### Layout
+
+```jsx
+<div className="flex flex-col items-center justify-center text-center py-3xl px-xl">
+  <Inbox className="w-12 h-12 text-text-muted mb-lg" aria-hidden="true" />
+  <h3 className="text-h2 text-text-primary mb-xs">No projects yet</h3>
+  <p className="text-subtitle text-text-secondary max-w-[360px] mb-xl">
+    Create your first project to get started. Projects help you organize your work.
+  </p>
+  <button className="inline-flex items-center justify-center gap-sm px-lg py-sm bg-accent text-text-on-accent font-medium text-body rounded-ds-md shadow-ds-sm hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    <Plus className="w-4 h-4" />
+    Create Project
+  </button>
+</div>
+```
+
+### Structure
+
+| Element | Classes | Required |
+|---------|---------|----------|
+| Container | `flex flex-col items-center justify-center text-center py-3xl px-xl` | Yes |
+| Icon | `w-12 h-12 text-text-muted mb-lg` | Yes |
+| Heading | `text-h2 text-text-primary mb-xs` | Yes |
+| Description | `text-subtitle text-text-secondary max-w-[360px] mb-xl` | Yes |
+| CTA button | Primary button pattern | Optional |
+
+### Icon Guidelines
+
+- Lucide icon representing the empty content type
+- Common choices: `Inbox` (messages), `FolderOpen` (files), `Users` (team), `Search` (results), `BarChart3` (analytics)
+- Always `w-12 h-12 text-text-muted`, `aria-hidden="true"`
+
+### Accessibility
+
+- Icon: `aria-hidden="true"` (decorative)
+- Heading: appropriate level for page hierarchy
+- CTA: standard button accessibility
+
+---
+
+## 18. Error Pages
+
+Full-page centered error screens for 404, 500, and maintenance states.
+
+### Layout
+
+```jsx
+<div className="flex flex-col items-center justify-center text-center min-h-screen py-3xl px-xl">
+  <span className="font-display text-display-1 text-accent mb-lg">404</span>
+  <h1 className="text-h1 text-text-primary mb-xs">Page not found</h1>
+  <p className="text-subtitle text-text-secondary max-w-[480px] mb-xl">
+    The page you're looking for doesn't exist or has been moved.
+  </p>
+  <a href="/" className="inline-flex items-center justify-center gap-sm px-lg py-sm bg-accent text-text-on-accent font-medium text-body rounded-ds-md shadow-ds-sm hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-muted transition-all duration-150">
+    <Home className="w-4 h-4" />
+    Go Home
+  </a>
+</div>
+```
+
+### Structure
+
+| Element | Classes | Required |
+|---------|---------|----------|
+| Container | `flex flex-col items-center justify-center text-center min-h-screen py-3xl px-xl` | Yes |
+| Status code | `font-display text-display-1 text-accent mb-lg` | Yes |
+| Heading | `text-h1 text-text-primary mb-xs` | Yes |
+| Description | `text-subtitle text-text-secondary max-w-[480px] mb-xl` | Yes |
+| CTA | Primary button as `<a>` | Yes |
+
+### Variants
+
+| Variant | Code | Heading | Description |
+|---------|------|---------|-------------|
+| Not Found | `404` | Page not found | The page you're looking for doesn't exist or has been moved. |
+| Server Error | `500` | Something went wrong | We're working on fixing this. Please try again later. |
+| Maintenance | `503` | Under maintenance | We're making improvements. We'll be back shortly. |
+
+### Design Details
+
+- Status code: `font-display` (Cinzel) at `text-display-1` — largest type in system
+- Status code color: `text-accent` (gold) — branded error pages
+- Description max-width: `480px` (wider than empty states)
+- CTA always present (user needs escape route)
+
+### Accessibility
+
+- Status code: decorative (heading conveys meaning)
+- Heading: `h1` (standalone pages)
+- CTA: `<a>` tag for navigation
