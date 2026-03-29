@@ -1085,3 +1085,97 @@ Activates at 7+ total pages. Shows first page, last page, and a window of 3 cent
 - Active page: `aria-current="page"`
 - Disabled buttons: `aria-disabled="true"` (not `disabled` — screen readers still announce it)
 - Ellipsis: `aria-hidden="true"`
+
+---
+
+## 15. Avatars
+
+User identity indicators with image, initials fallback, status dot, and group/stack variants.
+
+### Sizes
+
+| Size | Class | Dimensions | Font Size | Status Dot |
+|------|-------|-----------|-----------|------------|
+| `xs` | `w-6 h-6` | 24px | `text-[0.625rem]` | `w-2 h-2` |
+| `sm` | `w-8 h-8` | 32px | `text-caption` | `w-2.5 h-2.5` |
+| `md` | `w-10 h-10` | 40px | `text-body` | `w-3 h-3` |
+| `lg` | `w-14 h-14` | 56px | `text-h3` | `w-3.5 h-3.5` |
+
+### Image Avatar
+
+```jsx
+<div className="relative inline-flex">
+  <img
+    src="/path/to/photo.jpg"
+    alt="John Doe"
+    className="w-10 h-10 rounded-full object-cover"
+  />
+</div>
+```
+
+- Always `rounded-full` (circle)
+- `object-cover` to prevent distortion
+- `alt` text is required (user's name)
+
+### Initials Fallback
+
+When no image is available, show two-letter initials (first + last name) on an accent circle.
+
+```jsx
+<div
+  className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent text-text-on-accent font-semibold text-body"
+  aria-label="John Doe"
+>
+  JD
+</div>
+```
+
+- Background: `bg-accent`
+- Text: `text-text-on-accent font-semibold`
+- Font size scales with avatar size (see Sizes table above)
+
+### Status Indicator
+
+Optional colored dot at bottom-right corner.
+
+```jsx
+<div className="relative inline-flex">
+  <img src="/photo.jpg" alt="John Doe" className="w-10 h-10 rounded-full object-cover" />
+  <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-success border-2 border-bg-primary" />
+</div>
+```
+
+- Ring: `border-2 border-bg-primary` (matches page background for cutout effect)
+
+| Status | Color |
+|--------|-------|
+| Online | `bg-success` |
+| Away | `bg-warning` |
+| Busy | `bg-error` |
+| Offline | `bg-text-muted` |
+
+### Avatar Group
+
+Stacked avatars with right overlap. First avatar on top.
+
+```jsx
+<div className="flex -space-x-3" role="group" aria-label="Team members">
+  <img src="/photo1.jpg" alt="John Doe" className="w-10 h-10 rounded-full object-cover ring-2 ring-bg-primary relative z-[3]" />
+  <img src="/photo2.jpg" alt="Anna Kim" className="w-10 h-10 rounded-full object-cover ring-2 ring-bg-primary relative z-[2]" />
+  <img src="/photo3.jpg" alt="Tom Smith" className="w-10 h-10 rounded-full object-cover ring-2 ring-bg-primary relative z-[1]" />
+  <div className="w-10 h-10 rounded-full bg-bg-elevated text-text-secondary font-semibold text-caption flex items-center justify-center ring-2 ring-bg-primary relative z-[0]">
+    +3
+  </div>
+</div>
+```
+
+- Overlap: `-space-x-3` (~12px)
+- Ring: `ring-2 ring-bg-primary`
+- Counter: `bg-bg-elevated text-text-secondary`
+
+### Accessibility
+
+- Image avatars: `alt` with user's name (required)
+- Initials fallback: `aria-label` with user's full name on container
+- Status dot: `aria-label` (e.g., "Online") or `aria-hidden="true"` if conveyed elsewhere
+- Group: `role="group"` + `aria-label`
