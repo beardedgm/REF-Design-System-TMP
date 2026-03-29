@@ -1149,9 +1149,9 @@
        ======================================== */
     .theme-toggle {
       position: fixed;
-      top: var(--space-xl);
+      bottom: var(--space-xl);
       right: var(--space-xl);
-      z-index: var(--z-sticky);
+      z-index: var(--z-modal);
       display: flex;
       align-items: center;
       gap: var(--space-sm);
@@ -2502,38 +2502,38 @@
       <div class="overline" style="margin-bottom: var(--space-lg);">Backgrounds</div>
       <div class="swatch-grid" style="margin-bottom: var(--space-2xl);">
         <div class="swatch">
-          <div class="swatch-color" style="background: #0c0d12;"></div>
+          <div class="swatch-color" style="background: var(--bg-primary);"></div>
           <div class="swatch-info">
             <div class="heading-3">Primary</div>
-            <div class="caption">#0c0d12</div>
+            <div class="caption swatch-hex" data-token="--bg-primary"></div>
           </div>
         </div>
         <div class="swatch">
-          <div class="swatch-color" style="background: #12131a;"></div>
+          <div class="swatch-color" style="background: var(--bg-secondary);"></div>
           <div class="swatch-info">
             <div class="heading-3">Secondary</div>
-            <div class="caption">#12131a</div>
+            <div class="caption swatch-hex" data-token="--bg-secondary"></div>
           </div>
         </div>
         <div class="swatch">
-          <div class="swatch-color" style="background: #161720;"></div>
+          <div class="swatch-color" style="background: var(--bg-surface);"></div>
           <div class="swatch-info">
             <div class="heading-3">Surface</div>
-            <div class="caption">#161720</div>
+            <div class="caption swatch-hex" data-token="--bg-surface"></div>
           </div>
         </div>
         <div class="swatch">
-          <div class="swatch-color" style="background: #1a1b24;"></div>
+          <div class="swatch-color" style="background: var(--bg-card);"></div>
           <div class="swatch-info">
             <div class="heading-3">Card</div>
-            <div class="caption">#1a1b24</div>
+            <div class="caption swatch-hex" data-token="--bg-card"></div>
           </div>
         </div>
         <div class="swatch">
-          <div class="swatch-color" style="background: #22232e;"></div>
+          <div class="swatch-color" style="background: var(--bg-elevated);"></div>
           <div class="swatch-info">
             <div class="heading-3">Elevated</div>
-            <div class="caption">#22232e</div>
+            <div class="caption swatch-hex" data-token="--bg-elevated"></div>
           </div>
         </div>
       </div>
@@ -2541,38 +2541,38 @@
       <div class="overline" style="margin-bottom: var(--space-lg);">Accent &amp; Semantic</div>
       <div class="swatch-grid" style="margin-bottom: var(--space-2xl);">
         <div class="swatch">
-          <div class="swatch-color" style="background: #c9a267;"></div>
+          <div class="swatch-color" style="background: var(--accent);"></div>
           <div class="swatch-info">
             <div class="heading-3">Accent</div>
-            <div class="caption">#c9a267</div>
+            <div class="caption swatch-hex" data-token="--accent"></div>
           </div>
         </div>
         <div class="swatch">
-          <div class="swatch-color" style="background: #dbb57e;"></div>
+          <div class="swatch-color" style="background: var(--accent-hover);"></div>
           <div class="swatch-info">
             <div class="heading-3">Accent Hover</div>
-            <div class="caption">#dbb57e</div>
+            <div class="caption swatch-hex" data-token="--accent-hover"></div>
           </div>
         </div>
         <div class="swatch">
-          <div class="swatch-color" style="background: #e5484d;"></div>
+          <div class="swatch-color" style="background: var(--error);"></div>
           <div class="swatch-info">
             <div class="heading-3">Error</div>
-            <div class="caption">#e5484d</div>
+            <div class="caption swatch-hex" data-token="--error"></div>
           </div>
         </div>
         <div class="swatch">
-          <div class="swatch-color" style="background: #30a46c;"></div>
+          <div class="swatch-color" style="background: var(--success);"></div>
           <div class="swatch-info">
             <div class="heading-3">Success</div>
-            <div class="caption">#30a46c</div>
+            <div class="caption swatch-hex" data-token="--success"></div>
           </div>
         </div>
         <div class="swatch">
-          <div class="swatch-color" style="background: #f5a623;"></div>
+          <div class="swatch-color" style="background: var(--warning);"></div>
           <div class="swatch-info">
             <div class="heading-3">Warning</div>
-            <div class="caption">#f5a623</div>
+            <div class="caption swatch-hex" data-token="--warning"></div>
           </div>
         </div>
       </div>
@@ -2935,42 +2935,42 @@
           <div class="status-dot" style="background: var(--status-1);"></div>
           <div>
             <div class="label-medium" style="color: var(--text-primary);">Status 1</div>
-            <div class="caption">#30a46c</div>
+            <div class="caption swatch-hex" data-token="--status-1"></div>
           </div>
         </div>
         <div class="status-swatch">
           <div class="status-dot" style="background: var(--status-2);"></div>
           <div>
             <div class="label-medium" style="color: var(--text-primary);">Status 2</div>
-            <div class="caption">#3498db</div>
+            <div class="caption swatch-hex" data-token="--status-2"></div>
           </div>
         </div>
         <div class="status-swatch">
           <div class="status-dot" style="background: var(--status-3);"></div>
           <div>
             <div class="label-medium" style="color: var(--text-primary);">Status 3</div>
-            <div class="caption">#d4873f</div>
+            <div class="caption swatch-hex" data-token="--status-3"></div>
           </div>
         </div>
         <div class="status-swatch">
           <div class="status-dot" style="background: var(--status-4);"></div>
           <div>
             <div class="label-medium" style="color: var(--text-primary);">Status 4</div>
-            <div class="caption">#bb7fe2</div>
+            <div class="caption swatch-hex" data-token="--status-4"></div>
           </div>
         </div>
         <div class="status-swatch">
           <div class="status-dot" style="background: var(--status-5);"></div>
           <div>
             <div class="label-medium" style="color: var(--text-primary);">Status 5</div>
-            <div class="caption">#e5484d</div>
+            <div class="caption swatch-hex" data-token="--status-5"></div>
           </div>
         </div>
         <div class="status-swatch">
           <div class="status-dot" style="background: var(--status-premium);"></div>
           <div>
             <div class="label-medium" style="color: var(--text-primary);">Premium</div>
-            <div class="caption">#FFD700</div>
+            <div class="caption swatch-hex" data-token="--status-premium"></div>
           </div>
         </div>
       </div>
@@ -3878,11 +3878,39 @@
       const moonPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
       const sunPath = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
 
+      // Convert rgb(r, g, b) string to #hex
+      function rgbToHex(rgb) {
+        var match = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        if (!match) return rgb;
+        return '#' + [match[1], match[2], match[3]].map(function(x) {
+          return parseInt(x).toString(16).padStart(2, '0');
+        }).join('');
+      }
+
+      // Update all swatch hex labels from computed CSS variable values
+      function updateSwatchHexLabels() {
+        var swatches = document.querySelectorAll('.swatch-hex[data-token]');
+        var styles = getComputedStyle(root);
+        swatches.forEach(function(el) {
+          var token = el.getAttribute('data-token');
+          var value = styles.getPropertyValue(token).trim();
+          // For colors, resolve to actual computed color via a temp element
+          var temp = document.createElement('div');
+          temp.style.color = value;
+          document.body.appendChild(temp);
+          var computed = getComputedStyle(temp).color;
+          document.body.removeChild(temp);
+          el.textContent = rgbToHex(computed);
+        });
+      }
+
       function setTheme(theme) {
         root.setAttribute('data-theme', theme);
         label.textContent = theme === 'dark' ? 'Dark' : 'Light';
         icon.innerHTML = theme === 'dark' ? moonPath : sunPath;
         try { localStorage.setItem('ds-theme', theme); } catch(e) {}
+        // Wait a frame for CSS variables to update, then refresh hex labels
+        requestAnimationFrame(updateSwatchHexLabels);
       }
 
       // Init from stored preference or default to light
