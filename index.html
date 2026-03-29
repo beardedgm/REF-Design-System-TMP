@@ -3343,6 +3343,145 @@
       </div>
     </section>
 
+    <!-- ====== AVATARS ====== -->
+    <section class="section animate-in" id="avatars">
+      <div class="section-header">
+        <div class="overline">Identity</div>
+        <h2 class="heading-2">Avatars</h2>
+        <p class="subtitle">User identity indicators with image, initials fallback, status dot, and group/stack variants.</p>
+      </div>
+
+      <div class="avatar-demo-group">
+        <!-- Sizes with images -->
+        <div>
+          <h4>Sizes (Image)</h4>
+          <div class="avatar-row">
+            <div class="avatar">
+              <img src="https://i.pravatar.cc/56?img=1" alt="Emily Chen" style="width: 24px; height: 24px;">
+            </div>
+            <div class="avatar">
+              <img src="https://i.pravatar.cc/56?img=1" alt="Emily Chen" style="width: 32px; height: 32px;">
+            </div>
+            <div class="avatar">
+              <img src="https://i.pravatar.cc/56?img=1" alt="Emily Chen" style="width: 40px; height: 40px;">
+            </div>
+            <div class="avatar">
+              <img src="https://i.pravatar.cc/56?img=1" alt="Emily Chen" style="width: 56px; height: 56px;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Sizes with initials -->
+        <div>
+          <h4>Sizes (Initials Fallback)</h4>
+          <div class="avatar-row">
+            <div class="avatar-initials" style="width: 24px; height: 24px; font-size: 0.625rem;" aria-label="John Doe">JD</div>
+            <div class="avatar-initials" style="width: 32px; height: 32px; font-size: 0.75rem;" aria-label="Anna Kim">AK</div>
+            <div class="avatar-initials" style="width: 40px; height: 40px; font-size: 0.875rem;" aria-label="Tom Smith">TS</div>
+            <div class="avatar-initials" style="width: 56px; height: 56px; font-size: 1rem;" aria-label="Maria Lopez">ML</div>
+          </div>
+        </div>
+
+        <!-- Status indicators -->
+        <div>
+          <h4>Status Indicators</h4>
+          <div class="avatar-row">
+            <div class="avatar">
+              <img src="https://i.pravatar.cc/56?img=2" alt="Alex Rivera" style="width: 40px; height: 40px; border-radius: 9999px; object-fit: cover;">
+              <span class="avatar-status" style="width: 12px; height: 12px; background: var(--success);" aria-label="Online"></span>
+            </div>
+            <div class="avatar">
+              <img src="https://i.pravatar.cc/56?img=3" alt="Sam Park" style="width: 40px; height: 40px; border-radius: 9999px; object-fit: cover;">
+              <span class="avatar-status" style="width: 12px; height: 12px; background: var(--warning);" aria-label="Away"></span>
+            </div>
+            <div class="avatar">
+              <img src="https://i.pravatar.cc/56?img=4" alt="Chris Lee" style="width: 40px; height: 40px; border-radius: 9999px; object-fit: cover;">
+              <span class="avatar-status" style="width: 12px; height: 12px; background: var(--error);" aria-label="Busy"></span>
+            </div>
+            <div class="avatar">
+              <img src="https://i.pravatar.cc/56?img=5" alt="Jordan Wu" style="width: 40px; height: 40px; border-radius: 9999px; object-fit: cover;">
+              <span class="avatar-status" style="width: 12px; height: 12px; background: var(--text-muted);" aria-label="Offline"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Avatar Group -->
+        <div>
+          <h4>Avatar Group</h4>
+          <div class="avatar-group" role="group" aria-label="Team members">
+            <img src="https://i.pravatar.cc/56?img=6" alt="Pat Kim" style="width: 40px; height: 40px; border-radius: 9999px; object-fit: cover; position: relative; z-index: 4;">
+            <img src="https://i.pravatar.cc/56?img=7" alt="Robin Cruz" style="width: 40px; height: 40px; border-radius: 9999px; object-fit: cover; position: relative; z-index: 3;">
+            <img src="https://i.pravatar.cc/56?img=8" alt="Quinn Ali" style="width: 40px; height: 40px; border-radius: 9999px; object-fit: cover; position: relative; z-index: 2;">
+            <div class="avatar-initials avatar-group-counter" style="width: 40px; height: 40px; position: relative; z-index: 1; background: var(--bg-elevated); color: var(--text-secondary);">+3</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== TOOLTIPS ====== -->
+    <section class="section animate-in" id="tooltips">
+      <div class="section-header">
+        <div class="overline">Feedback</div>
+        <h2 class="heading-2">Tooltips</h2>
+        <p class="subtitle">Contextual info popups with accent-tinted style, arrow pointer, and four position options.</p>
+      </div>
+
+      <div class="tooltip-demo-group">
+        <div>
+          <h4>Positions</h4>
+          <div class="tooltip-demo-row">
+            <!-- Top -->
+            <div class="tooltip-trigger">
+              <button class="tooltip-btn" aria-describedby="demo-tip-top">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg>
+              </button>
+              <div class="tooltip-box top" role="tooltip" id="demo-tip-top">
+                Tooltip on top
+                <span class="tooltip-arrow-border"></span>
+                <span class="tooltip-arrow-fill"></span>
+              </div>
+            </div>
+
+            <!-- Right -->
+            <div class="tooltip-trigger">
+              <button class="tooltip-btn" aria-describedby="demo-tip-right">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+              <div class="tooltip-box right" role="tooltip" id="demo-tip-right">
+                Tooltip on right
+                <span class="tooltip-arrow-border"></span>
+                <span class="tooltip-arrow-fill"></span>
+              </div>
+            </div>
+
+            <!-- Bottom -->
+            <div class="tooltip-trigger">
+              <button class="tooltip-btn" aria-describedby="demo-tip-bottom">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><polyline points="19 12 12 19 5 12"/></svg>
+              </button>
+              <div class="tooltip-box bottom" role="tooltip" id="demo-tip-bottom">
+                Tooltip on bottom
+                <span class="tooltip-arrow-border"></span>
+                <span class="tooltip-arrow-fill"></span>
+              </div>
+            </div>
+
+            <!-- Left -->
+            <div class="tooltip-trigger">
+              <button class="tooltip-btn" aria-describedby="demo-tip-left">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+              </button>
+              <div class="tooltip-box left" role="tooltip" id="demo-tip-left">
+                Tooltip on left
+                <span class="tooltip-arrow-border"></span>
+                <span class="tooltip-arrow-fill"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ====== TOASTS ====== -->
     <section class="section animate-in" id="toasts">
       <div class="section-header">
