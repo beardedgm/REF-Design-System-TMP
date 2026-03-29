@@ -1,12 +1,22 @@
 /**
  * Signature Design System — Tailwind Preset
  *
+ * This is an OPTIONAL convenience layer that maps the CSS variables defined
+ * in globals.css to Tailwind utility classes (e.g., bg-bg-card, text-accent).
+ *
+ * globals.css is the foundation and works independently — this preset just
+ * makes the tokens available as Tailwind classes for projects that use Tailwind.
+ *
  * Usage in any MERN app:
  *   // tailwind.config.js
  *   const designSystem = require('./path-to/tailwind.preset.js');
  *   module.exports = { presets: [designSystem], content: [...] }
  *
- * Also import globals.css in your root layout for the CSS custom properties.
+ * IMPORTANT: You must also import globals.css in your root layout.
+ * Without it, the CSS variables this preset references won't exist.
+ *
+ * For projects NOT using Tailwind, skip this file entirely and use
+ * globals.css CSS variables directly (see STYLE_GUIDE.md Section 19).
  */
 
 /** @type {import('tailwindcss').Config} */
