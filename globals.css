@@ -37,6 +37,10 @@
   --accent-hover: #dbb57e;
   --accent-muted: rgba(201, 162, 103, 0.12);
 
+  /* Tooltip */
+  --tooltip-bg: rgba(201, 162, 103, 0.12);
+  --tooltip-border: rgba(201, 162, 103, 0.25);
+
   /* Semantic */
   --error: #e5484d;
   --success: #30a46c;
@@ -104,6 +108,10 @@
   --accent: #a8843e;
   --accent-hover: #c9a267;
   --accent-muted: rgba(168, 132, 62, 0.10);
+
+  /* Tooltip */
+  --tooltip-bg: rgba(168, 132, 62, 0.10);
+  --tooltip-border: rgba(168, 132, 62, 0.25);
 
   /* Semantic — darkened for readability */
   --error: #cd2b31;

@@ -36,6 +36,10 @@ module.exports = {
           hover: 'var(--accent-hover)',
           muted: 'var(--accent-muted)',
         },
+        tooltip: {
+          bg: 'var(--tooltip-bg)',
+          border: 'var(--tooltip-border)',
+        },
         error: 'var(--error)',
         success: 'var(--success)',
         warning: {
