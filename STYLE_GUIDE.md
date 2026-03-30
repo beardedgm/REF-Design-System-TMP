@@ -1715,3 +1715,311 @@ document.documentElement.setAttribute('data-theme', saved);
 | Any non-JavaScript project | Link `globals.css`, use CSS variables everywhere |
 
 The key rule: **`globals.css` is always required.** `tailwind.preset.js` is optional — it just maps CSS variables to Tailwind utility classes for convenience.
+
+---
+
+## 20. Command Palette
+
+A `Cmd+K` / `Ctrl+K` triggered modal for quick navigation and action execution.
+
+### Structure
+
+- **Overlay backdrop:** full-screen fixed, `bg-black/50`, `z-modal`
+- **Panel:** centered, `max-width: 560px`, `bg-bg-card`, `border border-border`, `rounded-ds-lg`, `shadow-ds-lg`
+- **Search input:** full-width, no visible border, `text-body`, Lucide `Search` icon (`w-5 h-5`), placeholder "Type a command or search..."
+- **Results list:** below input, `max-height: 360px`, `overflow-y: auto`
+- **Result item:** `px-lg py-sm`, icon (`w-5 h-5 text-text-secondary`) + label (`text-body text-text-primary`) + optional shortcut badge (`text-caption text-text-muted bg-bg-elevated px-xs rounded-ds-sm`)
+- **Section headers:** `text-overline font-semibold uppercase tracking-widest text-text-tertiary`
+- **Footer:** `px-lg py-sm`, `border-t border-border`, `text-caption text-text-muted` — keyboard hints
+
+### Pattern (React + Tailwind)
+
+```jsx
+<div className="fixed inset-0 z-modal flex items-start justify-center pt-[15vh]">
+  <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+  <div className="relative w-full max-w-[560px] bg-bg-card border border-border rounded-ds-lg shadow-ds-lg overflow-hidden" role="dialog" aria-modal="true" aria-label="Command palette">
+    {/* Search Input */}
+    <div className="flex items-center gap-sm px-lg border-b border-border">
+      <Search className="w-5 h-5 text-text-muted" />
+      <input
+        role="combobox"
+        aria-expanded="true"
+        aria-controls="command-palette-list"
+        aria-autocomplete="list"
+        className="flex-1 bg-transparent border-none py-md text-body text-text-primary placeholder:text-text-muted focus:outline-none"
+        placeholder="Type a command or search..."
+        autoFocus
+      />
+    </div>
+    {/* Results */}
+    <div role="listbox" id="command-palette-list" className="max-h-[360px] overflow-y-auto py-sm">
+      <div className="px-lg py-xs">
+        <span className="text-overline font-semibold uppercase tracking-widest text-text-tertiary">Navigation</span>
+      </div>
+      <div role="option" aria-selected="true" className="flex items-center gap-sm px-lg py-sm bg-bg-elevated cursor-pointer">
+        <LayoutDashboard className="w-5 h-5 text-text-secondary" />
+        <span className="text-body text-text-primary">Dashboard</span>
+        <span className="ml-auto text-caption text-text-muted bg-bg-elevated px-xs py-[2px] rounded-ds-sm">⌘D</span>
+      </div>
+      <div role="option" className="flex items-center gap-sm px-lg py-sm hover:bg-bg-elevated cursor-pointer">
+        <FolderOpen className="w-5 h-5 text-text-secondary" />
+        <span className="text-body text-text-primary">Projects</span>
+      </div>
+    </div>
+    {/* Footer */}
+    <div className="flex items-center gap-lg px-lg py-sm border-t border-border">
+      <span className="text-caption text-text-muted">↑↓ Navigate</span>
+      <span className="text-caption text-text-muted">↵ Select</span>
+      <span className="text-caption text-text-muted">Esc Close</span>
+    </div>
+  </div>
+</div>
+```
+
+### Plain CSS
+
+```css
+.cmd-palette-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 15vh;
+}
+.cmd-palette-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+.cmd-palette-panel {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.cmd-palette-input {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0 var(--space-lg);
+  border-bottom: 1px solid var(--border);
+}
+.cmd-palette-input input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: var(--space-md) 0;
+  font-size: var(--text-body);
+  color: var(--text-primary);
+  outline: none;
+}
+.cmd-palette-input input::placeholder {
+  color: var(--text-muted);
+}
+.cmd-palette-results {
+  max-height: 360px;
+  overflow-y: auto;
+  padding: var(--space-sm) 0;
+}
+.cmd-palette-group-label {
+  padding: var(--space-xs) var(--space-lg);
+  font-size: var(--text-overline);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+}
+.cmd-palette-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  transition: background var(--duration-fast) ease;
+}
+.cmd-palette-item:hover,
+.cmd-palette-item.active {
+  background: var(--bg-elevated);
+}
+.cmd-palette-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-sm) var(--space-lg);
+  border-top: 1px solid var(--border);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+}
+```
+
+### States
+
+| State | Tailwind Classes | CSS |
+|-------|-----------------|-----|
+| Closed | Hidden / not rendered | `display: none` |
+| Open | Backdrop visible, input focused | Overlay visible |
+| Item resting | `bg-transparent` | `background: transparent` |
+| Item highlighted | `bg-bg-elevated` | `background: var(--bg-elevated)` |
+
+### Accessibility
+
+- Panel: `role="dialog"`, `aria-modal="true"`, `aria-label="Command palette"`
+- Input: `role="combobox"`, `aria-expanded`, `aria-controls="command-palette-list"`, `aria-autocomplete="list"`
+- Results: `role="listbox"`, each item `role="option"`, `aria-selected` on active
+- Section headers: `role="presentation"` (not selectable)
+- Keyboard: `Escape` closes, `ArrowUp`/`ArrowDown` navigate, `Enter` selects, `Home`/`End` first/last
+- Focus trapped inside dialog when open
+- Trigger: `Cmd+K` (Mac) / `Ctrl+K` (Windows/Linux)
+
+---
+
+## 21. Skeleton Loaders
+
+Animated placeholder shapes shown while content is loading. Prevents layout shift and signals that data is incoming.
+
+### Primitives
+
+Three base shapes that developers compose into any skeleton layout:
+
+| Primitive | Default Size | Radius | CSS Class |
+|-----------|-------------|--------|-----------|
+| Line | `100% × 16px` | `var(--radius-md)` | `skeleton-line` |
+| Circle | `40px × 40px` | `var(--radius-full)` | `skeleton-circle` |
+| Rectangle | `100% × 120px` | `var(--radius-md)` | `skeleton-rect` |
+
+All primitives: `background: var(--bg-elevated)`, shimmer animation overlay, no border.
+
+### Animation
+
+- Shimmer: CSS gradient sweep left-to-right using `var(--shimmer-highlight)`
+- Duration: `1.5s`, timing: `ease-in-out`, repeat: `infinite`
+- `@keyframes shimmer` translates `background-position` from `-200%` to `200%`
+- Reduced motion: `@media (prefers-reduced-motion: reduce)` — static fill, no animation
+
+### Pattern (React + Tailwind)
+
+```jsx
+{/* Line primitive */}
+<div className="h-4 w-full bg-bg-elevated rounded-ds-md animate-shimmer"
+  style={{ backgroundImage: 'linear-gradient(90deg, transparent, var(--shimmer-highlight), transparent)', backgroundSize: '200% 100%' }}
+/>
+
+{/* Circle primitive */}
+<div className="w-10 h-10 bg-bg-elevated rounded-full animate-shimmer"
+  style={{ backgroundImage: 'linear-gradient(90deg, transparent, var(--shimmer-highlight), transparent)', backgroundSize: '200% 100%' }}
+/>
+
+{/* Rectangle primitive */}
+<div className="h-[120px] w-full bg-bg-elevated rounded-ds-md animate-shimmer"
+  style={{ backgroundImage: 'linear-gradient(90deg, transparent, var(--shimmer-highlight), transparent)', backgroundSize: '200% 100%' }}
+/>
+```
+
+### Plain CSS
+
+```css
+.skeleton {
+  background: var(--bg-elevated);
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--shimmer-highlight),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border: none;
+}
+
+.skeleton-line {
+  height: 16px;
+  width: 100%;
+  border-radius: var(--radius-md);
+}
+
+.skeleton-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+}
+
+.skeleton-rect {
+  height: 120px;
+  width: 100%;
+  border-radius: var(--radius-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    background-image: none;
+  }
+}
+```
+
+### Pre-composed Examples
+
+**Card skeleton:** Rectangle (image area) + circle (avatar) beside two text lines at varying widths.
+
+**Table row skeleton:** 4-5 inline rectangles at column widths, `height: 12px`, row height `48px`.
+
+**Nav item skeleton:** Circle (`24px`) + one text line (`60% width`), repeated 4 times with `gap: var(--space-sm)`.
+
+### Tokens
+
+| Token | Light | Dark | Usage |
+|-------|-------|------|-------|
+| `--shimmer-highlight` | `rgba(255,255,255,0.5)` | `rgba(255,255,255,0.04)` | Shimmer gradient highlight |
+
+Uses existing: `--bg-elevated` (base fill), `--radius-md`, `--radius-full`.
+
+---
+
+## 22. Data Visualization Colors
+
+The canonical color sequence for charts, graphs, and data visualizations.
+
+### Chart Color Palette
+
+Uses the existing `--status-*` tokens — no new variables needed.
+
+| Order | Token | Name | Light Hex | Dark Hex | Tailwind |
+|-------|-------|------|-----------|----------|----------|
+| 1 | `--status-1` | Green | `#218358` | `#30a46c` | `text-status-1`, `bg-status-1` |
+| 2 | `--status-2` | Blue | `#2271a1` | `#3498db` | `text-status-2`, `bg-status-2` |
+| 3 | `--status-3` | Amber | `#a86520` | `#d4873f` | `text-status-3`, `bg-status-3` |
+| 4 | `--status-4` | Purple | `#8b4fc0` | `#bb7fe2` | `text-status-4`, `bg-status-4` |
+| 5 | `--status-5` | Red | `#cd2b31` | `#e5484d` | `text-status-5`, `bg-status-5` |
+| 6 | `--status-premium` | Gold | `#9a7800` | `#FFD700` | `text-status-premium`, `bg-status-premium` |
+
+### CSS Usage
+
+```css
+/* Categorical series — use in order */
+.chart-series-1 { color: var(--status-1); }
+.chart-series-2 { color: var(--status-2); }
+.chart-series-3 { color: var(--status-3); }
+/* ...etc */
+
+/* Single-metric (progress bar, gauge) */
+.progress-fill { background: var(--accent); }
+.progress-track { background: var(--bg-elevated); }
+
+/* Opacity variant for secondary fills */
+.area-fill-1 { fill: var(--status-1); opacity: 0.5; }
+```
+
+### Rules
+
+1. **Use in sequence order** — `status-1` → `status-2` → ... → `status-premium` for categorical data
+2. **Never use `--accent` for data series** — reserve it for UI interactions (buttons, tabs, links). Exception: single-metric charts (progress bars, gauges) use `--accent` for the fill and `--bg-elevated` for the track
+3. **Never rely on color alone** — pair every color-coded element with a text label, pattern, or spatial position
+4. **Max 5-6 colors per chart** — beyond that, group smaller categories into "Other" or choose a different visualization type
+5. **Opacity variants** — for area charts or stacked fills, use the status color at 50% opacity for secondary/background fills
+6. **Both themes** — all `--status-*` tokens have light and dark values; charts automatically adapt when the theme switches
