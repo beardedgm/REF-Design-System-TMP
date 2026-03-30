@@ -136,6 +136,32 @@ All spacing values: `xs` (4px), `sm` (8px), `md` (12px), `lg` (16px), `xl` (24px
 - Variants: 404 (not found), 500 (server error), 503 (maintenance)
 - CTA always present on error pages (user needs an escape route)
 
+### 16. Command Palette Uses Combobox Pattern
+
+- Trigger: `Cmd+K` / `Ctrl+K`, opens centered dialog with search input
+- Panel: `role="dialog"`, `aria-modal="true"`, `max-width: 560px`, `bg-bg-card`, `shadow-ds-lg`
+- Input: `role="combobox"`, `aria-expanded`, `aria-controls` pointing to listbox
+- Results: `role="listbox"`, each item `role="option"`, `aria-selected` on active
+- Keyboard: `Escape` closes, arrows navigate, `Enter` selects, focus trapped
+- Footer shows keyboard hints in `text-caption text-text-muted`
+
+### 17. Skeleton Loaders Match Content Layout
+
+- Base: `bg-bg-elevated` with CSS shimmer animation (`1.5s ease-in-out infinite`)
+- Shimmer highlight: `var(--shimmer-highlight)` (theme-aware)
+- Three primitives: line (`h-4 rounded-ds-md`), circle (`rounded-full`), rect (`rounded-ds-md`)
+- Compose primitives to match the layout of the content being loaded
+- Respect `prefers-reduced-motion`: static fill, no animation
+- Never show skeletons for more than 3 seconds — if loading takes longer, add a text hint
+
+### 18. Data Viz Colors Use Status Sequence
+
+- Chart palette: `--status-1` through `--status-5` + `--status-premium`, used in order
+- Never use `--accent` for data series (reserved for UI)
+- Single-metric charts (progress bars, gauges): `--accent` fill + `--bg-elevated` track
+- Never use color alone — pair with labels or patterns
+- Max 5-6 colors per chart
+
 ## How to Use in a New App
 
 ### With Tailwind (recommended for React apps)
@@ -208,6 +234,9 @@ See `STYLE_GUIDE.md` for complete React + Tailwind component patterns including:
 - **Tooltips** (accent-tinted, 4 positions, arrow pointer)
 - **Empty States** (centered icon + heading + CTA)
 - **Error Pages** (404, 500, 503 full-page centered)
+- **Command Palette** (Cmd+K modal, combobox search, keyboard navigation)
+- **Skeleton Loaders** (line, circle, rect primitives with shimmer animation)
+- **Data Viz Colors** (chart color sequence using status tokens)
 
 ## Quick Reference — Tailwind Class Naming
 
@@ -231,3 +260,6 @@ See `STYLE_GUIDE.md` for complete React + Tailwind component patterns including:
 | Pagination | `aria-label="Pagination"` | `aria-current="page"` on active |
 | Avatars | `rounded-full object-cover` | `w-6`/`w-8`/`w-10`/`w-14` sizes |
 | Tooltips | `role="tooltip"`, `bg-tooltip-bg` | `aria-describedby`, 4 positions |
+| Command Palette | `role="dialog"`, `role="combobox"` | `aria-modal`, `Cmd+K` trigger |
+| Skeletons | `bg-bg-elevated`, `animate-shimmer` | `--shimmer-highlight`, 3 primitives |
+| Data Viz | `--status-1` through `--status-5` | Sequential chart palette |
