@@ -4044,46 +4044,46 @@
         <p class="subtitle">Quick-access modal for navigation and actions, triggered by Cmd+K / Ctrl+K.</p>
       </div>
 
-      <button type="button" class="btn btn-primary" onclick="document.getElementById('cmdPaletteDemo').classList.add('open')">
+      <button type="button" class="btn btn-primary" id="cmdPaletteOpenBtn">
         Open Command Palette
       </button>
 
       <div class="cmd-palette-overlay" id="cmdPaletteDemo" role="dialog" aria-modal="true" aria-label="Command palette">
-        <div class="cmd-palette-backdrop" onclick="document.getElementById('cmdPaletteDemo').classList.remove('open')"></div>
+        <div class="cmd-palette-backdrop"></div>
         <div class="cmd-palette-panel">
           <div class="cmd-palette-input">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted); flex-shrink: 0;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" placeholder="Type a command or search..." role="combobox" aria-expanded="true" aria-controls="cmd-palette-list" aria-autocomplete="list" />
-            <button type="button" onclick="document.getElementById('cmdPaletteDemo').classList.remove('open')" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: var(--space-xs);" aria-label="Close">
+            <input type="text" placeholder="Type a command or search..." role="combobox" aria-expanded="true" aria-controls="command-palette-list" aria-autocomplete="list" aria-activedescendant="cmd-option-dashboard" />
+            <button type="button" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: var(--space-xs);" aria-label="Close">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
           </div>
-          <div class="cmd-palette-results" role="listbox" id="cmd-palette-list">
+          <div class="cmd-palette-results" role="listbox" id="command-palette-list">
             <div class="cmd-palette-group-label" role="presentation">Navigation</div>
-            <div class="cmd-palette-item active" role="option" aria-selected="true">
+            <div class="cmd-palette-item active" id="cmd-option-dashboard" role="option" aria-selected="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
               <span>Dashboard</span>
               <span class="cmd-palette-shortcut">⌘D</span>
             </div>
-            <div class="cmd-palette-item" role="option">
+            <div class="cmd-palette-item" id="cmd-option-projects" role="option" aria-selected="false">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
               <span>Projects</span>
               <span class="cmd-palette-shortcut">⌘P</span>
             </div>
-            <div class="cmd-palette-item" role="option">
+            <div class="cmd-palette-item" id="cmd-option-settings" role="option" aria-selected="false">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
               <span>Settings</span>
             </div>
             <div class="cmd-palette-group-label" role="presentation">Actions</div>
-            <div class="cmd-palette-item" role="option">
+            <div class="cmd-palette-item" id="cmd-option-create" role="option" aria-selected="false">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               <span>Create Project</span>
             </div>
-            <div class="cmd-palette-item" role="option">
+            <div class="cmd-palette-item" id="cmd-option-invite" role="option" aria-selected="false">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
               <span>Invite Team Member</span>
             </div>
-            <div class="cmd-palette-item" role="option">
+            <div class="cmd-palette-item" id="cmd-option-export" role="option" aria-selected="false">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               <span>Export Data</span>
             </div>
@@ -4282,13 +4282,57 @@
       });
     })();
 
-    // Command Palette — close on Escape
-    document.addEventListener('keydown', function(e) {
+    // Command Palette — keyboard + focus management
+    (function() {
       var palette = document.getElementById('cmdPaletteDemo');
-      if (e.key === 'Escape' && palette.classList.contains('open')) {
-        palette.classList.remove('open');
+      var trigger = null;
+
+      function openPalette(triggerEl) {
+        trigger = triggerEl || document.activeElement;
+        palette.classList.add('open');
+        var input = palette.querySelector('input');
+        if (input) input.focus();
       }
-    });
+
+      function closePalette() {
+        palette.classList.remove('open');
+        if (trigger && trigger.focus) trigger.focus();
+        trigger = null;
+      }
+
+      // Cmd+K / Ctrl+K to open
+      document.addEventListener('keydown', function(e) {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          if (palette.classList.contains('open')) {
+            closePalette();
+          } else {
+            openPalette();
+          }
+        }
+        if (e.key === 'Escape' && palette.classList.contains('open')) {
+          closePalette();
+        }
+      });
+
+      // Wire up the open button
+      var openBtn = document.getElementById('cmdPaletteOpenBtn');
+      if (openBtn) {
+        openBtn.addEventListener('click', function() { openPalette(this); });
+      }
+
+      // Wire up backdrop close
+      var backdrop = palette.querySelector('.cmd-palette-backdrop');
+      if (backdrop) {
+        backdrop.addEventListener('click', function() { closePalette(); });
+      }
+
+      // Wire up X button close
+      var closeBtn = palette.querySelector('.cmd-palette-input button');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function() { closePalette(); });
+      }
+    })();
   </script>
 </body>
 </html>
