@@ -117,7 +117,7 @@ table {
   /* Borders */
   --border: #1f2029;
   --border-hover: #2e2f3d;
-  --border-accent: var(--accent);
+  --border-focus: var(--accent);
 
   /* Status sequence — charts, badges, level indicators */
   --status-1: #30a46c;
@@ -190,7 +190,7 @@ table {
   /* Borders */
   --border: #ddd8d0;
   --border-hover: #c8c2b8;
-  --border-accent: var(--accent);
+  --border-focus: var(--accent);
 
   /* Status sequence — charts, badges, level indicators */
   --status-1: #218358;
@@ -291,17 +291,17 @@ table {
   /* Z-index scale */
   --z-dropdown: 50;
   --z-sticky: 100;
-  --z-banner: 200;
+  --z-drawer: 200;
   --z-overlay: 900;
   --z-modal: 1000;
   --z-toast: 1100;
 
   /* Motion */
-  --duration-fast: 150ms;
-  --duration-normal: 200ms;
-  --duration-moderate: 300ms;
-  --duration-slow: 400ms;
-  --easing-default: ease;
+  --duration-micro: 150ms;
+  --duration-standard: 200ms;
+  --duration-emphasis: 300ms;
+  --duration-entrance: 400ms;
+  --ease-default: ease;
 }
 
 /* ========================================
