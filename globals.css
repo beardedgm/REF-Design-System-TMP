@@ -1,7 +1,7 @@
 /*
- * Signature Design System — Global Styles
+ * Signature Design System v2 — Global Styles
  *
- * This is the foundation of the design system. It works with OR without Tailwind.
+ * The foundation of the design system. Works with OR without Tailwind.
  *
  * WITH Tailwind:
  *   1. Import this file in your root layout: import './globals.css';
@@ -14,166 +14,12 @@
  *   3. Use CSS variables directly: background: var(--bg-card); color: var(--accent);
  *
  * Theme is controlled by data-theme="light|dark" on <html>.
- * Light is the default (:root). Dark overrides via [data-theme="dark"].
+ * Dual-theme architecture: cool blue-black dark + warm cream/parchment light,
+ * connected by a warm gold accent.
  */
 
 /* ========================================
-   LIGHT THEME (Default)
-   ======================================== */
-:root,
-[data-theme="light"] {
-  /* Backgrounds — light grays and whites */
-  --bg-primary: #f4f4f6;       /* App background, outermost canvas */
-  --bg-secondary: #eaeaee;     /* Alternating sections, secondary panels */
-  --bg-surface: #ffffff;       /* Input fields, inner surfaces */
-  --bg-card: #ffffff;          /* Cards, modals, panels */
-  --bg-elevated: #f0f0f4;     /* Hover states, popovers, skeletons */
-
-  /* Text — dark text on light backgrounds */
-  --text-primary: #1a1b24;     /* Headings, body text */
-  --text-secondary: #5c5d6e;   /* Labels, descriptions, subtitles */
-  --text-tertiary: #72738a;    /* Metadata, counters */
-  --text-muted: #9394a5;       /* Hints, placeholders, disabled text */
-  --text-on-accent: #ffffff;   /* White text on gold accent backgrounds */
-
-  /* Accent — deepened gold for contrast on light */
-  --accent: #a8843e;           /* Primary buttons, active tabs, links */
-  --accent-hover: #c9a267;     /* Hover state for accent elements */
-  --accent-muted: rgba(168, 132, 62, 0.10); /* Chip backgrounds, focus rings */
-
-  /* Tooltip — accent-tinted */
-  --tooltip-bg: rgba(168, 132, 62, 0.10);
-  --tooltip-border: rgba(168, 132, 62, 0.25);
-
-  /* Semantic — darkened for readability on light */
-  --error: #cd2b31;            /* Destructive actions, validation errors */
-  --success: #218358;          /* Success states, positive indicators */
-  --warning: #c47d0a;          /* Warning states, usage alerts */
-  --warning-muted: #d49a2e;    /* Non-critical warnings */
-
-  /* Status Sequence — for charts, badges, level indicators */
-  --status-1: #218358;         /* Green */
-  --status-2: #2271a1;         /* Blue */
-  --status-3: #a86520;         /* Amber */
-  --status-4: #8b4fc0;         /* Purple */
-  --status-5: #cd2b31;         /* Red */
-  --status-premium: #9a7800;   /* Gold */
-
-  /* Borders */
-  --border: #d8d9e0;           /* Default borders */
-  --border-hover: #bcbdc8;     /* Interactive hover state borders */
-
-  /* Spacing — 8-point grid (same for both themes) */
-  --space-xs: 0.25rem;   /* 4px */
-  --space-sm: 0.5rem;    /* 8px */
-  --space-md: 0.75rem;   /* 12px */
-  --space-lg: 1rem;      /* 16px */
-  --space-xl: 1.5rem;    /* 24px */
-  --space-2xl: 2rem;     /* 32px */
-  --space-3xl: 3rem;     /* 48px */
-
-  /* Border Radii (same for both themes) */
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-full: 9999px;
-
-  /* Shadows — softer for light context */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
-
-  /* Z-Index Scale (same for both themes) */
-  --z-dropdown: 50;
-  --z-sticky: 100;
-  --z-overlay: 900;
-  --z-modal: 1000;
-
-  /* Typography Scale — font sizes, line heights, letter spacing */
-  --text-display-1: 3.25rem;    /* Hero headings (Cinzel 700) */
-  --lh-display-1: 1.15;
-  --ls-display-1: -0.015em;
-  --text-h1: 1.75rem;           /* Page titles */
-  --lh-h1: 1.3;
-  --ls-h1: -0.01em;
-  --text-h2: 1.375rem;          /* Section headings */
-  --lh-h2: 1.35;
-  --ls-h2: -0.01em;
-  --text-h3: 1rem;              /* Card titles */
-  --lh-h3: 1.4;
-  --text-subtitle: 0.875rem;    /* Subtitles, descriptions */
-  --text-body: 0.875rem;        /* Default body text */
-  --lh-body: 1.6;
-  --text-label: 0.8125rem;      /* Form labels, nav items */
-  --text-caption: 0.75rem;      /* Small annotations, timestamps */
-  --text-overline: 0.6875rem;   /* Category labels, section markers */
-  --ls-overline: 0.08em;
-
-  /* Transition Durations */
-  --duration-fast: 150ms;       /* Interactive state changes (hover, focus) */
-  --duration-normal: 200ms;     /* Elevation, transform changes */
-  --duration-slow: 400ms;       /* Page entrance animations (max) */
-
-  /* Skeleton Shimmer */
-  --shimmer-highlight: rgba(255,255,255,0.5);
-}
-
-/* ========================================
-   DARK THEME
-   ======================================== */
-[data-theme="dark"] {
-  /* Backgrounds — deep navy/charcoal */
-  --bg-primary: #0c0d12;       /* App background, deepest canvas */
-  --bg-secondary: #12131a;     /* Alternating sections, secondary panels */
-  --bg-surface: #161720;       /* Input fields, inner surfaces */
-  --bg-card: #1a1b24;          /* Cards, modals, panels */
-  --bg-elevated: #22232e;      /* Hover states, popovers, skeletons */
-
-  /* Text — light text on dark backgrounds */
-  --text-primary: #e8e8ec;     /* Headings, body text */
-  --text-secondary: #8e8fa1;   /* Labels, descriptions, subtitles */
-  --text-tertiary: #8b8c9e;    /* Metadata, counters */
-  --text-muted: #838495;       /* Hints, placeholders, disabled text */
-  --text-on-accent: #0c0d12;   /* Dark text on gold accent backgrounds */
-
-  /* Accent — warm gold signature */
-  --accent: #c9a267;           /* Primary buttons, active tabs, links */
-  --accent-hover: #dbb57e;     /* Hover state for accent elements */
-  --accent-muted: rgba(201, 162, 103, 0.12); /* Chip backgrounds, focus rings */
-
-  /* Tooltip — accent-tinted */
-  --tooltip-bg: rgba(201, 162, 103, 0.12);
-  --tooltip-border: rgba(201, 162, 103, 0.25);
-
-  /* Semantic */
-  --error: #e5484d;            /* Destructive actions, validation errors */
-  --success: #30a46c;          /* Success states, positive indicators */
-  --warning: #f5a623;          /* Warning states, usage alerts */
-  --warning-muted: #e8a838;    /* Non-critical warnings */
-
-  /* Status Sequence */
-  --status-1: #30a46c;         /* Green */
-  --status-2: #3498db;         /* Blue */
-  --status-3: #d4873f;         /* Amber */
-  --status-4: #bb7fe2;         /* Purple */
-  --status-5: #e5484d;         /* Red */
-  --status-premium: #FFD700;   /* Gold */
-
-  /* Borders */
-  --border: #1f2029;           /* Default borders */
-  --border-hover: #2e2f3d;     /* Interactive hover state borders */
-
-  /* Shadows — heavier for dark context */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
-
-  /* Skeleton Shimmer */
-  --shimmer-highlight: rgba(255,255,255,0.04);
-}
-
-/* ========================================
-   BASE RESET & DEFAULTS
+   CSS RESET / NORMALIZE
    ======================================== */
 *,
 *::before,
@@ -185,29 +31,557 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ========================================
+   DARK THEME TOKENS
+   ======================================== */
+[data-theme="dark"] {
+  /* Backgrounds — cool blue-black */
+  --bg-primary: #0c0d12;
+  --bg-secondary: #12131a;
+  --bg-surface: #161720;
+  --bg-card: #1a1b24;
+  --bg-elevated: #22232e;
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+
+  /* Text — light on dark */
+  --text-primary: #e8e8ec;
+  --text-secondary: #8e8fa1;
+  --text-tertiary: #6b6c7e;
+  --text-muted: #4e4f5e;
+  --text-on-accent: #0c0d12;
+
+  /* Accent — warm gold signature */
+  --accent: #c9a267;
+  --accent-hover: #dbb57e;
+  --accent-active: #b8934f;
+  --accent-muted: rgba(201, 162, 103, 0.10);
+  --accent-subtle: rgba(201, 162, 103, 0.05);
+
+  /* Semantic — error */
+  --error: #e5484d;
+  --error-hover: #f06b6e;
+  --error-muted: rgba(229, 72, 77, 0.10);
+
+  /* Semantic — success */
+  --success: #30a46c;
+  --success-hover: #3ec282;
+  --success-muted: rgba(48, 164, 108, 0.10);
+
+  /* Semantic — warning */
+  --warning: #f5a623;
+  --warning-hover: #f7b84a;
+  --warning-muted: rgba(245, 166, 35, 0.10);
+
+  /* Semantic — info */
+  --info: #3498db;
+  --info-hover: #5bb0e8;
+  --info-muted: rgba(52, 152, 219, 0.10);
+
+  /* Borders */
+  --border: #1f2029;
+  --border-hover: #2e2f3d;
+  --border-accent: var(--accent);
+
+  /* Status sequence — charts, badges, level indicators */
+  --status-1: #30a46c;
+  --status-2: #3498db;
+  --status-3: #f5a623;
+  --status-4: #9b59b6;
+  --status-5: #e5484d;
+  --status-premium: var(--accent);
+
+  /* Tooltip — accent-tinted */
+  --tooltip-bg: #2a2b36;
+  --tooltip-border: #3a3b48;
+  --tooltip-text: #e8e8ec;
+
+  /* Shimmer */
+  --shimmer-highlight: rgba(255, 255, 255, 0.04);
+
+  /* Shadows — heavier for dark context */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* ========================================
+   LIGHT THEME TOKENS
+   ======================================== */
+[data-theme="light"] {
+  /* Backgrounds — warm cream/parchment */
+  --bg-primary: #f5f3ef;
+  --bg-secondary: #ece8e1;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-elevated: #f0ece6;
+  --bg-overlay: rgba(0, 0, 0, 0.4);
+
+  /* Text — dark on light */
+  --text-primary: #1c1a16;
+  --text-secondary: #5e5a50;
+  --text-tertiary: #8a857a;
+  --text-muted: #b0a99e;
+  --text-on-accent: #ffffff;
+
+  /* Accent — deepened gold for contrast on light */
+  --accent: #a8843e;
+  --accent-hover: #c9a267;
+  --accent-active: #96753a;
+  --accent-muted: rgba(168, 132, 62, 0.10);
+  --accent-subtle: rgba(168, 132, 62, 0.05);
+
+  /* Semantic — error */
+  --error: #cd2b31;
+  --error-hover: #e5484d;
+  --error-muted: rgba(205, 43, 49, 0.10);
+
+  /* Semantic — success */
+  --success: #218358;
+  --success-hover: #30a46c;
+  --success-muted: rgba(33, 131, 88, 0.10);
+
+  /* Semantic — warning */
+  --warning: #c47d0a;
+  --warning-hover: #d49a2e;
+  --warning-muted: rgba(196, 125, 10, 0.10);
+
+  /* Semantic — info */
+  --info: #2271a1;
+  --info-hover: #3498db;
+  --info-muted: rgba(34, 113, 161, 0.10);
+
+  /* Borders */
+  --border: #ddd8d0;
+  --border-hover: #c8c2b8;
+  --border-accent: var(--accent);
+
+  /* Status sequence — charts, badges, level indicators */
+  --status-1: #218358;
+  --status-2: #2271a1;
+  --status-3: #c47d0a;
+  --status-4: #7c3aad;
+  --status-5: #cd2b31;
+  --status-premium: var(--accent);
+
+  /* Tooltip — dark solid */
+  --tooltip-bg: #1c1a16;
+  --tooltip-border: #2e2a23;
+  --tooltip-text: #f5f3ef;
+
+  /* Shimmer */
+  --shimmer-highlight: rgba(255, 255, 255, 0.6);
+
+  /* Shadows — warm-tinted for light context */
+  --shadow-sm: 0 1px 3px rgba(80, 60, 20, 0.08);
+  --shadow-md: 0 4px 12px rgba(80, 60, 20, 0.10);
+  --shadow-lg: 0 8px 24px rgba(80, 60, 20, 0.14);
+}
+
+/* ========================================
+   THEME-AGNOSTIC TOKENS (:root)
+   ======================================== */
+:root {
+  /* Font families */
+  --font-display: 'Cinzel', serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Type scale — size */
+  --text-display-1: 3.25rem;
+  --text-display-2: 2.25rem;
+  --text-h1: 1.75rem;
+  --text-h2: 1.375rem;
+  --text-h3: 1.125rem;
+  --text-h4: 1rem;
+  --text-body: 0.875rem;
+  --text-label: 0.8125rem;
+  --text-caption: 0.75rem;
+  --text-overline: 0.6875rem;
+
+  /* Type scale — weight */
+  --weight-display-1: 700;
+  --weight-display-2: 700;
+  --weight-h1: 600;
+  --weight-h2: 600;
+  --weight-h3: 600;
+  --weight-h4: 600;
+  --weight-body: 400;
+  --weight-label: 500;
+  --weight-caption: 400;
+  --weight-overline: 600;
+
+  /* Type scale — letter spacing */
+  --ls-display-1: -0.015em;
+  --ls-display-2: -0.015em;
+  --ls-h1: -0.01em;
+  --ls-h2: -0.01em;
+  --ls-h3: 0;
+  --ls-h4: 0;
+  --ls-body: 0;
+  --ls-label: 0;
+  --ls-caption: 0;
+  --ls-overline: 0.08em;
+
+  /* Type scale — line height */
+  --lh-display-1: 1.1;
+  --lh-display-2: 1.2;
+  --lh-h1: 1.3;
+  --lh-h2: 1.35;
+  --lh-h3: 1.4;
+  --lh-h4: 1.4;
+  --lh-body: 1.5;
+  --lh-label: 1.4;
+  --lh-caption: 1.4;
+  --lh-overline: 1.3;
+
+  /* Spacing — 8-point grid + extras */
+  --space-2xs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --space-3xl: 48px;
+  --space-4xl: 64px;
+
+  /* Border radii */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Z-index scale */
+  --z-dropdown: 50;
+  --z-sticky: 100;
+  --z-banner: 200;
+  --z-overlay: 900;
+  --z-modal: 1000;
+  --z-toast: 1100;
+
+  /* Motion */
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-moderate: 300ms;
+  --duration-slow: 400ms;
+  --easing-default: ease;
+}
+
+/* ========================================
+   BODY DEFAULTS
+   ======================================== */
 body {
-  font-family: 'Inter', -apple-system, system-ui, sans-serif;
-  font-weight: 400;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-body);
   font-size: var(--text-body);
   line-height: var(--lh-body);
   color: var(--text-primary);
   background: var(--bg-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* ========================================
-   SKELETON SHIMMER ANIMATION
+   TYPOGRAPHY UTILITY CLASSES
    ======================================== */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+.display-1 {
+  font-family: var(--font-display);
+  font-size: var(--text-display-1);
+  font-weight: var(--weight-display-1);
+  letter-spacing: var(--ls-display-1);
+  line-height: var(--lh-display-1);
+}
+
+.display-2 {
+  font-family: var(--font-display);
+  font-size: var(--text-display-2);
+  font-weight: var(--weight-display-2);
+  letter-spacing: var(--ls-display-2);
+  line-height: var(--lh-display-2);
+}
+
+.heading-1 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h1);
+  font-weight: var(--weight-h1);
+  letter-spacing: var(--ls-h1);
+  line-height: var(--lh-h1);
+}
+
+.heading-2 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-h2);
+  letter-spacing: var(--ls-h2);
+  line-height: var(--lh-h2);
+}
+
+.heading-3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-h3);
+  letter-spacing: var(--ls-h3);
+  line-height: var(--lh-h3);
+}
+
+.heading-4 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-h4);
+  letter-spacing: var(--ls-h4);
+  line-height: var(--lh-h4);
+}
+
+.text-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: var(--weight-body);
+  letter-spacing: var(--ls-body);
+  line-height: var(--lh-body);
+}
+
+.text-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-label);
+  font-weight: var(--weight-label);
+  letter-spacing: var(--ls-label);
+  line-height: var(--lh-label);
+}
+
+.text-caption {
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-caption);
+  letter-spacing: var(--ls-caption);
+  line-height: var(--lh-caption);
+}
+
+.text-overline {
+  font-family: var(--font-sans);
+  font-size: var(--text-overline);
+  font-weight: var(--weight-overline);
+  letter-spacing: var(--ls-overline);
+  line-height: var(--lh-overline);
+  text-transform: uppercase;
 }
 
 /* ========================================
-   ACCESSIBILITY
+   FOCUS RING STYLE
+   ======================================== */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ========================================
+   SELECTION STYLING
+   ======================================== */
+::selection {
+  background: var(--accent-muted);
+  color: var(--text-primary);
+}
+
+::-moz-selection {
+  background: var(--accent-muted);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   SCROLLBAR STYLING
+   ======================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hover) transparent;
+}
+
+/* ========================================
+   KEYFRAME ANIMATIONS
+   ======================================== */
+
+/* Fade in up — page entrance, toast enter */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade out down — toast exit */
+@keyframes fade-out-down {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* Shimmer — skeleton loaders */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Slide in from right — drawer/panel enter */
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide out to right — drawer/panel exit */
+@keyframes slide-out-right {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* Slide in from left — sidebar enter */
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide out to left — sidebar exit */
+@keyframes slide-out-left {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+/* Scale in — modal/dialog enter */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scale out — modal/dialog exit */
+@keyframes scale-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/* ========================================
+   SHIMMER UTILITY CLASS
+   ======================================== */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-elevated) 25%,
+    var(--shimmer-highlight) 50%,
+    var(--bg-elevated) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ========================================
+   REDUCED MOTION
    ======================================== */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -217,5 +591,9 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .shimmer {
+    animation: none;
   }
 }
