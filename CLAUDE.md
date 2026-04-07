@@ -5,18 +5,18 @@ Single source of truth for all SaaS application styling. Every app in the portfo
 ## Tech Stack
 
 - **Apps:** MERN (MongoDB, Express, React, Node.js)
-- **Styling:** Tailwind CSS with this design system's preset, OR plain CSS with variables
-- **Theming:** Light/dark via `data-theme` attribute + CSS custom properties
-- **Foundation:** `globals.css` is the framework-agnostic base -- works with or without Tailwind
+- **Styling:** CSS custom properties from `globals.css` -- works with any framework including Tailwind
+- **Theming:** Light/dark via `data-theme` attribute on `<html>`
+- **Approach:** Style guide + tokens. Agents read `STYLE_GUIDE.md`, write code using `var()` tokens. No preset to import -- just use the variables.
 
 ## Repository Structure
 
 | File | Purpose |
 |------|---------|
-| `globals.css` | **The foundation.** CSS custom properties (dark + light themes), typography variables, spacing, base reset, keyframe animations. Works independently -- no Tailwind required. Import into any app's root layout. |
-| `tailwind.preset.js` | **Optional convenience layer.** Maps `globals.css` variables to Tailwind utility classes. Import into any app's `tailwind.config.js` via `presets: [require('./path/tailwind.preset.js')]`. |
-| `STYLE_GUIDE.md` | Complete design spec -- tokens, principles, 52 component patterns in both Tailwind and plain CSS. The LLM-readable reference. |
-| `index.html` | Interactive visual showcase. Open in browser to see all tokens and components rendered. Uses plain CSS (no Tailwind). |
+| `globals.css` | **The foundation.** CSS custom properties (dark + light themes), typography variables, spacing, base reset, keyframe animations. Import into any app's root layout. |
+| `STYLE_GUIDE.md` | **The reference.** Complete design spec -- tokens, principles, 52 component patterns with CSS variable examples and Tailwind equivalents. The LLM-readable source of truth. |
+| `CLAUDE.md` | **The rules.** This file. Agentic consumption rules, quick reference tables, integration guide. |
+| `index.html` | **The showcase.** Interactive visual demo. Open in browser to see all tokens and components rendered. Uses plain CSS. |
 
 ---
 
@@ -26,16 +26,17 @@ Single source of truth for all SaaS application styling. Every app in the portfo
 
 Every color, spacing, radius, and shadow must come from the design system. Never write a raw hex value, pixel value, or arbitrary number in a component.
 
-- **With Tailwind:** Use the custom utility names (`bg-bg-card`, `text-accent`, `rounded-ds-md`, `shadow-ds-lg`, `p-xl`, `gap-lg`)
-- **Without Tailwind:** Use CSS variables (`var(--bg-card)`, `var(--accent)`, `var(--radius-md)`, `var(--shadow-lg)`, `var(--space-xl)`)
-- **Either way:** `globals.css` must be imported -- it defines all the variables both approaches rely on
+- **Always:** Use CSS variables from `globals.css` (`var(--bg-card)`, `var(--accent)`, `var(--radius-md)`, `var(--shadow-lg)`, `var(--space-xl)`)
+- **With Tailwind:** You can use Tailwind's arbitrary value syntax to reference the same tokens: `bg-[var(--bg-card)]`, `text-[var(--accent)]`, `rounded-[var(--radius-lg)]`, `p-[var(--space-xl)]`
+- **Prerequisite:** `globals.css` must be imported in the app's root layout -- it defines all the variables
 
 **Do:**
-```jsx
-<div className="bg-bg-card border border-border rounded-ds-lg p-xl shadow-ds-sm">
-```
 ```css
 .my-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-xl); box-shadow: var(--shadow-sm); }
+```
+```jsx
+/* With Tailwind arbitrary values */
+<div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-[var(--radius-lg)] p-[var(--space-xl)] shadow-[var(--shadow-sm)]">
 ```
 
 **Don't:**
@@ -51,13 +52,12 @@ Never assume a specific theme. Never use colors that only make sense in one them
 
 ### 3. Keep All Files in Sync
 
-When modifying any design token, **update all five files:**
+When modifying any design token, **update all four files:**
 
 1. `globals.css` -- the CSS custom properties (both dark and light values)
-2. `tailwind.preset.js` -- the Tailwind theme extension
-3. `STYLE_GUIDE.md` -- the human/LLM-readable documentation
-4. `CLAUDE.md` -- this rules document
-5. `index.html` -- the visual showcase
+2. `STYLE_GUIDE.md` -- the human/LLM-readable documentation
+3. `CLAUDE.md` -- this rules document
+4. `index.html` -- the visual showcase
 
 Missing any file will cause the system to drift out of sync.
 
@@ -342,42 +342,29 @@ These are different patterns. Do not confuse them.
 
 ## How to Use in a New App
 
-### With Tailwind (recommended for React apps)
-
-```js
-// tailwind.config.js
-const designSystem = require('../path-to-design-system/tailwind.preset.js');
-
-module.exports = {
-  presets: [designSystem],
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
-};
-```
+### Step 1: Import globals.css
 
 ```jsx
-// App.jsx or root layout
+// In your root layout (App.jsx, layout.tsx, etc.)
 import '../path-to-design-system/globals.css';
 ```
 
+Or in plain HTML:
 ```html
-<!-- index.html or root template -->
-<html data-theme="dark">
-```
-
-### Without Tailwind (plain CSS)
-
-```html
-<!-- Link globals.css in your HTML head or import in your bundler -->
 <link rel="stylesheet" href="path-to-design-system/globals.css" />
 ```
 
+### Step 2: Set the theme
+
 ```html
-<!-- Set theme on root element -->
 <html data-theme="dark">
 ```
 
+Toggle with JS: `document.documentElement.setAttribute('data-theme', 'light')`
+
+### Step 3: Use CSS variables everywhere
+
 ```css
-/* Use CSS variables in your stylesheets */
 .my-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -402,7 +389,17 @@ import '../path-to-design-system/globals.css';
 }
 ```
 
-See `STYLE_GUIDE.md` Section 19 for full plain-CSS component examples and the Tailwind-to-CSS Variable mapping table.
+### Using with Tailwind
+
+If your app uses Tailwind, reference tokens via arbitrary values -- no preset needed:
+
+```jsx
+<div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-[var(--radius-lg)] p-[var(--space-xl)]">
+  <h2 className="text-[var(--text-h2)] text-[var(--text-primary)]">Title</h2>
+</div>
+```
+
+See `STYLE_GUIDE.md` for a complete Tailwind-to-CSS Variable mapping table and full component examples.
 
 ---
 
@@ -482,7 +479,7 @@ Additional marketing patterns (Pricing Table, Error Pages) are documented in the
 
 ---
 
-## Quick Reference -- Tailwind Class Naming
+## Quick Reference -- Token Naming
 
 | Category | Pattern | Example |
 |----------|---------|---------|

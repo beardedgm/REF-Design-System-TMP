@@ -3,15 +3,12 @@
  *
  * The foundation of the design system. Works with OR without Tailwind.
  *
- * WITH Tailwind:
+ * USAGE:
  *   1. Import this file in your root layout: import './globals.css';
- *   2. Add tailwind.preset.js to your tailwind.config.js presets array
- *   3. Use Tailwind utility classes (bg-bg-card, text-accent, etc.)
- *
- * WITHOUT Tailwind:
- *   1. Import or <link> this file in your HTML/app
- *   2. Set data-theme="light" or data-theme="dark" on <html>
- *   3. Use CSS variables directly: background: var(--bg-card); color: var(--accent);
+ *      Or link it: <link rel="stylesheet" href="globals.css" />
+ *   2. Set data-theme="dark" or data-theme="light" on <html>
+ *   3. Use CSS variables: background: var(--bg-card); color: var(--accent);
+ *   4. With Tailwind, use arbitrary values: bg-[var(--bg-card)], text-[var(--accent)]
  *
  * Theme is controlled by data-theme="light|dark" on <html>.
  * Dual-theme architecture: cool blue-black dark + warm cream/parchment light,
