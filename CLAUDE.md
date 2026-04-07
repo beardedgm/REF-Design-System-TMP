@@ -472,10 +472,38 @@ See `STYLE_GUIDE.md` for complete specs (anatomy, variants, states, accessibilit
 50. Divider / Separator
 51. Bottom Sheet (Mobile)
 
-### Marketing & Utility (2+)
+### Marketing & Utility (3)
 52. Command Palette
+53. Pricing Table
+54. Error Pages (404, 500, 503)
 
-Additional marketing patterns (Pricing Table, Error Pages) are documented in the Error Pages and Empty States sections above.
+---
+
+## Verification
+
+Quick checks to confirm the design system is working:
+
+```bash
+# Open the showcase in default browser
+open index.html        # macOS
+start index.html       # Windows
+xdg-open index.html    # Linux
+```
+
+In the showcase, verify:
+- Toggle between dark and light themes (top-right button)
+- All color swatches update correctly
+- Interactive elements work (tabs, accordion, modal, toasts)
+
+### .gitignore
+
+Add these to your app's `.gitignore` if not already present:
+
+```
+.superpowers/
+.claude/
+.remember/
+```
 
 ---
 
