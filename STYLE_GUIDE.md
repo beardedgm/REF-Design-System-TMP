@@ -1,6 +1,6 @@
 # Signature Design System v2 -- Style Guide
 
-This document is the single source of truth for all SaaS applications in the Signature portfolio. It defines every design token, component pattern, and interaction rule that developers and AI agents need to build consistent, accessible interfaces. The companion files -- `globals.css` (framework-agnostic foundation), `tailwind.preset.js` (optional Tailwind layer), and `index.html` (visual showcase) -- implement and demonstrate everything described here.
+This document is the single source of truth for all SaaS applications in the Signature portfolio. It defines every design token, component pattern, and interaction rule that developers and AI agents need to build consistent, accessible interfaces. The companion files -- `globals.css` (the CSS custom property foundation) and `index.html` (visual showcase) -- implement and demonstrate everything described here. AI agents read this guide and write code using `var()` tokens directly.
 
 ---
 
@@ -11662,7 +11662,7 @@ document.documentElement.setAttribute('data-theme',
 
 ### Tailwind Class to CSS Variable Mapping
 
-Use this table to translate between the Tailwind utility classes defined in `tailwind.preset.js` and the underlying CSS variables from `globals.css`.
+Use this table to translate between common Tailwind utility class patterns and the underlying CSS variables from `globals.css`. When using Tailwind, reference tokens via arbitrary values: `bg-[var(--bg-card)]`, `text-[var(--text-primary)]`, etc.
 
 #### Backgrounds
 
