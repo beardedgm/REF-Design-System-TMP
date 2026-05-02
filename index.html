@@ -3,17 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Signature Design System — Visual Showcase</title>
+  <title>Signature Design System: Visual Showcase</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="globals.css" />
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Lucide is loaded via CDN with `defer` so it does not block HTML parsing.
+       Production apps should install the `lucide-react` package and tree-shake.
+       For a pinned-and-hashed CDN copy, use a specific version with an SRI integrity hash. -->
+  <script src="https://unpkg.com/lucide@latest" defer></script>
   <style>
     /* ============================================
        SHOWCASE-ONLY LAYOUT STYLES
        All component styling uses var() tokens.
        ============================================ */
+
+    /* --- A11y utilities --- */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .skip-link {
+      position: fixed;
+      top: var(--space-sm);
+      left: var(--space-sm);
+      z-index: calc(var(--z-toast) + 10);
+      padding: var(--space-sm) var(--space-lg);
+      background: var(--accent);
+      color: var(--text-on-accent);
+      font-size: var(--text-label);
+      font-weight: var(--weight-label);
+      border-radius: var(--radius-md);
+      transform: translateY(-200%);
+      transition: transform var(--duration-micro) var(--ease-default);
+    }
+    .skip-link:focus-visible {
+      transform: translateY(0);
+    }
 
     /* --- Layout Shell --- */
     .showcase-sidebar {
@@ -37,13 +70,36 @@
       margin-bottom: var(--space-sm);
     }
     .showcase-sidebar .nav-group-label {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%;
+      padding: var(--space-lg) var(--space-lg) var(--space-xs);
+      background: none; border: none; cursor: pointer;
+      font-family: inherit;
       font-size: var(--text-overline);
       font-weight: var(--weight-overline);
       letter-spacing: var(--ls-overline);
       text-transform: uppercase;
       color: var(--text-muted);
-      padding: var(--space-lg) var(--space-lg) var(--space-xs);
+      transition: color var(--duration-micro) var(--ease-default);
     }
+    .showcase-sidebar .nav-group-label:hover { color: var(--text-secondary); }
+    .showcase-sidebar .nav-group-label:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+    .showcase-sidebar .nav-group-count {
+      font-size: var(--text-overline);
+      letter-spacing: 0;
+      color: var(--text-muted);
+      margin-left: var(--space-xs);
+      font-feature-settings: "tnum";
+    }
+    .showcase-sidebar .nav-group-chevron {
+      width: 12px; height: 12px;
+      color: var(--text-muted);
+      transition: transform var(--duration-standard) var(--ease-default);
+      flex-shrink: 0;
+    }
+    .showcase-sidebar .nav-group-label[aria-expanded="true"] .nav-group-chevron { transform: rotate(90deg); }
+    .showcase-sidebar .nav-group-items { display: none; }
+    .showcase-sidebar .nav-group-label[aria-expanded="true"] + .nav-group-items { display: block; }
     .showcase-sidebar a {
       display: block;
       padding: var(--space-xs) var(--space-lg);
@@ -120,6 +176,18 @@
       color: var(--text-secondary);
       margin-bottom: var(--space-xl);
       margin-top: var(--space-sm);
+      max-width: 70ch;
+    }
+    /* Finale section gets extra breathing room above and a bigger title */
+    .ds-section--finale {
+      margin-top: var(--space-4xl);
+      padding-top: var(--space-2xl);
+      border-top: 1px solid var(--border);
+    }
+    .ds-section--finale .ds-section-title {
+      font-size: var(--text-h1);
+      font-weight: var(--weight-h1);
+      letter-spacing: var(--ls-h1);
     }
 
     /* --- Generic flex/grid helpers --- */
@@ -138,6 +206,7 @@
       color: var(--text-secondary);
       margin-bottom: var(--space-sm);
     }
+    /* Swatch is a button: clicking copies var(--token) to clipboard. */
     .swatch {
       display: flex;
       align-items: center;
@@ -146,7 +215,17 @@
       border-radius: var(--radius-md);
       background: var(--bg-surface);
       border: 1px solid var(--border);
+      width: 100%;
+      font-family: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition:
+        border-color var(--duration-micro) var(--ease-default),
+        background-color var(--duration-micro) var(--ease-default);
     }
+    .swatch:hover { border-color: var(--border-hover); background: var(--bg-card); }
+    .swatch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .swatch[data-copied="true"] { border-color: var(--accent); }
     .swatch-color {
       width: 40px;
       height: 40px;
@@ -154,7 +233,7 @@
       border: 1px solid var(--border);
       flex-shrink: 0;
     }
-    .swatch-info { flex: 1; }
+    .swatch-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
     .swatch-name {
       font-size: var(--text-caption);
       font-weight: var(--weight-label);
@@ -165,6 +244,20 @@
       color: var(--text-tertiary);
       font-family: monospace;
     }
+    .swatch-cta {
+      flex-shrink: 0;
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2xs);
+      font-size: var(--text-caption);
+      color: var(--text-tertiary);
+      opacity: 0;
+      transition: opacity var(--duration-micro) var(--ease-default), color var(--duration-micro) var(--ease-default);
+    }
+    .swatch:hover .swatch-cta,
+    .swatch:focus-visible .swatch-cta { opacity: 1; }
+    .swatch[data-copied="true"] .swatch-cta { opacity: 1; color: var(--accent); }
 
     /* --- Spacing demo --- */
     .spacing-bar {
@@ -209,6 +302,25 @@
       color: var(--text-secondary);
     }
 
+    /* --- Focus visibility (reaches controls without their own focus rules) --- */
+    .tab-btn:focus-visible,
+    .pill-tab-btn:focus-visible,
+    .page-btn:focus-visible,
+    .dropdown-item:focus-visible,
+    .cmd-item:focus-visible,
+    .modal-close:focus-visible,
+    .toast-close:focus-visible,
+    .accordion-header:focus-visible,
+    .dashboard-sidebar .nav-item:focus-visible,
+    .ds-table thead th button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .cmd-input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+
     /* --- Buttons --- */
     .btn {
       display: inline-flex;
@@ -219,7 +331,10 @@
       font-weight: var(--weight-label);
       border: 1px solid transparent;
       cursor: pointer;
-      transition: all var(--duration-micro) var(--ease-default);
+      transition:
+        background-color var(--duration-micro) var(--ease-default),
+        border-color var(--duration-micro) var(--ease-default),
+        color var(--duration-micro) var(--ease-default);
       white-space: nowrap;
     }
     .btn:focus-visible {
@@ -248,14 +363,14 @@
 
     .btn-ghost {
       background: transparent;
-      color: var(--text-secondary);
+      color: var(--text-primary);
       border-color: transparent;
     }
     .btn-ghost:hover { background: var(--bg-elevated); color: var(--text-primary); }
 
     .btn-danger {
       background: var(--error);
-      color: #fff;
+      color: var(--text-on-error);
       border-color: var(--error);
     }
     .btn-danger:hover { background: var(--error-hover); border-color: var(--error-hover); }
@@ -298,14 +413,16 @@
     }
     .form-input::placeholder { color: var(--text-muted); }
     .form-input:hover { border-color: var(--border-hover); }
-    .form-input:focus {
-      outline: none;
+    .form-input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-muted);
     }
     .form-input.error {
       border-color: var(--error);
-      box-shadow: 0 0 0 3px var(--error-muted);
+    }
+    .form-input.error:focus-visible {
+      outline-color: var(--error);
     }
     .form-hint {
       font-size: var(--text-caption);
@@ -388,7 +505,8 @@
       padding: var(--space-xl);
       transition: box-shadow var(--duration-standard) var(--ease-default), border-color var(--duration-standard) var(--ease-default);
     }
-    .card-interactive:hover {
+    .card-interactive:hover,
+    .card-interactive:focus-visible {
       box-shadow: var(--shadow-md);
       border-color: var(--border-hover);
     }
@@ -411,6 +529,103 @@
       border-radius: var(--radius-lg);
       padding: var(--space-xl);
     }
+
+    /* Compact stat value used in dense dashboard contexts */
+    .stat-value-compact {
+      font-size: var(--text-h2);
+      font-weight: var(--weight-h2);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2xs);
+    }
+
+    /* Stat card, solo treatment: prominent, taller, breathing room */
+    .stat-card--solo {
+      padding: var(--space-2xl) var(--space-xl);
+    }
+    .stat-card--solo .stat-value {
+      font-size: var(--text-display-2);
+      font-weight: var(--weight-display-2);
+      line-height: var(--lh-display-2);
+      letter-spacing: var(--ls-display-2);
+      margin: var(--space-sm) 0 var(--space-md);
+    }
+    .stat-solo {
+      margin-top: var(--space-lg);
+    }
+
+    /* Cards showcase grid (Section 9): asymmetric 2:1, varies card weight */
+    .cards-showcase {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+    }
+    @media (max-width: 600px) {
+      .cards-showcase { grid-template-columns: 1fr; }
+    }
+
+    /* Metric strip (Section 14): 3 stats in one horizontal panel with vertical dividers */
+    .metric-strip {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: var(--space-xl);
+      padding: var(--space-xl) var(--space-2xl);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+    .metric-strip__item { min-width: 0; }
+    .metric-strip__divider {
+      width: 1px;
+      height: 56px;
+      background: var(--border);
+      align-self: center;
+    }
+    @media (max-width: 767px) {
+      .metric-strip {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+        padding: var(--space-lg);
+      }
+      .metric-strip__divider {
+        width: 100%;
+        height: 1px;
+      }
+    }
+
+    /* Error pages showcase (Section 28): feature 404 + variants column */
+    .error-pages-showcase {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+    .error-pages-showcase__variants {
+      display: grid;
+      gap: var(--space-lg);
+    }
+    @media (min-width: 700px) {
+      .error-pages-showcase {
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+        align-items: stretch;
+      }
+    }
+    .error-page-mini--featured {
+      padding: var(--space-4xl) var(--space-2xl);
+    }
+    .error-page-mini--featured .error-code {
+      font-size: 4.5rem;
+      line-height: 1;
+    }
+    .error-page-mini--compact {
+      padding: var(--space-xl) var(--space-lg);
+      min-height: 0;
+    }
+    .error-page-mini--compact .error-code {
+      font-size: var(--text-display-2);
+      margin-bottom: var(--space-sm);
+    }
+    .error-page-mini--compact .error-title { font-size: var(--text-h4); }
+    .error-page-mini--compact .error-desc { font-size: var(--text-caption); margin-bottom: var(--space-md); }
     .stat-label {
       font-size: var(--text-caption);
       font-weight: var(--weight-label);
@@ -460,14 +675,22 @@
     /* --- Table --- */
     .ds-table { width: 100%; border-collapse: collapse; font-size: var(--text-body); }
     .ds-table thead th {
-      text-align: left; font-size: var(--text-caption); font-weight: var(--weight-label);
+      text-align: left; padding: 0;
+      border-bottom: 1px solid var(--border); white-space: nowrap;
+      font-size: var(--text-caption); font-weight: var(--weight-label);
       color: var(--text-tertiary); text-transform: uppercase; letter-spacing: var(--ls-overline);
-      padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border);
-      cursor: pointer; user-select: none; white-space: nowrap;
     }
-    .ds-table thead th:hover { color: var(--text-primary); }
-    .ds-table thead th .sort-icon { display: inline-block; margin-left: var(--space-xs); opacity: 0.4; }
-    .ds-table thead th.sorted .sort-icon { opacity: 1; color: var(--accent); }
+    .ds-table thead th button {
+      display: inline-flex; align-items: center; gap: var(--space-xs);
+      width: 100%; padding: var(--space-sm) var(--space-md);
+      font: inherit; color: inherit; text-align: left; text-transform: inherit; letter-spacing: inherit;
+      background: none; border: none; cursor: pointer; user-select: none;
+      transition: color var(--duration-micro) var(--ease-default);
+    }
+    .ds-table thead th button:hover { color: var(--text-primary); }
+    .ds-table thead th .sort-icon { display: inline-block; opacity: 0.4; }
+    .ds-table thead th[aria-sort="ascending"] .sort-icon,
+    .ds-table thead th[aria-sort="descending"] .sort-icon { opacity: 1; color: var(--accent); }
     .ds-table tbody td { padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border); color: var(--text-primary); }
     .ds-table tbody tr:hover { background: var(--bg-elevated); }
     .ds-table.striped tbody tr:nth-child(even) { background: var(--bg-surface); }
@@ -478,15 +701,18 @@
     .accordion-item:last-child { border-bottom: none; }
     .accordion-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: var(--space-lg); background: var(--bg-card); cursor: pointer;
-      font-weight: var(--weight-label); color: var(--text-primary);
+      width: 100%; padding: var(--space-lg);
+      background: var(--bg-card); border: none; cursor: pointer;
+      font-family: inherit; font-size: var(--text-body);
+      font-weight: var(--weight-label); color: var(--text-primary); text-align: left;
       transition: background var(--duration-micro) var(--ease-default);
     }
     .accordion-header:hover { background: var(--bg-elevated); }
-    .accordion-chevron { transition: transform var(--duration-standard) var(--ease-default); color: var(--text-tertiary); }
-    .accordion-item.open .accordion-chevron { transform: rotate(180deg); }
-    .accordion-body { max-height: 0; overflow: hidden; transition: max-height var(--duration-standard) var(--ease-default); }
-    .accordion-item.open .accordion-body { max-height: 400px; }
+    .accordion-chevron { transition: transform var(--duration-standard) var(--ease-default); color: var(--text-tertiary); flex-shrink: 0; }
+    .accordion-header[aria-expanded="true"] .accordion-chevron { transform: rotate(180deg); }
+    .accordion-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--duration-standard) var(--ease-default); }
+    .accordion-body > .accordion-content-wrap { overflow: hidden; }
+    .accordion-header[aria-expanded="true"] + .accordion-body { grid-template-rows: 1fr; }
     .accordion-content { padding: 0 var(--space-lg) var(--space-lg); color: var(--text-secondary); font-size: var(--text-body); }
 
     /* --- Progress bars --- */
@@ -518,10 +744,10 @@
       display: inline-flex; align-items: center; justify-content: center;
       font-weight: var(--weight-label); flex-shrink: 0; position: relative; overflow: hidden;
     }
-    .avatar-xs { width: 24px; height: 24px; font-size: 10px; }
-    .avatar-sm { width: 32px; height: 32px; font-size: 12px; }
-    .avatar-md { width: 40px; height: 40px; font-size: 14px; }
-    .avatar-lg { width: 56px; height: 56px; font-size: 18px; }
+    .avatar-xs { width: 24px; height: 24px; font-size: var(--text-overline); }
+    .avatar-sm { width: 32px; height: 32px; font-size: var(--text-caption); }
+    .avatar-md { width: 40px; height: 40px; font-size: var(--text-body); }
+    .avatar-lg { width: 56px; height: 56px; font-size: var(--text-h3); }
     .avatar-initials { background: var(--accent); color: var(--text-on-accent); }
     .avatar-wrapper { position: relative; display: inline-block; }
     .avatar-status { position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--bg-card); }
@@ -578,7 +804,10 @@
     .pill-tab-btn {
       padding: var(--space-xs) var(--space-md); font-size: var(--text-caption); font-weight: var(--weight-label);
       color: var(--text-secondary); background: none; border: none; cursor: pointer;
-      border-radius: var(--radius-full); transition: all var(--duration-micro) var(--ease-default);
+      border-radius: var(--radius-full);
+      transition:
+        background-color var(--duration-micro) var(--ease-default),
+        color var(--duration-micro) var(--ease-default);
     }
     .pill-tab-btn:hover { color: var(--text-primary); }
     .pill-tab-btn[aria-selected="true"] { background: var(--accent); color: var(--text-on-accent); }
@@ -589,7 +818,11 @@
       min-width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center;
       font-size: var(--text-caption); font-weight: var(--weight-label); color: var(--text-secondary);
       background: none; border: 1px solid transparent; border-radius: var(--radius-sm);
-      cursor: pointer; transition: all var(--duration-micro) var(--ease-default);
+      cursor: pointer;
+      transition:
+        background-color var(--duration-micro) var(--ease-default),
+        border-color var(--duration-micro) var(--ease-default),
+        color var(--duration-micro) var(--ease-default);
     }
     .page-btn:hover { background: var(--bg-elevated); color: var(--text-primary); }
     .page-btn.active { background: var(--accent); color: var(--text-on-accent); border-color: var(--accent); }
@@ -644,9 +877,20 @@
     .alert-info { background: var(--info-muted); border-color: var(--info); color: var(--text-primary); }
     .alert-info .alert-icon { color: var(--info); }
 
-    /* --- Callouts --- */
-    .callout { padding: var(--space-lg); border-left: 3px solid; border-radius: 0 var(--radius-md) var(--radius-md) 0; font-size: var(--text-body); }
-    .callout-title { font-weight: var(--weight-label); margin-bottom: var(--space-xs); display: flex; align-items: center; gap: var(--space-sm); }
+    /* --- Callouts ---
+       Identity carried by leading icon + background tint + 1px full border in the variant color.
+       No colored side-stripe (forbidden by DESIGN.md). */
+    .callout {
+      padding: var(--space-lg);
+      border: 1px solid;
+      border-radius: var(--radius-md);
+      font-size: var(--text-body);
+    }
+    .callout-title {
+      font-weight: var(--weight-label);
+      margin-bottom: var(--space-xs);
+      display: flex; align-items: center; gap: var(--space-sm);
+    }
     .callout-tip { background: var(--success-muted); border-color: var(--success); }
     .callout-tip .callout-title { color: var(--success); }
     .callout-warning { background: var(--warning-muted); border-color: var(--warning); }
@@ -679,8 +923,12 @@
       position: fixed; top: 0; right: 0; width: 360px; max-width: 90vw; height: 100vh;
       background: var(--bg-card); border-left: 1px solid var(--border); box-shadow: var(--shadow-lg);
       z-index: calc(var(--z-drawer) + 1);
-      animation: slide-in-right var(--duration-standard) var(--ease-default);
-      display: flex; flex-direction: column;
+      display: none;
+      flex-direction: column;
+    }
+    .drawer-panel.open {
+      display: flex;
+      animation: slide-in-right var(--duration-emphasis) var(--ease-default);
     }
     .drawer-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-lg) var(--space-xl); border-bottom: 1px solid var(--border); }
     .drawer-body { flex: 1; padding: var(--space-xl); overflow-y: auto; color: var(--text-secondary); font-size: var(--text-body); }
@@ -714,7 +962,8 @@
       position: absolute; background: var(--tooltip-bg); border: 1px solid var(--tooltip-border);
       color: var(--tooltip-text); font-size: var(--text-caption);
       padding: var(--space-xs) var(--space-sm); border-radius: var(--radius-sm);
-      white-space: nowrap; z-index: var(--z-dropdown); pointer-events: none;
+      max-width: 240px; word-wrap: break-word;
+      z-index: var(--z-tooltip); pointer-events: none;
       opacity: 0; transition: opacity var(--duration-micro) var(--ease-default);
     }
     .tooltip-trigger:hover .tooltip, .tooltip-trigger:focus-visible .tooltip { opacity: 1; }
@@ -723,15 +972,20 @@
     .tooltip-bottom { top: calc(100% + var(--space-sm)); left: 50%; transform: translateX(-50%); }
     .tooltip-left { right: calc(100% + var(--space-sm)); top: 50%; transform: translateY(-50%); }
 
-    /* --- Empty state --- */
+    /* --- Empty state ---
+       Empty states fill the data area they replace, not a small card. The dashed inner
+       border reads "this region is empty," not "this is a contained card." */
     .empty-state {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: var(--space-3xl) var(--space-xl);
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      text-align: center; padding: var(--space-4xl) var(--space-xl);
+      background: var(--bg-card);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-lg);
+      min-height: 360px;
     }
     .empty-state-icon { color: var(--text-muted); margin-bottom: var(--space-lg); }
-    .empty-state-heading { font-size: var(--text-h3); font-weight: var(--weight-h3); color: var(--text-primary); margin-bottom: var(--space-sm); }
-    .empty-state-desc { font-size: var(--text-body); color: var(--text-secondary); margin-bottom: var(--space-xl); max-width: 320px; }
+    .empty-state-heading { font-size: var(--text-h2); font-weight: var(--weight-h2); color: var(--text-primary); margin-bottom: var(--space-sm); }
+    .empty-state-desc { font-size: var(--text-body); color: var(--text-secondary); margin-bottom: var(--space-xl); max-width: 38ch; }
 
     /* --- Error page mini --- */
     .error-page-mini {
@@ -802,6 +1056,8 @@
     /* --- Dashboard mini --- */
     .dashboard-shell { display: grid; grid-template-columns: 200px 1fr; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; min-height: 400px; }
     .dashboard-sidebar { background: var(--bg-card); border-right: 1px solid var(--border); padding: var(--space-lg) 0; }
+    .dashboard-brand { padding: var(--space-sm) var(--space-lg); margin-bottom: var(--space-md); }
+    .dashboard-brand-mark { font-family: var(--font-display); font-size: var(--text-label); color: var(--accent); }
     .dashboard-sidebar .nav-item {
       display: flex; align-items: center; gap: var(--space-sm);
       padding: var(--space-sm) var(--space-lg); font-size: var(--text-body);
@@ -809,11 +1065,38 @@
       transition: background var(--duration-micro), color var(--duration-micro);
     }
     .dashboard-sidebar .nav-item:hover { background: var(--bg-elevated); color: var(--text-primary); }
-    .dashboard-sidebar .nav-item.active { background: var(--accent-muted); color: var(--accent); }
+    .dashboard-sidebar .nav-item.active {
+      background: var(--accent-muted);
+      color: var(--accent);
+      border-left: 2px solid var(--accent);
+      padding-left: calc(var(--space-lg) - 2px);
+    }
     .dashboard-content { background: var(--bg-primary); padding: var(--space-xl); overflow: auto; }
     @media (max-width: 767px) {
-      .dashboard-shell { grid-template-columns: 1fr; }
-      .dashboard-sidebar { display: none; }
+      .dashboard-shell { grid-template-columns: 1fr; min-height: auto; }
+      .dashboard-sidebar {
+        display: flex; flex-direction: row; align-items: center;
+        gap: var(--space-xs);
+        padding: var(--space-sm);
+        border-right: none; border-bottom: 1px solid var(--border);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .dashboard-brand { display: none; }
+      .dashboard-sidebar .nav-item {
+        flex-shrink: 0;
+        min-height: 44px;
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-sm);
+        white-space: nowrap;
+      }
+      .dashboard-sidebar .nav-item.active {
+        border-left: none;
+        border-bottom: 2px solid var(--accent);
+        padding-left: var(--space-md);
+        padding-bottom: calc(var(--space-sm) - 2px);
+        border-radius: 0;
+      }
     }
 
     /* --- Theme toggle (fixed) --- */
@@ -828,15 +1111,186 @@
     }
     .theme-toggle-fixed:hover { background: var(--bg-elevated); border-color: var(--border-hover); }
 
-    /* --- Hero --- */
-    .hero { text-align: center; padding: var(--space-4xl) var(--space-xl); }
+    /* --- Colophon footer ---
+       A quiet sign-off pointing to the spec. Not a marketing footer. */
+    .colophon {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-lg);
+      padding: var(--space-2xl) 0 var(--space-3xl);
+      margin-top: var(--space-3xl);
+      border-top: 1px solid var(--border);
+      color: var(--text-tertiary);
+      font-size: var(--text-caption);
+    }
+    .colophon-mark {
+      font-family: var(--font-display);
+      font-size: var(--text-label);
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+    .colophon-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-lg);
+    }
+    .colophon-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--duration-micro) var(--ease-default);
+    }
+    .colophon-links a:hover { color: var(--accent); }
+    .colophon-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--radius-sm); }
+
+    /* --- Quick Start ---
+       Three numbered steps to adopt the system. Numbers in Cinzel echo the codex eyebrow;
+       no card chrome around steps so the page reads as a continuous spread, not a grid. */
+    .quickstart {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+      padding: var(--space-2xl) 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .quickstart-step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-lg) var(--space-xl);
+      align-items: start;
+    }
+    .quickstart-num {
+      font-family: var(--font-display);
+      font-size: var(--text-display-2);
+      font-weight: var(--weight-display-2);
+      line-height: 1;
+      color: var(--accent);
+      letter-spacing: 0;
+      grid-row: span 2;
+    }
+    .quickstart-title {
+      font-size: var(--text-h4);
+      font-weight: var(--weight-h4);
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .quickstart-code {
+      grid-column: 2;
+      position: relative;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md) var(--space-lg);
+      padding-right: 96px;
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: var(--text-caption);
+      color: var(--text-primary);
+      overflow-x: auto;
+    }
+    .quickstart-code .kw { color: var(--info); }
+    .quickstart-code .str { color: var(--success); }
+    .quickstart-code .fn { color: var(--accent); }
+    .quickstart-copy {
+      position: absolute;
+      top: var(--space-sm);
+      right: var(--space-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-2xs) var(--space-sm);
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: var(--text-caption);
+      font-weight: var(--weight-label);
+      cursor: pointer;
+      transition:
+        background-color var(--duration-micro) var(--ease-default),
+        color var(--duration-micro) var(--ease-default);
+    }
+    .quickstart-copy:hover { background: var(--bg-card); color: var(--text-primary); border-color: var(--border-hover); }
+    .quickstart-copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .quickstart-copy[data-copied="true"] { color: var(--success); border-color: var(--success); }
+
+    /* --- Hero ---
+       The brand argument lives here. Cinzel earns its place; the gold radial is a
+       quiet firelight ambient (not a hero gradient); the ornamental rule says codex,
+       not landing page; copy commits to "codex, not kit." */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: clamp(var(--space-3xl), 8vw, var(--space-4xl)) var(--space-xl);
+      isolation: isolate;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%,
+          var(--accent-subtle) 0%,
+          transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: var(--text-overline);
+      font-weight: var(--weight-overline);
+      letter-spacing: var(--ls-overline);
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--space-lg);
+    }
     .hero-title {
-      font-family: var(--font-display); font-size: var(--text-display-1); font-weight: var(--weight-display-1);
-      letter-spacing: var(--ls-display-1); line-height: var(--lh-display-1);
-      color: var(--text-primary); margin-bottom: var(--space-lg);
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6.5vw, 4.5rem);
+      font-weight: var(--weight-display-1);
+      letter-spacing: 0.01em;
+      line-height: 1.05;
+      color: var(--text-primary);
+      margin: 0 auto;
+      max-width: 16ch;
     }
     .hero-accent { color: var(--accent); }
-    .hero-desc { font-size: var(--text-h3); color: var(--text-secondary); margin-bottom: var(--space-xl); max-width: 600px; margin-left: auto; margin-right: auto; }
+    .hero-rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-md);
+      width: clamp(200px, 36%, 320px);
+      margin: var(--space-xl) auto;
+      color: var(--accent);
+    }
+    .hero-rule__line {
+      flex: 1;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.55;
+    }
+    .hero-rule__glyph {
+      font-size: 1.25rem;
+      line-height: 1;
+      transform: translateY(-0.05em);
+    }
+    .hero-lede {
+      font-size: clamp(var(--text-body), 1.4vw, var(--text-h3));
+      color: var(--text-secondary);
+      max-width: 52ch;
+      margin: 0 auto var(--space-2xl);
+      line-height: 1.55;
+    }
+    .hero-lede strong { color: var(--text-primary); font-weight: var(--weight-label); }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
 
     /* --- Select dropdown --- */
     .select-wrapper { position: relative; }
@@ -851,9 +1305,58 @@
       width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent;
       border-top: 5px solid var(--text-tertiary); pointer-events: none;
     }
+
+    /* ============================================
+       MOBILE TOUCH-TARGET COMPLIANCE
+       Below 768px, every interactive element gets a 44x44px hit area.
+       Visual size on the icon stays the same; padding and min-* expand the touch surface.
+       ============================================ */
+    @media (max-width: 767px) {
+      /* Buttons */
+      .btn-sm { min-height: 44px; }
+      .btn-icon.btn-base, .btn-icon.btn-sm { min-width: 44px; min-height: 44px; }
+
+      /* Form controls */
+      .form-input { min-height: 44px; }
+      textarea.form-input { min-height: 88px; }
+      .check-radio-label { min-height: 44px; padding: var(--space-xs) 0; }
+      .check-radio-label input[type="checkbox"],
+      .check-radio-label input[type="radio"] { width: 22px; height: 22px; }
+      .toggle-switch { width: 52px; height: 32px; }
+      .toggle-track::after { width: 26px; height: 26px; }
+      .toggle-switch input:checked + .toggle-track::after { transform: translateX(20px); }
+
+      /* Pagination */
+      .page-btn { min-width: 44px; min-height: 44px; }
+
+      /* Tabs (allow horizontal scroll instead of wrap on narrow screens) */
+      .tab-list { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .tab-list::-webkit-scrollbar { display: none; }
+      .tab-btn { min-height: 44px; flex-shrink: 0; }
+      .pill-tab-btn { min-height: 36px; }
+
+      /* Menus and items */
+      .dropdown-item { min-height: 44px; }
+      .cmd-item { min-height: 44px; }
+
+      /* Close icons */
+      .toast-close, .modal-close {
+        width: 44px; height: 44px;
+        display: inline-flex; align-items: center; justify-content: center;
+      }
+
+      /* Theme toggle pill */
+      .theme-toggle-fixed { min-height: 44px; }
+
+      /* Hero CTA shrinks gracefully */
+      .hero { padding: var(--space-3xl) var(--space-lg); }
+      .hero-title { font-size: var(--text-display-2); }
+    }
   </style>
 </head>
 <body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
 
 <!-- Mobile Menu Button -->
 <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
@@ -861,65 +1364,134 @@
 </button>
 
 <!-- Theme Toggle (Fixed) -->
-<button class="theme-toggle-fixed" id="themeToggle" aria-label="Toggle theme" onclick="toggleTheme()">
+<button class="theme-toggle-fixed" id="themeToggle" aria-pressed="false" onclick="toggleTheme()">
   <i data-lucide="sun" style="width:16px;height:16px;" id="themeIconSun"></i>
   <i data-lucide="moon" style="width:16px;height:16px;display:none;" id="themeIconMoon"></i>
-  <span id="themeLabel">Light</span>
+  <span class="sr-only">Switch to </span><span id="themeLabel">Light</span><span class="sr-only"> mode</span>
 </button>
 
 <!-- Sidebar Navigation -->
 <nav class="showcase-sidebar" id="sidebar" aria-label="Showcase Navigation">
   <div class="sidebar-title">Signature DS</div>
-  <div class="nav-group-label">Foundation</div>
-  <a href="#hero">Hero</a>
-  <a href="#colors">Color Palette</a>
-  <a href="#typography">Typography</a>
-  <a href="#spacing">Spacing</a>
-  <a href="#radii">Border Radii</a>
-  <a href="#shadows">Shadows</a>
-  <div class="nav-group-label">Components</div>
-  <a href="#buttons">Buttons</a>
-  <a href="#forms">Form Controls</a>
-  <a href="#cards">Cards</a>
-  <a href="#badges">Badges</a>
-  <a href="#table">Data Table</a>
-  <a href="#accordion">Accordion</a>
-  <a href="#progress">Progress Bars</a>
-  <a href="#stats">Stat Cards</a>
-  <a href="#avatars">Avatars</a>
-  <a href="#code">Code / KBD</a>
-  <a href="#tabs">Tabs</a>
-  <a href="#pagination">Pagination</a>
-  <a href="#breadcrumbs">Breadcrumbs</a>
-  <div class="nav-group-label">Feedback</div>
-  <a href="#toasts">Toasts</a>
-  <a href="#alerts">Alerts</a>
-  <a href="#callouts">Callouts</a>
-  <div class="nav-group-label">Overlays</div>
-  <a href="#modal">Modal</a>
-  <a href="#drawer">Drawer</a>
-  <a href="#dropdown">Dropdown Menu</a>
-  <a href="#tooltips">Tooltips</a>
-  <a href="#command-palette">Command Palette</a>
-  <div class="nav-group-label">Patterns</div>
-  <a href="#empty-state">Empty State</a>
-  <a href="#error-pages">Error Pages</a>
-  <a href="#skeletons">Skeleton Loaders</a>
-  <a href="#dividers">Dividers</a>
-  <a href="#dashboard">Dashboard</a>
+
+  <button type="button" class="nav-group-label" aria-expanded="true" aria-controls="nav-foundation">
+    <span>Foundation <span class="nav-group-count">7</span></span>
+    <i data-lucide="chevron-right" class="nav-group-chevron"></i>
+  </button>
+  <div class="nav-group-items" id="nav-foundation">
+    <a href="#hero">Hero</a>
+    <a href="#quickstart">Quick Start</a>
+    <a href="#colors">Color Palette</a>
+    <a href="#typography">Typography</a>
+    <a href="#spacing">Spacing</a>
+    <a href="#radii">Border Radii</a>
+    <a href="#shadows">Shadows</a>
+  </div>
+
+  <button type="button" class="nav-group-label" aria-expanded="false" aria-controls="nav-components">
+    <span>Components <span class="nav-group-count">13</span></span>
+    <i data-lucide="chevron-right" class="nav-group-chevron"></i>
+  </button>
+  <div class="nav-group-items" id="nav-components">
+    <a href="#buttons">Buttons</a>
+    <a href="#forms">Form Controls</a>
+    <a href="#cards">Cards</a>
+    <a href="#badges">Badges</a>
+    <a href="#table">Data Table</a>
+    <a href="#accordion">Accordion</a>
+    <a href="#progress">Progress Bars</a>
+    <a href="#stats">Stat Cards</a>
+    <a href="#avatars">Avatars</a>
+    <a href="#code">Code / KBD</a>
+    <a href="#tabs">Tabs</a>
+    <a href="#pagination">Pagination</a>
+    <a href="#breadcrumbs">Breadcrumbs</a>
+  </div>
+
+  <button type="button" class="nav-group-label" aria-expanded="false" aria-controls="nav-feedback">
+    <span>Feedback <span class="nav-group-count">3</span></span>
+    <i data-lucide="chevron-right" class="nav-group-chevron"></i>
+  </button>
+  <div class="nav-group-items" id="nav-feedback">
+    <a href="#toasts">Toasts</a>
+    <a href="#alerts">Alerts</a>
+    <a href="#callouts">Callouts</a>
+  </div>
+
+  <button type="button" class="nav-group-label" aria-expanded="false" aria-controls="nav-overlays">
+    <span>Overlays <span class="nav-group-count">5</span></span>
+    <i data-lucide="chevron-right" class="nav-group-chevron"></i>
+  </button>
+  <div class="nav-group-items" id="nav-overlays">
+    <a href="#modal">Modal</a>
+    <a href="#drawer">Drawer</a>
+    <a href="#dropdown">Dropdown Menu</a>
+    <a href="#tooltips">Tooltips</a>
+    <a href="#command-palette">Command Palette</a>
+  </div>
+
+  <button type="button" class="nav-group-label" aria-expanded="false" aria-controls="nav-patterns">
+    <span>Patterns <span class="nav-group-count">5</span></span>
+    <i data-lucide="chevron-right" class="nav-group-chevron"></i>
+  </button>
+  <div class="nav-group-items" id="nav-patterns">
+    <a href="#empty-state">Empty State</a>
+    <a href="#error-pages">Error Pages</a>
+    <a href="#skeletons">Skeleton Loaders</a>
+    <a href="#dividers">Dividers</a>
+    <a href="#dashboard">Dashboard</a>
+  </div>
 </nav>
 
 <!-- Main Content -->
-<main class="showcase-main">
+<main class="showcase-main" id="main" tabindex="-1">
 
   <!-- 1. Hero -->
   <section class="hero ds-section" id="hero">
+    <span class="hero-eyebrow">The Firelight Codex</span>
     <h1 class="hero-title">Signature <span class="hero-accent">Design System</span></h1>
-    <p class="hero-desc">A complete token-driven design system for SaaS applications. Dark and light themes, unified by a warm gold accent.</p>
-    <button class="btn btn-primary btn-lg" onclick="toggleTheme()">
-      <i data-lucide="palette" style="width:18px;height:18px;"></i>
-      Toggle Theme
-    </button>
+    <div class="hero-rule" aria-hidden="true">
+      <span class="hero-rule__line"></span>
+      <span class="hero-rule__glyph">&#x2756;</span>
+      <span class="hero-rule__line"></span>
+    </div>
+    <p class="hero-lede">A token codex, not a kit. Two themes (cool blue-black night, warm cream-parchment day). One thread of warm gold across both. <strong>Every component documented; nothing decorative.</strong></p>
+    <div class="hero-actions">
+      <a href="#colors" class="btn btn-primary btn-lg">
+        Browse the tokens
+        <i data-lucide="arrow-down" style="width:18px;height:18px;"></i>
+      </a>
+      <button class="btn btn-default btn-lg" onclick="toggleTheme()">
+        <i data-lucide="palette" style="width:18px;height:18px;"></i>
+        See it in <span id="heroThemeLabel">light</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Quick Start (between Hero and Foundation tokens) -->
+  <section class="ds-section" id="quickstart">
+    <h2 class="ds-section-title">Quick Start</h2>
+    <p class="ds-section-desc">Three lines and you’re set up. Click a swatch later to copy <code>var()</code> references straight into your CSS.</p>
+    <div class="quickstart">
+      <div class="quickstart-step">
+        <div class="quickstart-num">01</div>
+        <h3 class="quickstart-title">Import the foundation</h3>
+        <div class="quickstart-code">
+<span class="kw">import</span> <span class="str">'./globals.css'</span>;<button type="button" class="quickstart-copy" onclick="copyCode(this)" aria-label="Copy import statement"><i data-lucide="copy" style="width:12px;height:12px;"></i> <span class="copy-label">Copy</span></button></div>
+      </div>
+      <div class="quickstart-step">
+        <div class="quickstart-num">02</div>
+        <h3 class="quickstart-title">Set the theme on <code>&lt;html&gt;</code></h3>
+        <div class="quickstart-code">
+&lt;<span class="kw">html</span> <span class="fn">data-theme</span>=<span class="str">"dark"</span>&gt;<button type="button" class="quickstart-copy" onclick="copyCode(this)" aria-label="Copy data-theme attribute"><i data-lucide="copy" style="width:12px;height:12px;"></i> <span class="copy-label">Copy</span></button></div>
+      </div>
+      <div class="quickstart-step">
+        <div class="quickstart-num">03</div>
+        <h3 class="quickstart-title">Use tokens via <code>var()</code></h3>
+        <div class="quickstart-code">
+.<span class="fn">card</span> { <span class="kw">background</span>: <span class="fn">var</span>(<span class="str">--bg-card</span>); <span class="kw">padding</span>: <span class="fn">var</span>(<span class="str">--space-xl</span>); }<button type="button" class="quickstart-copy" onclick="copyCode(this)" aria-label="Copy CSS example"><i data-lucide="copy" style="width:12px;height:12px;"></i> <span class="copy-label">Copy</span></button></div>
+      </div>
+    </div>
   </section>
 
   <!-- 2. Color Palette -->
@@ -939,16 +1511,16 @@
     <h2 class="ds-section-title">Typography</h2>
     <p class="ds-section-desc">Full type scale using Inter for UI and Cinzel for display headings.</p>
     <div class="flex-col" style="gap: var(--space-xl);">
-      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Display 1 - 3.25rem / Cinzel 700</div><div class="display-1">The Quick Brown Fox</div></div>
-      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Display 2 - 2.25rem / Cinzel 700</div><div class="display-2">The Quick Brown Fox</div></div>
-      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Heading 1 - 1.75rem / Inter 600</div><div class="heading-1">The Quick Brown Fox</div></div>
-      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Heading 2 - 1.375rem / Inter 600</div><div class="heading-2">The Quick Brown Fox</div></div>
-      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Heading 3 - 1.125rem / Inter 600</div><div class="heading-3">The Quick Brown Fox</div></div>
-      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Heading 4 - 1rem / Inter 600</div><div class="heading-4">The Quick Brown Fox</div></div>
-      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Body - 0.875rem / Inter 400</div><div class="text-body">The quick brown fox jumps over the lazy dog. This is body text used for paragraphs and general content.</div></div>
-      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Label - 0.8125rem / Inter 500</div><div class="text-label">Form Label Text</div></div>
-      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Caption - 0.75rem / Inter 400</div><div class="text-caption" style="color:var(--text-secondary);">Caption text for supplementary information and metadata.</div></div>
-      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Overline - 0.6875rem / Inter 600 / UPPERCASE</div><div class="text-overline">Overline Category Label</div></div>
+      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Display 1 / 3.25rem / Cinzel 700</div><div class="display-1">The Firelight Codex</div></div>
+      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Display 2 / 2.25rem / Cinzel 700</div><div class="display-2">Signature in Gold</div></div>
+      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Heading 1 / 1.75rem / Inter 600</div><div class="heading-1">Cool dark, warm light, one thread</div></div>
+      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Heading 2 / 1.375rem / Inter 600</div><div class="heading-2">Two themes, one signature</div></div>
+      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Heading 3 / 1.125rem / Inter 600</div><div class="heading-3">Tokens documented; nothing decorative</div></div>
+      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Heading 4 / 1rem / Inter 600</div><div class="heading-4">Component patterns, in order</div></div>
+      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Body / 0.875rem / Inter 400</div><div class="text-body" style="max-width:65ch;">Every spacing token, color value, and shadow comes from a defined scale. Components reference tokens via <code>var()</code> and stay valid across both themes; nothing arbitrary lives in component code.</div></div>
+      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Label / 0.8125rem / Inter 500</div><div class="text-label">Display name</div></div>
+      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Caption / 0.75rem / Inter 400</div><div class="text-caption" style="color:var(--text-secondary);">12 components shown · last updated today</div></div>
+      <div><div class="text-overline" style="color:var(--text-muted);margin-bottom:var(--space-xs);">Overline / 0.6875rem / Inter 600 / UPPERCASE</div><div class="text-overline">Foundation token</div></div>
     </div>
   </section>
 
@@ -1011,7 +1583,7 @@
     <p class="ds-section-desc">Inputs, textareas, selects, checkboxes, radios, and toggles with visible labels.</p>
     <div class="grid-2">
       <div class="form-group"><label class="form-label" for="input-name">Full Name</label><input class="form-input" type="text" id="input-name" placeholder="Jane Doe" /><span class="form-hint">Enter your first and last name.</span></div>
-      <div class="form-group"><label class="form-label" for="input-email">Email Address</label><input class="form-input error" type="email" id="input-email" value="invalid-email" /><span class="form-error">Please enter a valid email address.</span></div>
+      <div class="form-group"><label class="form-label" for="input-email">Email address</label><input class="form-input error" type="email" id="input-email" value="invalid-email" aria-invalid="true" aria-describedby="input-email-error" /><span class="form-error" id="input-email-error" role="alert">Email addresses need an @ symbol. Try: name@example.com</span></div>
       <div class="form-group"><label class="form-label" for="input-search">Search</label><div style="position:relative;"><input class="form-input" type="search" id="input-search" placeholder="Search..." style="padding-left:var(--space-2xl);" /><i data-lucide="search" style="position:absolute;left:var(--space-sm);top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--text-muted);"></i></div></div>
       <div class="form-group"><label class="form-label" for="input-select">Category</label><div class="select-wrapper"><select id="input-select" class="form-input"><option value="">Choose...</option><option value="design">Design</option><option value="engineering">Engineering</option><option value="marketing">Marketing</option></select></div></div>
       <div class="form-group" style="grid-column:span 2;"><label class="form-label" for="input-textarea">Message</label><textarea class="form-input" id="input-textarea" placeholder="Type your message here..."></textarea></div>
@@ -1024,12 +1596,25 @@
   <!-- 9. Cards -->
   <section class="ds-section" id="cards">
     <h2 class="ds-section-title">Cards</h2>
-    <p class="ds-section-desc">Basic, interactive, compact, and stat/KPI card variants.</p>
-    <div class="grid-2">
-      <div class="card"><div class="card-title">Basic Card</div><div class="card-body">A simple content container with border and padding. Uses bg-card for background.</div></div>
-      <div class="card card-interactive" style="cursor:pointer;"><div class="card-title">Interactive Card</div><div class="card-body">Hover over this card to see the elevation change and border highlight.</div></div>
-      <div class="card card-compact"><div class="card-title">Compact Card</div><div class="card-body">Tighter padding for dense layouts and sidebar panels.</div></div>
-      <div class="stat-card"><div class="stat-label">Monthly Revenue</div><div class="stat-value">$48,250</div><span class="stat-trend up"><i data-lucide="trending-up" style="width:14px;height:14px;"></i> +12.5%</span></div>
+    <p class="ds-section-desc">Cards aren’t one shape. The four variants below sit at different sizes on purpose, so the page reads as composition, not a rectangle index.</p>
+    <div class="cards-showcase">
+      <div class="card card-interactive cards-showcase__lead" tabindex="0">
+        <div class="card-title">Interactive card</div>
+        <div class="card-body">Hover or focus to see the elevation rise and the border accent. Use this when the whole card is a target, not when there are buttons inside it.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Monthly revenue</div>
+        <div class="stat-value">$48,250</div>
+        <span class="stat-trend up"><i data-lucide="trending-up" style="width:14px;height:14px;"></i> +12.5%</span>
+      </div>
+      <div class="card">
+        <div class="card-title">Basic card</div>
+        <div class="card-body">The default surface. Use only when content is genuinely distinct from its surroundings.</div>
+      </div>
+      <div class="card card-compact">
+        <div class="card-title">Compact card</div>
+        <div class="card-body">Tighter padding for dense layouts and sidebar panels.</div>
+      </div>
     </div>
   </section>
 
@@ -1054,7 +1639,12 @@
     <p class="ds-section-desc">Sortable columns, hover highlighting, and striped rows. Click headers to cycle sort.</p>
     <div style="overflow-x:auto;">
       <table class="ds-table striped" id="demoTable">
-        <thead><tr><th onclick="cycleSort(this)">Name <span class="sort-icon"><i data-lucide="chevrons-up-down" style="width:12px;height:12px;"></i></span></th><th onclick="cycleSort(this)">Role <span class="sort-icon"><i data-lucide="chevrons-up-down" style="width:12px;height:12px;"></i></span></th><th onclick="cycleSort(this)">Status <span class="sort-icon"><i data-lucide="chevrons-up-down" style="width:12px;height:12px;"></i></span></th><th onclick="cycleSort(this)">Revenue <span class="sort-icon"><i data-lucide="chevrons-up-down" style="width:12px;height:12px;"></i></span></th></tr></thead>
+        <thead><tr>
+          <th aria-sort="none"><button type="button" onclick="cycleSort(this)">Name <span class="sort-icon"><i data-lucide="chevrons-up-down" style="width:12px;height:12px;"></i></span></button></th>
+          <th aria-sort="none"><button type="button" onclick="cycleSort(this)">Role <span class="sort-icon"><i data-lucide="chevrons-up-down" style="width:12px;height:12px;"></i></span></button></th>
+          <th aria-sort="none"><button type="button" onclick="cycleSort(this)">Status <span class="sort-icon"><i data-lucide="chevrons-up-down" style="width:12px;height:12px;"></i></span></button></th>
+          <th aria-sort="none"><button type="button" onclick="cycleSort(this)">Revenue <span class="sort-icon"><i data-lucide="chevrons-up-down" style="width:12px;height:12px;"></i></span></button></th>
+        </tr></thead>
         <tbody>
           <tr><td>Alice Johnson</td><td>Designer</td><td><span class="badge badge-success">Active</span></td><td>$12,400</td></tr>
           <tr><td>Bob Smith</td><td>Engineer</td><td><span class="badge badge-success">Active</span></td><td>$18,200</td></tr>
@@ -1071,9 +1661,18 @@
     <h2 class="ds-section-title">Accordion</h2>
     <p class="ds-section-desc">Collapsible sections with chevron rotation animation.</p>
     <div class="accordion">
-      <div class="accordion-item open"><div class="accordion-header" onclick="toggleAccordion(this)"><span>What tokens does the design system provide?</span><i data-lucide="chevron-down" class="accordion-chevron" style="width:16px;height:16px;"></i></div><div class="accordion-body"><div class="accordion-content">Colors, typography, spacing, border radii, shadows, z-index layers, and motion durations. Every visual property is tokenized and works across both dark and light themes.</div></div></div>
-      <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><span>Does this work without Tailwind?</span><i data-lucide="chevron-down" class="accordion-chevron" style="width:16px;height:16px;"></i></div><div class="accordion-body"><div class="accordion-content">Yes. The entire system is built on CSS custom properties defined in globals.css. Tailwind is an optional convenience layer. This showcase page uses zero Tailwind.</div></div></div>
-      <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><span>How do I add this to my project?</span><i data-lucide="chevron-down" class="accordion-chevron" style="width:16px;height:16px;"></i></div><div class="accordion-body"><div class="accordion-content">Import globals.css in your root layout, set data-theme on your html element, and use var() tokens in your CSS. With Tailwind, use arbitrary values like bg-[var(--bg-card)].</div></div></div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-header" aria-expanded="true" aria-controls="acc-1" id="acc-h-1" onclick="toggleAccordion(this)"><span>What tokens does the design system provide?</span><i data-lucide="chevron-down" class="accordion-chevron" style="width:16px;height:16px;"></i></button>
+        <div class="accordion-body" id="acc-1" role="region" aria-labelledby="acc-h-1"><div class="accordion-content-wrap"><div class="accordion-content">Colors, typography, spacing, border radii, shadows, z-index layers, and motion durations. Every visual property is tokenized and works across both dark and light themes.</div></div></div>
+      </div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-header" aria-expanded="false" aria-controls="acc-2" id="acc-h-2" onclick="toggleAccordion(this)"><span>Does this work without Tailwind?</span><i data-lucide="chevron-down" class="accordion-chevron" style="width:16px;height:16px;"></i></button>
+        <div class="accordion-body" id="acc-2" role="region" aria-labelledby="acc-h-2"><div class="accordion-content-wrap"><div class="accordion-content">Yes. The entire system is built on CSS custom properties defined in globals.css. Tailwind is an optional convenience layer. This showcase page uses zero Tailwind.</div></div></div>
+      </div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-header" aria-expanded="false" aria-controls="acc-3" id="acc-h-3" onclick="toggleAccordion(this)"><span>How do I add this to my project?</span><i data-lucide="chevron-down" class="accordion-chevron" style="width:16px;height:16px;"></i></button>
+        <div class="accordion-body" id="acc-3" role="region" aria-labelledby="acc-h-3"><div class="accordion-content-wrap"><div class="accordion-content">Import globals.css in your root layout, set data-theme on your html element, and use var() tokens in your CSS. With Tailwind, use arbitrary values like bg-[var(--bg-card)].</div></div></div>
+      </div>
     </div>
   </section>
 
@@ -1091,11 +1690,34 @@
   <!-- 14. Stat Cards -->
   <section class="ds-section" id="stats">
     <h2 class="ds-section-title">Stat Cards</h2>
-    <p class="ds-section-desc">KPI cards with trend indicators for dashboard layouts.</p>
-    <div class="grid-3">
-      <div class="stat-card"><div class="stat-label">Total Users</div><div class="stat-value">12,847</div><span class="stat-trend up"><i data-lucide="trending-up" style="width:14px;height:14px;"></i> +8.2% this month</span></div>
-      <div class="stat-card"><div class="stat-label">Conversion Rate</div><div class="stat-value">3.24%</div><span class="stat-trend down"><i data-lucide="trending-down" style="width:14px;height:14px;"></i> -1.1% this week</span></div>
-      <div class="stat-card"><div class="stat-label">Active Subscriptions</div><div class="stat-value">4,129</div><span class="stat-trend up"><i data-lucide="trending-up" style="width:14px;height:14px;"></i> +15.3% this quarter</span></div>
+    <p class="ds-section-desc">Two valid uses: a single horizontal panel of related metrics (top), or one card on its own when a single number carries the page (bottom).</p>
+
+    <div class="metric-strip">
+      <div class="metric-strip__item">
+        <div class="stat-label">Total users</div>
+        <div class="stat-value">12,847</div>
+        <span class="stat-trend up"><i data-lucide="trending-up" style="width:14px;height:14px;"></i> +8.2% this month</span>
+      </div>
+      <div class="metric-strip__divider" aria-hidden="true"></div>
+      <div class="metric-strip__item">
+        <div class="stat-label">Conversion rate</div>
+        <div class="stat-value">3.24%</div>
+        <span class="stat-trend down"><i data-lucide="trending-down" style="width:14px;height:14px;"></i> -1.1% this week</span>
+      </div>
+      <div class="metric-strip__divider" aria-hidden="true"></div>
+      <div class="metric-strip__item">
+        <div class="stat-label">Active subscriptions</div>
+        <div class="stat-value">4,129</div>
+        <span class="stat-trend up"><i data-lucide="trending-up" style="width:14px;height:14px;"></i> +15.3% this quarter</span>
+      </div>
+    </div>
+
+    <div class="stat-solo">
+      <div class="stat-card stat-card--solo">
+        <div class="stat-label">Net retention</div>
+        <div class="stat-value">112%</div>
+        <span class="stat-trend up"><i data-lucide="trending-up" style="width:14px;height:14px;"></i> Healthy. Cohorts expanding faster than they churn.</span>
+      </div>
     </div>
   </section>
 
@@ -1164,10 +1786,10 @@
     <h2 class="ds-section-title">Alerts / Banners</h2>
     <p class="ds-section-desc">Inline alert messages for all four semantic states.</p>
     <div class="flex-col">
-      <div class="alert alert-success"><i data-lucide="check-circle" class="alert-icon" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;"></i><div><strong>Success!</strong> Your changes have been saved successfully.</div></div>
-      <div class="alert alert-error"><i data-lucide="x-circle" class="alert-icon" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;"></i><div><strong>Error.</strong> Unable to process your request. Please try again.</div></div>
-      <div class="alert alert-warning"><i data-lucide="alert-triangle" class="alert-icon" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;"></i><div><strong>Warning.</strong> Your session will expire in 5 minutes.</div></div>
-      <div class="alert alert-info"><i data-lucide="info" class="alert-icon" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;"></i><div><strong>Note:</strong> A new version of the design system is available.</div></div>
+      <div class="alert alert-success"><i data-lucide="check-circle" class="alert-icon" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;"></i><div><strong>Saved.</strong> Your changes are live across all environments.</div></div>
+      <div class="alert alert-error"><i data-lucide="x-circle" class="alert-icon" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;"></i><div><strong>Couldn’t save.</strong> Two fields below need attention before you can continue.</div></div>
+      <div class="alert alert-warning"><i data-lucide="alert-triangle" class="alert-icon" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;"></i><div><strong>Session ends in 5 minutes.</strong> Save your draft so you don’t lose work.</div></div>
+      <div class="alert alert-info"><i data-lucide="info" class="alert-icon" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;"></i><div><strong>v2.1 available.</strong> Refresh to load the latest tokens.</div></div>
     </div>
   </section>
 
@@ -1186,14 +1808,14 @@
   <!-- 23. Modal -->
   <section class="ds-section" id="modal">
     <h2 class="ds-section-title">Modal</h2>
-    <p class="ds-section-desc">Centered dialog with backdrop, header, body, footer, and focus trap.</p>
-    <button class="btn btn-primary btn-base" onclick="openModal()">Open Modal</button>
+    <p class="ds-section-desc">Destructive confirmation pattern: <code>role="alertdialog"</code>, focus trapped on Cancel, danger-styled confirm, focus returns to the trigger on close.</p>
+    <button class="btn btn-default btn-base" onclick="openModal()"><i data-lucide="trash-2" style="width:16px;height:16px;color:var(--error);"></i> Delete project</button>
   </section>
-  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-overlay" id="modalOverlay" role="alertdialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
     <div class="modal-panel">
-      <div class="modal-header"><h3 class="modal-title" id="modalTitle">Confirm Action</h3><button class="modal-close" onclick="closeModal()" aria-label="Close modal"><i data-lucide="x" style="width:18px;height:18px;"></i></button></div>
-      <div class="modal-body">Are you sure you want to proceed? This demonstrates the modal component with proper ARIA attributes and focus management.</div>
-      <div class="modal-footer"><button class="btn btn-default btn-base" onclick="closeModal()">Cancel</button><button class="btn btn-primary btn-base" onclick="closeModal()">Confirm</button></div>
+      <div class="modal-header"><h3 class="modal-title" id="modalTitle">Delete &lsquo;Q4 launch plan&rsquo;?</h3><button class="modal-close" onclick="closeModal()" aria-label="Close dialog"><i data-lucide="x" style="width:18px;height:18px;"></i></button></div>
+      <div class="modal-body" id="modalDesc">This permanently removes the project and its 47 tasks. You cannot undo this.</div>
+      <div class="modal-footer"><button class="btn btn-default btn-base" id="modalCancel" onclick="closeModal()">Cancel</button><button class="btn btn-danger btn-base" onclick="closeModal()">Delete project</button></div>
     </div>
   </div>
 
@@ -1204,7 +1826,7 @@
     <button class="btn btn-primary btn-base" onclick="openDrawer()">Open Drawer</button>
   </section>
   <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
-  <div class="drawer-panel" id="drawerPanel" style="display:none;">
+  <div class="drawer-panel" id="drawerPanel">
     <div class="drawer-header"><h3 class="modal-title">Drawer Panel</h3><button class="modal-close" onclick="closeDrawer()" aria-label="Close drawer"><i data-lucide="x" style="width:18px;height:18px;"></i></button></div>
     <div class="drawer-body"><p style="margin-bottom:var(--space-lg);">This is a slide-over drawer panel with a backdrop overlay.</p><div class="form-group" style="margin-bottom:var(--space-lg);"><label class="form-label" for="drawer-input">Filter</label><input class="form-input" type="text" id="drawer-input" placeholder="Search filters..." /></div><button class="btn btn-primary btn-base" onclick="closeDrawer()">Apply</button></div>
   </div>
@@ -1214,13 +1836,13 @@
     <h2 class="ds-section-title">Dropdown Menu</h2>
     <p class="ds-section-desc">Action menu triggered by a button click.</p>
     <div class="dropdown-wrapper" id="dropdownWrapper">
-      <button class="btn btn-default btn-base" onclick="toggleDropdown()">Actions <i data-lucide="chevron-down" style="width:14px;height:14px;"></i></button>
-      <div class="dropdown-menu" id="dropdownMenu">
-        <button class="dropdown-item" onclick="toggleDropdown()"><i data-lucide="edit" style="width:14px;height:14px;color:var(--text-tertiary);"></i> Edit</button>
-        <button class="dropdown-item" onclick="toggleDropdown()"><i data-lucide="copy" style="width:14px;height:14px;color:var(--text-tertiary);"></i> Duplicate</button>
-        <button class="dropdown-item" onclick="toggleDropdown()"><i data-lucide="archive" style="width:14px;height:14px;color:var(--text-tertiary);"></i> Archive</button>
-        <div class="dropdown-separator"></div>
-        <button class="dropdown-item" onclick="toggleDropdown()" style="color:var(--error);"><i data-lucide="trash-2" style="width:14px;height:14px;"></i> Delete</button>
+      <button class="btn btn-default btn-base" id="dropdownTrigger" aria-haspopup="menu" aria-expanded="false" aria-controls="dropdownMenu" onclick="toggleDropdown()">Actions <i data-lucide="chevron-down" style="width:14px;height:14px;"></i></button>
+      <div class="dropdown-menu" id="dropdownMenu" role="menu" aria-labelledby="dropdownTrigger">
+        <button class="dropdown-item" role="menuitem" onclick="toggleDropdown()"><i data-lucide="edit" style="width:14px;height:14px;color:var(--text-tertiary);"></i> Edit</button>
+        <button class="dropdown-item" role="menuitem" onclick="toggleDropdown()"><i data-lucide="copy" style="width:14px;height:14px;color:var(--text-tertiary);"></i> Duplicate</button>
+        <button class="dropdown-item" role="menuitem" onclick="toggleDropdown()"><i data-lucide="archive" style="width:14px;height:14px;color:var(--text-tertiary);"></i> Archive</button>
+        <div class="dropdown-separator" role="separator"></div>
+        <button class="dropdown-item" role="menuitem" onclick="toggleDropdown()" style="color:var(--error);"><i data-lucide="trash-2" style="width:14px;height:14px;"></i> Delete</button>
       </div>
     </div>
   </section>
@@ -1241,17 +1863,34 @@
   <section class="ds-section" id="empty-state">
     <h2 class="ds-section-title">Empty State</h2>
     <p class="ds-section-desc">Centered placeholder shown when no data is available.</p>
-    <div class="empty-state"><div class="empty-state-icon"><i data-lucide="inbox" style="width:48px;height:48px;"></i></div><div class="empty-state-heading">No projects yet</div><div class="empty-state-desc">Create your first project to get started. Projects help you organize your work and collaborate with your team.</div><button class="btn btn-primary btn-base"><i data-lucide="plus" style="width:16px;height:16px;"></i> Create Project</button></div>
+    <div class="empty-state"><div class="empty-state-icon"><i data-lucide="inbox" style="width:48px;height:48px;"></i></div><div class="empty-state-heading">No projects yet</div><div class="empty-state-desc">Spin up your first project. Projects collect tasks, files, and people in one place.</div><button class="btn btn-primary btn-base"><i data-lucide="plus" style="width:16px;height:16px;"></i> Create project</button></div>
   </section>
 
   <!-- 28. Error Pages -->
   <section class="ds-section" id="error-pages">
     <h2 class="ds-section-title">Error Pages</h2>
-    <p class="ds-section-desc">Miniature error page demos showing Cinzel status codes in the signature gold accent.</p>
-    <div class="grid-3">
-      <div class="error-page-mini"><div class="error-code">404</div><div class="error-title">Page Not Found</div><div class="error-desc">The page you requested could not be found.</div><button class="btn btn-primary btn-sm">Go Home</button></div>
-      <div class="error-page-mini"><div class="error-code">500</div><div class="error-title">Server Error</div><div class="error-desc">Something went wrong on our end.</div><button class="btn btn-primary btn-sm">Try Again</button></div>
-      <div class="error-page-mini"><div class="error-code">503</div><div class="error-title">Maintenance</div><div class="error-desc">We are performing scheduled maintenance.</div><button class="btn btn-primary btn-sm">Check Status</button></div>
+    <p class="ds-section-desc">404 is the one users see most, so it earns the prominent slot. 500 and 503 reuse the same chrome at smaller scale.</p>
+    <div class="error-pages-showcase">
+      <div class="error-page-mini error-page-mini--featured">
+        <div class="error-code">404</div>
+        <div class="error-title">Page not found</div>
+        <div class="error-desc">We couldn’t find that page. It may have moved or been removed.</div>
+        <button class="btn btn-primary btn-base">Go home</button>
+      </div>
+      <div class="error-pages-showcase__variants">
+        <div class="error-page-mini error-page-mini--compact">
+          <div class="error-code">500</div>
+          <div class="error-title">Server error</div>
+          <div class="error-desc">Our servers hit a snag. We’re already on it.</div>
+          <button class="btn btn-primary btn-sm">Try again</button>
+        </div>
+        <div class="error-page-mini error-page-mini--compact">
+          <div class="error-code">503</div>
+          <div class="error-title">Under maintenance</div>
+          <div class="error-desc">We’re upgrading the system. Back in a few minutes.</div>
+          <button class="btn btn-primary btn-sm">Check status</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1302,24 +1941,24 @@
   </section>
 
   <!-- 32. Dashboard Example -->
-  <section class="ds-section" id="dashboard">
-    <h2 class="ds-section-title">Dashboard Example</h2>
-    <p class="ds-section-desc">Integrated layout showing sidebar navigation, stat cards, and a data table together.</p>
+  <section class="ds-section ds-section--finale" id="dashboard">
+    <h2 class="ds-section-title">In Composition</h2>
+    <p class="ds-section-desc">The components above, working together. Sidebar nav (with the 2px gold left-border on the active item), a metric strip, a data table, status badges. The brand thread ties it without dominating.</p>
     <div class="dashboard-shell">
-      <div class="dashboard-sidebar">
-        <div style="padding:var(--space-sm) var(--space-lg);margin-bottom:var(--space-md);"><span style="font-family:var(--font-display);font-size:var(--text-label);color:var(--accent);">Acme</span></div>
-        <div class="nav-item active"><i data-lucide="layout-dashboard" style="width:16px;height:16px;"></i> Dashboard</div>
-        <div class="nav-item"><i data-lucide="users" style="width:16px;height:16px;"></i> Users</div>
-        <div class="nav-item"><i data-lucide="bar-chart-3" style="width:16px;height:16px;"></i> Analytics</div>
-        <div class="nav-item"><i data-lucide="file-text" style="width:16px;height:16px;"></i> Reports</div>
-        <div class="nav-item"><i data-lucide="settings" style="width:16px;height:16px;"></i> Settings</div>
-      </div>
+      <nav class="dashboard-sidebar" aria-label="Dashboard">
+        <div class="dashboard-brand"><span class="dashboard-brand-mark">Acme</span></div>
+        <a class="nav-item active" href="#dashboard" aria-current="page" onclick="event.preventDefault()"><i data-lucide="layout-dashboard" style="width:16px;height:16px;"></i> Dashboard</a>
+        <a class="nav-item" href="#dashboard" onclick="event.preventDefault()"><i data-lucide="users" style="width:16px;height:16px;"></i> Users</a>
+        <a class="nav-item" href="#dashboard" onclick="event.preventDefault()"><i data-lucide="bar-chart-3" style="width:16px;height:16px;"></i> Analytics</a>
+        <a class="nav-item" href="#dashboard" onclick="event.preventDefault()"><i data-lucide="file-text" style="width:16px;height:16px;"></i> Reports</a>
+        <a class="nav-item" href="#dashboard" onclick="event.preventDefault()"><i data-lucide="settings" style="width:16px;height:16px;"></i> Settings</a>
+      </nav>
       <div class="dashboard-content">
         <h3 class="heading-3" style="margin-bottom:var(--space-lg);">Overview</h3>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:var(--space-md);margin-bottom:var(--space-xl);">
-          <div class="stat-card card-compact"><div class="stat-label">Revenue</div><div style="font-size:var(--text-h2);font-weight:var(--weight-h2);color:var(--text-primary);">$48.2K</div><span class="stat-trend up" style="font-size:10px;"><i data-lucide="trending-up" style="width:12px;height:12px;"></i> +12%</span></div>
-          <div class="stat-card card-compact"><div class="stat-label">Users</div><div style="font-size:var(--text-h2);font-weight:var(--weight-h2);color:var(--text-primary);">2,847</div><span class="stat-trend up" style="font-size:10px;"><i data-lucide="trending-up" style="width:12px;height:12px;"></i> +8%</span></div>
-          <div class="stat-card card-compact"><div class="stat-label">Orders</div><div style="font-size:var(--text-h2);font-weight:var(--weight-h2);color:var(--text-primary);">1,024</div><span class="stat-trend down" style="font-size:10px;"><i data-lucide="trending-down" style="width:12px;height:12px;"></i> -3%</span></div>
+          <div class="stat-card card-compact"><div class="stat-label">Revenue</div><div class="stat-value-compact">$48.2K</div><span class="stat-trend up"><i data-lucide="trending-up" style="width:12px;height:12px;"></i> +12%</span></div>
+          <div class="stat-card card-compact"><div class="stat-label">Users</div><div class="stat-value-compact">2,847</div><span class="stat-trend up"><i data-lucide="trending-up" style="width:12px;height:12px;"></i> +8%</span></div>
+          <div class="stat-card card-compact"><div class="stat-label">Orders</div><div class="stat-value-compact">1,024</div><span class="stat-trend down"><i data-lucide="trending-down" style="width:12px;height:12px;"></i> -3%</span></div>
         </div>
         <div style="overflow-x:auto;">
           <table class="ds-table"><thead><tr><th>Customer</th><th>Status</th><th>Amount</th></tr></thead>
@@ -1328,6 +1967,17 @@
       </div>
     </div>
   </section>
+
+  <!-- Colophon -->
+  <footer class="colophon">
+    <span class="colophon-mark">Signature DS</span>
+    <nav class="colophon-links" aria-label="Project documentation">
+      <a href="STYLE_GUIDE.md">Full style guide</a>
+      <a href="DESIGN.md">Design tokens (DESIGN.md)</a>
+      <a href="CLAUDE.md">Rules for AI agents</a>
+      <a href="README.md">Read me</a>
+    </nav>
+  </footer>
 
 </main>
 
@@ -1360,6 +2010,9 @@ function updateThemeUI() {
   document.getElementById('themeIconSun').style.display = isDark ? 'block' : 'none';
   document.getElementById('themeIconMoon').style.display = isDark ? 'none' : 'block';
   document.getElementById('themeLabel').textContent = isDark ? 'Light' : 'Dark';
+  var heroLabel = document.getElementById('heroThemeLabel');
+  if (heroLabel) heroLabel.textContent = isDark ? 'light' : 'dark';
+  document.getElementById('themeToggle').setAttribute('aria-pressed', isDark ? 'false' : 'true');
 }
 
 // Swatches
@@ -1378,14 +2031,76 @@ function buildSwatches() {
     if (!c) return;
     c.textContent = '';
     swatchDefs[cid].forEach(function(def) {
-      var s = document.createElement('div'); s.className = 'swatch';
+      var s = document.createElement('button');
+      s.type = 'button';
+      s.className = 'swatch';
+      s.setAttribute('aria-label', 'Copy var(' + def[0] + ') to clipboard');
+      s.dataset.var = def[0];
+      s.addEventListener('click', function() { copyToken(s, def[0]); });
+
       var colorDiv = document.createElement('div'); colorDiv.className = 'swatch-color'; colorDiv.style.background = 'var(' + def[0] + ')';
-      var infoDiv = document.createElement('div'); infoDiv.className = 'swatch-info';
-      var nameDiv = document.createElement('div'); nameDiv.className = 'swatch-name'; nameDiv.textContent = def[1];
-      var valDiv = document.createElement('div'); valDiv.className = 'swatch-value'; valDiv.setAttribute('data-var', def[0]); valDiv.textContent = getCV(def[0]);
-      infoDiv.appendChild(nameDiv); infoDiv.appendChild(valDiv);
-      s.appendChild(colorDiv); s.appendChild(infoDiv); c.appendChild(s);
+
+      var infoDiv = document.createElement('span'); infoDiv.className = 'swatch-info';
+      var nameDiv = document.createElement('span'); nameDiv.className = 'swatch-name'; nameDiv.textContent = def[1];
+      var valDiv = document.createElement('span'); valDiv.className = 'swatch-value'; valDiv.setAttribute('data-var', def[0]); valDiv.textContent = getCV(def[0]);
+      infoDiv.appendChild(nameDiv);
+      infoDiv.appendChild(valDiv);
+
+      var cta = document.createElement('span'); cta.className = 'swatch-cta';
+      var icon = document.createElement('i'); icon.setAttribute('data-lucide', 'copy'); icon.style.cssText = 'width:12px;height:12px;';
+      var ctaText = document.createElement('span'); ctaText.textContent = 'Copy';
+      cta.appendChild(icon); cta.appendChild(ctaText);
+
+      s.appendChild(colorDiv); s.appendChild(infoDiv); s.appendChild(cta);
+      c.appendChild(s);
     });
+  });
+  if (window.lucide && lucide.createIcons) lucide.createIcons();
+}
+
+// Clipboard helpers (Quick Start code blocks + swatches).
+function writeClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text);
+  }
+  return Promise.reject(new Error('Clipboard API unavailable'));
+}
+function copyToken(swatchEl, varName) {
+  var text = 'var(' + varName + ')';
+  writeClipboard(text).then(function() {
+    swatchEl.dataset.copied = 'true';
+    swatchEl.querySelector('.swatch-cta span:last-child').textContent = 'Copied';
+    showToastMessage('success', 'Copied: ' + text);
+    setTimeout(function() {
+      swatchEl.removeAttribute('data-copied');
+      var label = swatchEl.querySelector('.swatch-cta span:last-child');
+      if (label) label.textContent = 'Copy';
+    }, 2000);
+  }).catch(function() {
+    showToastMessage('error', 'Couldn’t copy. Select the value manually.');
+  });
+}
+function copyCode(btn) {
+  var pre = btn.parentElement;
+  if (!pre) return;
+  // textContent picks up the code preceding the button; trim to drop the button label.
+  var text = '';
+  for (var i = 0; i < pre.childNodes.length; i++) {
+    var node = pre.childNodes[i];
+    if (node === btn) break;
+    text += node.textContent;
+  }
+  text = text.trim();
+  writeClipboard(text).then(function() {
+    btn.dataset.copied = 'true';
+    var label = btn.querySelector('.copy-label');
+    if (label) label.textContent = 'Copied';
+    setTimeout(function() {
+      btn.removeAttribute('data-copied');
+      if (label) label.textContent = 'Copy';
+    }, 2000);
+  }).catch(function() {
+    showToastMessage('error', 'Couldn’t copy. Select the snippet manually.');
   });
 }
 function updateSwatchValues() {
@@ -1419,21 +2134,36 @@ document.addEventListener('keydown', function(e) {
 });
 
 // Accordion
-function toggleAccordion(header) { header.closest('.accordion-item').classList.toggle('open'); }
+function toggleAccordion(header) {
+  var expanded = header.getAttribute('aria-expanded') === 'true';
+  header.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+}
 
-// Table sort (visual)
-function cycleSort(th) { th.closest('thead').querySelectorAll('th').forEach(function(t) { t.classList.remove('sorted'); }); th.classList.add('sorted'); }
+// Table sort (visual cycle: none -> ascending -> descending -> none)
+function cycleSort(btn) {
+  var th = btn.closest('th');
+  var current = th.getAttribute('aria-sort');
+  var next = current === 'ascending' ? 'descending' : current === 'descending' ? 'none' : 'ascending';
+  th.closest('thead').querySelectorAll('th').forEach(function(t) { t.setAttribute('aria-sort', 'none'); });
+  th.setAttribute('aria-sort', next);
+}
 
 // Toasts
-var toastMsgs = { success: { icon: 'check-circle', text: 'Operation completed successfully.' }, error: { icon: 'x-circle', text: 'Something went wrong. Please try again.' }, warning: { icon: 'alert-triangle', text: 'Please review your changes before saving.' }, info: { icon: 'info', text: 'A new update is available for download.' } };
-function showToast(type) {
+var toastMsgs = {
+  success: { icon: 'check-circle', text: 'Settings saved. Changes are live.' },
+  error: { icon: 'x-circle', text: 'Couldn’t save. Check your connection and try again.' },
+  warning: { icon: 'alert-triangle', text: 'Unsaved changes. Save before leaving.' },
+  info: { icon: 'info', text: 'v2.1 is available. Refresh to update.' }
+};
+function showToast(type) { var m = toastMsgs[type]; showToastMessage(type, m.text); }
+function showToastMessage(type, text) {
   var container = document.getElementById('toastContainer');
   var existing = container.querySelectorAll('.toast:not(.removing)');
   if (existing.length >= 3) removeToast(existing[existing.length - 1]);
-  var m = toastMsgs[type];
+  var iconName = (toastMsgs[type] && toastMsgs[type].icon) || 'info';
   var toast = document.createElement('div'); toast.className = 'toast';
-  var iconEl = document.createElement('i'); iconEl.setAttribute('data-lucide', m.icon); iconEl.className = 'toast-icon ' + type; iconEl.style.cssText = 'width:18px;height:18px;';
-  var textEl = document.createElement('span'); textEl.textContent = m.text;
+  var iconEl = document.createElement('i'); iconEl.setAttribute('data-lucide', iconName); iconEl.className = 'toast-icon ' + type; iconEl.style.cssText = 'width:18px;height:18px;';
+  var textEl = document.createElement('span'); textEl.textContent = text;
   var closeBtn = document.createElement('button'); closeBtn.className = 'toast-close'; closeBtn.setAttribute('aria-label', 'Dismiss');
   closeBtn.onclick = function() { removeToast(toast); };
   var closeIcon = document.createElement('i'); closeIcon.setAttribute('data-lucide', 'x'); closeIcon.style.cssText = 'width:14px;height:14px;';
@@ -1442,8 +2172,13 @@ function showToast(type) {
   container.prepend(toast);
   lucide.createIcons({ nodes: [toast] });
   var timer = setTimeout(function() { removeToast(toast); }, 5000);
-  toast.addEventListener('mouseenter', function() { clearTimeout(timer); });
-  toast.addEventListener('mouseleave', function() { timer = setTimeout(function() { removeToast(toast); }, 5000); });
+  var pause = function() { clearTimeout(timer); };
+  var resume = function() { timer = setTimeout(function() { removeToast(toast); }, 5000); };
+  // Pause on hover OR keyboard focus, so keyboard users can read and act on the toast.
+  toast.addEventListener('mouseenter', pause);
+  toast.addEventListener('mouseleave', resume);
+  toast.addEventListener('focusin', pause);
+  toast.addEventListener('focusout', resume);
 }
 function removeToast(toast) {
   if (!toast || toast.classList.contains('removing')) return;
@@ -1451,22 +2186,87 @@ function removeToast(toast) {
   setTimeout(function() { toast.remove(); }, 150);
 }
 
+// Focus management for overlays (modal, drawer, cmd palette)
+var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+var overlayState = { trigger: null, container: null, handler: null };
+function trapFocus(container) {
+  var nodes = Array.from(container.querySelectorAll(FOCUSABLE)).filter(function(n) { return n.offsetParent !== null; });
+  if (!nodes.length) return null;
+  var first = nodes[0], last = nodes[nodes.length - 1];
+  return function(e) {
+    if (e.key !== 'Tab') return;
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+}
+function openOverlay(container, defaultFocus) {
+  overlayState.trigger = document.activeElement;
+  overlayState.container = container;
+  overlayState.handler = trapFocus(container);
+  if (overlayState.handler) document.addEventListener('keydown', overlayState.handler);
+  document.body.style.overflow = 'hidden';
+  if (defaultFocus) defaultFocus.focus();
+}
+function closeOverlay() {
+  if (overlayState.handler) document.removeEventListener('keydown', overlayState.handler);
+  document.body.style.overflow = '';
+  if (overlayState.trigger && typeof overlayState.trigger.focus === 'function') overlayState.trigger.focus();
+  overlayState.trigger = null; overlayState.container = null; overlayState.handler = null;
+}
+
 // Modal
-function openModal() { document.getElementById('modalOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; var f = document.querySelector('.modal-panel button'); if (f) f.focus(); }
-function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+function openModal() {
+  document.getElementById('modalOverlay').classList.add('open');
+  openOverlay(document.querySelector('#modalOverlay .modal-panel'), document.getElementById('modalCancel'));
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  closeOverlay();
+}
 document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === e.currentTarget) closeModal(); });
 
 // Drawer
-function openDrawer() { document.getElementById('drawerOverlay').classList.add('open'); document.getElementById('drawerPanel').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-function closeDrawer() { document.getElementById('drawerOverlay').classList.remove('open'); document.getElementById('drawerPanel').style.display = 'none'; document.body.style.overflow = ''; }
+function openDrawer() {
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.getElementById('drawerPanel').classList.add('open');
+  openOverlay(document.getElementById('drawerPanel'), document.getElementById('drawer-input'));
+}
+function closeDrawer() {
+  document.getElementById('drawerOverlay').classList.remove('open');
+  document.getElementById('drawerPanel').classList.remove('open');
+  closeOverlay();
+}
 
 // Dropdown
-function toggleDropdown() { document.getElementById('dropdownMenu').classList.toggle('open'); }
-document.addEventListener('click', function(e) { var w = document.getElementById('dropdownWrapper'); if (w && !w.contains(e.target)) document.getElementById('dropdownMenu').classList.remove('open'); });
+function toggleDropdown() {
+  var menu = document.getElementById('dropdownMenu');
+  var trigger = document.getElementById('dropdownTrigger');
+  var open = menu.classList.toggle('open');
+  trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+document.addEventListener('click', function(e) {
+  var w = document.getElementById('dropdownWrapper');
+  if (w && !w.contains(e.target)) {
+    document.getElementById('dropdownMenu').classList.remove('open');
+    document.getElementById('dropdownTrigger').setAttribute('aria-expanded', 'false');
+  }
+});
 
 // Command Palette
-function openCmdPalette() { document.getElementById('cmdOverlay').classList.add('open'); document.getElementById('cmdInput').value = ''; document.getElementById('cmdInput').focus(); document.body.style.overflow = 'hidden'; }
-function closeCmdPalette() { document.getElementById('cmdOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+function openCmdPalette() {
+  document.getElementById('cmdOverlay').classList.add('open');
+  var input = document.getElementById('cmdInput');
+  input.value = '';
+  openOverlay(document.querySelector('#cmdOverlay .cmd-panel'), input);
+  // Pre-select the first option so Enter has a target
+  var items = document.querySelectorAll('#cmdResults .cmd-item');
+  items.forEach(function(i) { i.removeAttribute('aria-selected'); });
+  if (items.length) items[0].setAttribute('aria-selected', 'true');
+}
+function closeCmdPalette() {
+  document.getElementById('cmdOverlay').classList.remove('open');
+  closeOverlay();
+}
 document.addEventListener('keydown', function(e) {
   if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); var o = document.getElementById('cmdOverlay'); if (o.classList.contains('open')) closeCmdPalette(); else openCmdPalette(); }
   if (e.key === 'Escape') { if (document.getElementById('cmdOverlay').classList.contains('open')) closeCmdPalette(); else if (document.getElementById('modalOverlay').classList.contains('open')) closeModal(); else if (document.getElementById('drawerOverlay').classList.contains('open')) closeDrawer(); }
@@ -1477,21 +2277,51 @@ document.getElementById('cmdInput').addEventListener('keydown', function(e) {
   var cur = items.findIndex(function(i) { return i.getAttribute('aria-selected') === 'true'; });
   if (e.key === 'ArrowDown') { e.preventDefault(); var n = cur < items.length - 1 ? cur + 1 : 0; items.forEach(function(i) { i.removeAttribute('aria-selected'); }); items[n].setAttribute('aria-selected', 'true'); items[n].scrollIntoView({ block: 'nearest' }); }
   else if (e.key === 'ArrowUp') { e.preventDefault(); var p = cur > 0 ? cur - 1 : items.length - 1; items.forEach(function(i) { i.removeAttribute('aria-selected'); }); items[p].setAttribute('aria-selected', 'true'); items[p].scrollIntoView({ block: 'nearest' }); }
-  else if (e.key === 'Enter') { e.preventDefault(); closeCmdPalette(); }
+  else if (e.key === 'Enter') {
+    e.preventDefault();
+    var sel = document.querySelector('#cmdResults .cmd-item[aria-selected="true"]') || items[0];
+    if (sel) sel.click();
+    closeCmdPalette();
+  }
+});
+// Cmd item click: log selection so the demo confirms which option ran
+Array.from(document.querySelectorAll('#cmdResults .cmd-item')).forEach(function(item) {
+  item.addEventListener('click', function() {
+    var label = item.textContent.trim();
+    closeCmdPalette();
+    showToastMessage('info', 'Selected: ' + label);
+  });
 });
 
 // Mobile sidebar
 document.getElementById('mobileMenuBtn').addEventListener('click', function() { document.getElementById('sidebar').classList.toggle('open'); });
 document.querySelectorAll('.showcase-sidebar a').forEach(function(link) { link.addEventListener('click', function() { document.getElementById('sidebar').classList.remove('open'); }); });
 
-// Scroll spy
+// Sidebar group toggles (progressive disclosure)
+document.querySelectorAll('.showcase-sidebar .nav-group-label').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+  });
+});
+
+// Scroll spy: highlight the active link, and auto-expand its group so the user always sees their location's siblings.
 var sidebarLinks = document.querySelectorAll('.showcase-sidebar a[href^="#"]');
 var observer = new IntersectionObserver(function(entries) {
   entries.forEach(function(entry) {
     if (entry.isIntersecting) {
       sidebarLinks.forEach(function(l) { l.classList.remove('active'); });
       var link = document.querySelector('.showcase-sidebar a[href="#' + entry.target.id + '"]');
-      if (link) link.classList.add('active');
+      if (link) {
+        link.classList.add('active');
+        var group = link.closest('.nav-group-items');
+        if (group) {
+          var label = document.querySelector('.nav-group-label[aria-controls="' + group.id + '"]');
+          if (label && label.getAttribute('aria-expanded') !== 'true') {
+            label.setAttribute('aria-expanded', 'true');
+          }
+        }
+      }
     }
   });
 }, { rootMargin: '-20% 0px -70% 0px' });

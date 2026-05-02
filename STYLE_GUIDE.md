@@ -303,11 +303,11 @@ These nine rules are mandatory for every component and page:
 
 ---
 
-## Tailwind <-> CSS Variable Mapping
+## Tailwind and CSS Variable Mapping
 
-For projects using Tailwind, the preset maps every token to a utility class. For projects using plain CSS, use the variable directly. This table shows the correspondence:
+The system has no Tailwind preset. With Tailwind, reference tokens via arbitrary values: `class="bg-[var(--bg-card)] text-[var(--text-primary)] rounded-[var(--radius-lg)] p-[var(--space-xl)]"`. With plain CSS, reference the variable directly: `background: var(--bg-card)`. The first column below shows the **legacy preset utility name** (kept for migration reference only); use the CSS variable in new code.
 
-| Tailwind Class | CSS Variable | Example Value (Dark) |
+| Legacy preset (deprecated) | CSS variable (current) | Example value (Dark) |
 |---------------|-------------|---------------------|
 | `bg-bg-primary` | `var(--bg-primary)` | `#0c0d12` |
 | `bg-bg-secondary` | `var(--bg-secondary)` | `#12131a` |
@@ -8859,7 +8859,7 @@ function Modal({ open, onClose, title, size = 'md', children, footer }) {
     position: relative;
     z-index: var(--z-modal);
     width: 100%;
-    max-width: 520px; /* md — swap to 400px for sm, 640px for lg */
+    max-width: 520px; /* md size: swap to 400px for sm, 640px for lg */
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -9656,7 +9656,7 @@ function Popover({ trigger, position = 'bottom', arrow = false, children }) {
     display: none;
   }
 
-  /* Arrow — bottom position (arrow points up) */
+  /* Arrow at bottom position (arrow points up) */
   .popover-arrow {
     position: absolute;
     top: -5px;
@@ -9845,7 +9845,7 @@ Usage:
                 visibility var(--duration-micro) var(--ease-default);
   }
 
-  /* Arrow — top position (arrow points down) */
+  /* Arrow at top position (arrow points down) */
   .tooltip-arrow {
     position: absolute;
     bottom: -5px;
@@ -9858,7 +9858,7 @@ Usage:
     border-bottom: 1px solid var(--tooltip-border);
   }
 
-  /* Show on hover and focus-visible — with 150ms delay */
+  /* Show on hover and focus-visible (with 150ms delay) */
   .tooltip-wrapper:hover .tooltip,
   .tooltip-wrapper:focus-within .tooltip {
     opacity: 1;

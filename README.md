@@ -1,15 +1,15 @@
 # Signature Design System
 
-A unified visual design system for all SaaS applications. CSS custom properties that work with any framework — Tailwind, plain CSS, or anything else.
+A unified visual design system for all SaaS applications. CSS custom properties that work with any framework: Tailwind, plain CSS, or anything else.
 
 ## What's Inside
 
 | File | What It Does |
 |------|-------------|
 | **`globals.css`** | **The foundation.** CSS custom properties for dark/light themes, typography, spacing, base reset, keyframe animations. Import this into any app. |
-| **`STYLE_GUIDE.md`** | **The reference.** Complete design spec — philosophy, tokens, 52 component patterns with CSS variable examples and Tailwind equivalents. |
-| **`CLAUDE.md`** | **The rules.** Project rules for AI agents — ensures consistent code generation across all apps. |
-| **`index.html`** | **The showcase.** Interactive demo — open in browser to see every token and component rendered in both themes. |
+| **`STYLE_GUIDE.md`** | **The reference.** Complete design spec covering philosophy, tokens, and 52 component patterns with CSS variable examples and Tailwind equivalents. |
+| **`CLAUDE.md`** | **The rules.** Project rules for AI agents to ensure consistent code generation across all apps. |
+| **`index.html`** | **The showcase.** Interactive demo. Open in any browser to see every token and component rendered in both themes. |
 
 ## Quick Start
 
@@ -43,7 +43,7 @@ Or in plain HTML:
 }
 ```
 
-**With Tailwind** — use arbitrary values, no preset needed:
+**With Tailwind**, use arbitrary values (no preset needed):
 
 ```jsx
 <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-[var(--radius-lg)] p-[var(--space-xl)]">
@@ -55,13 +55,13 @@ Toggle theme with JS: `document.documentElement.setAttribute('data-theme', 'ligh
 
 ## Design Principles
 
-1. **Cool Dark, Warm Light** — Asymmetric themes connected by a gold accent thread
-2. **Consistency Over Novelty** — Same tokens, same patterns, every app
-3. **Warm Gold Signature** — `#c9a267` is the brand accent threading through all interactions
-4. **Density Over Sprawl** — Compact, information-rich layouts on an 8-point grid
-5. **Accessibility Non-Negotiable** — Focus rings, contrast ratios, reduced motion
-6. **Restrained Motion** — 150–200ms transitions, no decorative animation
-7. **Systematic Scaling** — Predictable spacing, sizing, and elevation scales
+1. **Cool Dark, Warm Light.** Asymmetric themes connected by a gold accent thread.
+2. **Consistency Over Novelty.** Same tokens, same patterns, every app.
+3. **Warm Gold Signature.** `#c9a267` is the brand accent threading through all interactions.
+4. **Density Over Sprawl.** Compact, information-rich layouts on an 8-point grid.
+5. **Accessibility Non-Negotiable.** Focus rings, contrast ratios, reduced motion.
+6. **Restrained Motion.** 150 to 200ms transitions, no decorative animation.
+7. **Systematic Scaling.** Predictable spacing, sizing, and elevation scales.
 
 ## Token Quick Reference
 

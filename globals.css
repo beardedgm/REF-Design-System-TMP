@@ -1,5 +1,5 @@
 /*
- * Signature Design System v2 — Global Styles
+ * Signature Design System v2: Global Styles
  *
  * The foundation of the design system. Works with OR without Tailwind.
  *
@@ -69,7 +69,7 @@ table {
    DARK THEME TOKENS
    ======================================== */
 [data-theme="dark"] {
-  /* Backgrounds — cool blue-black */
+  /* Backgrounds: cool blue-black */
   --bg-primary: #0c0d12;
   --bg-secondary: #12131a;
   --bg-surface: #161720;
@@ -77,36 +77,37 @@ table {
   --bg-elevated: #22232e;
   --bg-overlay: rgba(0, 0, 0, 0.6);
 
-  /* Text — light on dark */
+  /* Text: light on dark */
   --text-primary: #e8e8ec;
   --text-secondary: #8e8fa1;
   --text-tertiary: #6b6c7e;
   --text-muted: #4e4f5e;
   --text-on-accent: #0c0d12;
 
-  /* Accent — warm gold signature */
+  /* Accent: warm gold signature */
   --accent: #c9a267;
   --accent-hover: #dbb57e;
   --accent-active: #b8934f;
   --accent-muted: rgba(201, 162, 103, 0.10);
   --accent-subtle: rgba(201, 162, 103, 0.05);
 
-  /* Semantic — error */
+  /* Semantic, error */
   --error: #e5484d;
   --error-hover: #f06b6e;
   --error-muted: rgba(229, 72, 77, 0.10);
+  --text-on-error: #fdfaf6;
 
-  /* Semantic — success */
+  /* Semantic, success */
   --success: #30a46c;
   --success-hover: #3ec282;
   --success-muted: rgba(48, 164, 108, 0.10);
 
-  /* Semantic — warning */
+  /* Semantic, warning */
   --warning: #f5a623;
   --warning-hover: #f7b84a;
   --warning-muted: rgba(245, 166, 35, 0.10);
 
-  /* Semantic — info */
+  /* Semantic, info */
   --info: #3498db;
   --info-hover: #5bb0e8;
   --info-muted: rgba(52, 152, 219, 0.10);
@@ -116,7 +117,7 @@ table {
   --border-hover: #2e2f3d;
   --border-focus: var(--accent);
 
-  /* Status sequence — charts, badges, level indicators */
+  /* Status sequence (charts, badges, level indicators) */
   --status-1: #30a46c;
   --status-2: #3498db;
   --status-3: #f5a623;
@@ -124,7 +125,7 @@ table {
   --status-5: #e5484d;
   --status-premium: var(--accent);
 
-  /* Tooltip — accent-tinted */
+  /* Tooltip (accent-tinted) */
   --tooltip-bg: #2a2b36;
   --tooltip-border: #3a3b48;
   --tooltip-text: #e8e8ec;
@@ -132,7 +133,7 @@ table {
   /* Shimmer */
   --shimmer-highlight: rgba(255, 255, 255, 0.04);
 
-  /* Shadows — heavier for dark context */
+  /* Shadows (heavier for dark context) */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
@@ -142,7 +143,7 @@ table {
    LIGHT THEME TOKENS
    ======================================== */
 [data-theme="light"] {
-  /* Backgrounds — warm cream/parchment */
+  /* Backgrounds: warm cream/parchment */
   --bg-primary: #f5f3ef;
   --bg-secondary: #ece8e1;
   --bg-surface: #ffffff;
@@ -150,36 +151,37 @@ table {
   --bg-elevated: #f0ece6;
   --bg-overlay: rgba(0, 0, 0, 0.4);
 
-  /* Text — dark on light */
+  /* Text: dark on light */
   --text-primary: #1c1a16;
   --text-secondary: #5e5a50;
   --text-tertiary: #8a857a;
   --text-muted: #b0a99e;
   --text-on-accent: #ffffff;
 
-  /* Accent — deepened gold for contrast on light */
+  /* Accent: deepened gold for contrast on light */
   --accent: #a8843e;
   --accent-hover: #c9a267;
   --accent-active: #96753a;
   --accent-muted: rgba(168, 132, 62, 0.10);
   --accent-subtle: rgba(168, 132, 62, 0.05);
 
-  /* Semantic — error */
+  /* Semantic, error */
   --error: #cd2b31;
   --error-hover: #e5484d;
   --error-muted: rgba(205, 43, 49, 0.10);
+  --text-on-error: #fdfaf6;
 
-  /* Semantic — success */
+  /* Semantic, success */
   --success: #218358;
   --success-hover: #30a46c;
   --success-muted: rgba(33, 131, 88, 0.10);
 
-  /* Semantic — warning */
+  /* Semantic, warning */
   --warning: #c47d0a;
   --warning-hover: #d49a2e;
   --warning-muted: rgba(196, 125, 10, 0.10);
 
-  /* Semantic — info */
+  /* Semantic, info */
   --info: #2271a1;
   --info-hover: #3498db;
   --info-muted: rgba(34, 113, 161, 0.10);
@@ -189,7 +191,7 @@ table {
   --border-hover: #c8c2b8;
   --border-focus: var(--accent);
 
-  /* Status sequence — charts, badges, level indicators */
+  /* Status sequence (charts, badges, level indicators) */
   --status-1: #218358;
   --status-2: #2271a1;
   --status-3: #c47d0a;
@@ -197,7 +199,7 @@ table {
   --status-5: #cd2b31;
   --status-premium: var(--accent);
 
-  /* Tooltip — dark solid */
+  /* Tooltip (dark solid) */
   --tooltip-bg: #1c1a16;
   --tooltip-border: #2e2a23;
   --tooltip-text: #f5f3ef;
@@ -205,7 +207,7 @@ table {
   /* Shimmer */
   --shimmer-highlight: rgba(255, 255, 255, 0.6);
 
-  /* Shadows — warm-tinted for light context */
+  /* Shadows (warm-tinted for light context) */
   --shadow-sm: 0 1px 3px rgba(80, 60, 20, 0.08);
   --shadow-md: 0 4px 12px rgba(80, 60, 20, 0.10);
   --shadow-lg: 0 8px 24px rgba(80, 60, 20, 0.14);
@@ -219,7 +221,7 @@ table {
   --font-display: 'Cinzel', serif;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 
-  /* Type scale — size */
+  /* Type scale: size */
   --text-display-1: 3.25rem;
   --text-display-2: 2.25rem;
   --text-h1: 1.75rem;
@@ -231,7 +233,7 @@ table {
   --text-caption: 0.75rem;
   --text-overline: 0.6875rem;
 
-  /* Type scale — weight */
+  /* Type scale: weight */
   --weight-display-1: 700;
   --weight-display-2: 700;
   --weight-h1: 600;
@@ -243,7 +245,7 @@ table {
   --weight-caption: 400;
   --weight-overline: 600;
 
-  /* Type scale — letter spacing */
+  /* Type scale: letter spacing */
   --ls-display-1: -0.015em;
   --ls-display-2: -0.015em;
   --ls-h1: -0.01em;
@@ -255,7 +257,7 @@ table {
   --ls-caption: 0;
   --ls-overline: 0.08em;
 
-  /* Type scale — line height */
+  /* Type scale: line height */
   --lh-display-1: 1.1;
   --lh-display-2: 1.2;
   --lh-h1: 1.3;
@@ -267,7 +269,7 @@ table {
   --lh-caption: 1.4;
   --lh-overline: 1.3;
 
-  /* Spacing — 8-point grid + extras */
+  /* Spacing: 8-point grid + extras */
   --space-2xs: 2px;
   --space-xs: 4px;
   --space-sm: 8px;
@@ -291,6 +293,7 @@ table {
   --z-drawer: 200;
   --z-overlay: 900;
   --z-modal: 1000;
+  --z-tooltip: 1050;
   --z-toast: 1100;
 
   /* Motion */
@@ -406,7 +409,6 @@ body {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: var(--radius-sm);
 }
 
 /* ========================================
@@ -457,7 +459,7 @@ body {
    KEYFRAME ANIMATIONS
    ======================================== */
 
-/* Fade in up — page entrance, toast enter */
+/* Fade in up: page entrance, toast enter */
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -469,7 +471,7 @@ body {
   }
 }
 
-/* Fade out down — toast exit */
+/* Fade out down: toast exit */
 @keyframes fade-out-down {
   from {
     opacity: 1;
@@ -481,7 +483,7 @@ body {
   }
 }
 
-/* Shimmer — skeleton loaders */
+/* Shimmer: skeleton loaders */
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -491,7 +493,7 @@ body {
   }
 }
 
-/* Slide in from right — drawer/panel enter */
+/* Slide in from right: drawer/panel enter */
 @keyframes slide-in-right {
   from {
     opacity: 0;
@@ -503,7 +505,7 @@ body {
   }
 }
 
-/* Slide out to right — drawer/panel exit */
+/* Slide out to right: drawer/panel exit */
 @keyframes slide-out-right {
   from {
     opacity: 1;
@@ -515,7 +517,7 @@ body {
   }
 }
 
-/* Slide in from left — sidebar enter */
+/* Slide in from left: sidebar enter */
 @keyframes slide-in-left {
   from {
     opacity: 0;
@@ -527,7 +529,7 @@ body {
   }
 }
 
-/* Slide out to left — sidebar exit */
+/* Slide out to left: sidebar exit */
 @keyframes slide-out-left {
   from {
     opacity: 1;
@@ -539,7 +541,7 @@ body {
   }
 }
 
-/* Scale in — modal/dialog enter */
+/* Scale in: modal/dialog enter */
 @keyframes scale-in {
   from {
     opacity: 0;
@@ -551,7 +553,7 @@ body {
   }
 }
 
-/* Scale out — modal/dialog exit */
+/* Scale out: modal/dialog exit */
 @keyframes scale-out {
   from {
     opacity: 1;
