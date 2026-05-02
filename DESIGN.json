@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-02T00:00:00Z",
+  "title": "Design System: Signature",
+  "extensions": {
+    "colorMeta": {
+      "accent": {
+        "role": "primary",
+        "displayName": "Signature Gold",
+        "canonical": "#c9a267",
+        "tonalRamp": ["#3a2f1c", "#564525", "#73592e", "#8f7037", "#a88440", "#c9a267", "#dbb57e", "#f0d3a8"]
+      },
+      "bg-primary": {
+        "role": "neutral",
+        "displayName": "Cool Blue-Black Page",
+        "canonical": "#0c0d12",
+        "tonalRamp": ["#0c0d12", "#12131a", "#161720", "#1a1b24", "#22232e", "#3a3b48", "#6b6c7e", "#e8e8ec"]
+      },
+      "bg-card": {
+        "role": "neutral",
+        "displayName": "Card Surface",
+        "canonical": "#1a1b24",
+        "tonalRamp": ["#0c0d12", "#12131a", "#161720", "#1a1b24", "#22232e", "#2e2f3d", "#4e4f5e", "#8e8fa1"]
+      },
+      "text-primary": {
+        "role": "neutral",
+        "displayName": "Light Text",
+        "canonical": "#e8e8ec",
+        "tonalRamp": ["#22232e", "#3a3b48", "#4e4f5e", "#6b6c7e", "#8e8fa1", "#b8b9c4", "#d6d7dd", "#e8e8ec"]
+      },
+      "error": {
+        "role": "semantic",
+        "displayName": "Error Red",
+        "canonical": "#e5484d",
+        "tonalRamp": ["#3a1112", "#581a1c", "#762327", "#942b30", "#b3343a", "#cd2b31", "#e5484d", "#f06b6e"]
+      },
+      "success": {
+        "role": "semantic",
+        "displayName": "Success Green",
+        "canonical": "#30a46c",
+        "tonalRamp": ["#0d2a1c", "#143f2a", "#1c5638", "#236d46", "#218358", "#30a46c", "#3ec282", "#7adba6"]
+      },
+      "warning": {
+        "role": "semantic",
+        "displayName": "Warning Amber",
+        "canonical": "#f5a623",
+        "tonalRamp": ["#3d2807", "#5d3d0b", "#7d520f", "#9c6713", "#c47d0a", "#dc931a", "#f5a623", "#f7c462"]
+      },
+      "info": {
+        "role": "semantic",
+        "displayName": "Info Blue",
+        "canonical": "#3498db",
+        "tonalRamp": ["#0d2638", "#143955", "#1a4c72", "#216090", "#2271a1", "#2c87c1", "#3498db", "#7cbde9"]
+      },
+      "status-4": {
+        "role": "data-viz",
+        "displayName": "Misc Purple",
+        "canonical": "#9b59b6",
+        "tonalRamp": ["#2a1638", "#402155", "#562d72", "#6c388f", "#7c3aad", "#894dac", "#9b59b6", "#bc8acf"]
+      }
+    },
+    "typographyMeta": {
+      "display-1": { "displayName": "Display 1 (Cinzel)", "purpose": "Hero headlines, marketing splash, error-page status codes." },
+      "display-2": { "displayName": "Display 2 (Cinzel)", "purpose": "Secondary marketing headings." },
+      "h1": { "displayName": "H1", "purpose": "Page titles in product UI." },
+      "h2": { "displayName": "H2", "purpose": "Section headings." },
+      "h3": { "displayName": "H3", "purpose": "Subsection headings." },
+      "h4": { "displayName": "H4", "purpose": "Card titles, group labels." },
+      "body": { "displayName": "Body", "purpose": "Paragraphs, descriptions. Cap reading width at 65 to 75ch." },
+      "label": { "displayName": "Label", "purpose": "Form labels, nav items, button text." },
+      "caption": { "displayName": "Caption", "purpose": "Helper text, timestamps, tooltips." },
+      "overline": { "displayName": "Overline", "purpose": "Section overlines, sidebar group labels (UPPERCASE)." }
+    },
+    "shadows": [
+      { "name": "shadow-sm", "value": "0 1px 2px rgba(0, 0, 0, 0.3)", "valueLight": "0 1px 3px rgba(80, 60, 20, 0.08)", "purpose": "Subtle elevation for cards at rest, if any." },
+      { "name": "shadow-md", "value": "0 4px 12px rgba(0, 0, 0, 0.4)", "valueLight": "0 4px 12px rgba(80, 60, 20, 0.10)", "purpose": "Dropdowns, popovers, hovered surfaces." },
+      { "name": "shadow-lg", "value": "0 8px 24px rgba(0, 0, 0, 0.5)", "valueLight": "0 8px 24px rgba(80, 60, 20, 0.14)", "purpose": "Modals, dialogs, drawers. True overlay elevation." }
+    ],
+    "motion": [
+      { "name": "duration-micro", "value": "150ms", "purpose": "Hover states, color transitions, micro-interactions." },
+      { "name": "duration-standard", "value": "200ms", "purpose": "Elevation changes, transforms, default transitions." },
+      { "name": "duration-emphasis", "value": "300ms", "purpose": "Expanding panels, drawer open/close." },
+      { "name": "duration-entrance", "value": "400ms", "purpose": "Page entrance, modal open, major reveals." },
+      { "name": "ease-default", "value": "ease", "purpose": "The only easing. No bounce, no spring, no elastic." },
+      { "name": "exit-faster-than-enter", "value": "exit 75% of enter", "purpose": "Toasts: enter 200ms, exit 150ms. Drawers: enter 300ms, exit 200ms." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "2xl", "value": "1536px" }
+    ],
+    "zIndex": [
+      { "name": "z-dropdown", "value": "50" },
+      { "name": "z-sticky", "value": "100" },
+      { "name": "z-drawer", "value": "200" },
+      { "name": "z-overlay", "value": "900" },
+      { "name": "z-modal", "value": "1000" },
+      { "name": "z-toast", "value": "1100" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The most assertive control. Gold fill, dark label. One per primary action.",
+      "html": "<button type=\"button\" class=\"ds-btn-primary\">Get started</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 0 16px; background: var(--accent, #c9a267); color: var(--text-on-accent, #0c0d12); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 0.8125rem; font-weight: 500; line-height: 1.4; border: none; border-radius: 8px; cursor: pointer; transition: background 150ms ease, transform 150ms ease; } .ds-btn-primary:hover { background: var(--accent-hover, #dbb57e); } .ds-btn-primary:active { background: var(--accent-active, #b8934f); } .ds-btn-primary:focus-visible { outline: 2px solid var(--accent, #c9a267); outline-offset: 2px; } .ds-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Workhorse default. Elevated surface, bordered, primary text.",
+      "html": "<button type=\"button\" class=\"ds-btn-secondary\">Cancel</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 0 16px; background: var(--bg-elevated, #22232e); color: var(--text-primary, #e8e8ec); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 0.8125rem; font-weight: 500; line-height: 1.4; border: 1px solid var(--border, #1f2029); border-radius: 8px; cursor: pointer; transition: border-color 150ms ease, background 150ms ease; } .ds-btn-secondary:hover { border-color: var(--border-hover, #2e2f3d); } .ds-btn-secondary:focus-visible { outline: 2px solid var(--accent, #c9a267); outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Blends until hovered. Used in toolbars and dense tables.",
+      "html": "<button type=\"button\" class=\"ds-btn-ghost\">Edit</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 0 16px; background: transparent; color: var(--text-primary, #e8e8ec); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 0.8125rem; font-weight: 500; line-height: 1.4; border: none; border-radius: 8px; cursor: pointer; transition: background 150ms ease; } .ds-btn-ghost:hover { background: var(--bg-elevated, #22232e); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--accent, #c9a267); outline-offset: 2px; }"
+    },
+    {
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Destructive confirmation. Reserved, never the default in a multi-button group.",
+      "html": "<button type=\"button\" class=\"ds-btn-danger\">Delete account</button>",
+      "css": ".ds-btn-danger { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 0 16px; background: var(--error, #e5484d); color: #ffffff; font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 0.8125rem; font-weight: 500; line-height: 1.4; border: none; border-radius: 8px; cursor: pointer; transition: background 150ms ease; } .ds-btn-danger:hover { background: var(--error-hover, #f06b6e); } .ds-btn-danger:focus-visible { outline: 2px solid var(--error, #e5484d); outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-text",
+      "description": "Standard single-line entry. Always paired with a visible label above.",
+      "html": "<div class=\"ds-field\"><label for=\"email\" class=\"ds-label\">Email address<span class=\"ds-required\">*</span></label><input id=\"email\" type=\"email\" class=\"ds-input\" placeholder=\"you@example.com\" required /></div>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 8px; font-family: 'Inter', system-ui, -apple-system, sans-serif; } .ds-label { color: var(--text-primary, #e8e8ec); font-size: 0.8125rem; font-weight: 500; line-height: 1.4; } .ds-required { color: var(--error, #e5484d); margin-left: 4px; } .ds-input { width: 100%; height: 36px; padding: 0 12px; background: var(--bg-elevated, #22232e); color: var(--text-primary, #e8e8ec); font-size: 0.875rem; border: 1px solid var(--border, #1f2029); border-radius: 8px; transition: border-color 150ms ease; } .ds-input::placeholder { color: var(--text-muted, #4e4f5e); } .ds-input:hover { border-color: var(--border-hover, #2e2f3d); } .ds-input:focus-visible { outline: 2px solid var(--accent, #c9a267); outline-offset: 2px; border-color: var(--accent, #c9a267); }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Dominant working surface. Flat at rest, bordered, 12px radius.",
+      "html": "<div class=\"ds-card\"><h3 class=\"ds-card-title\">Active subscription</h3><p class=\"ds-card-body\">Your Premium plan renews on November 14. Manage billing or change plan from settings.</p></div>",
+      "css": ".ds-card { background: var(--bg-card, #1a1b24); border: 1px solid var(--border, #1f2029); border-radius: 12px; padding: 24px; font-family: 'Inter', system-ui, -apple-system, sans-serif; transition: border-color 150ms ease, box-shadow 200ms ease; } .ds-card:hover { border-color: var(--border-hover, #2e2f3d); box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.3)); } .ds-card-title { color: var(--text-primary, #e8e8ec); font-size: 1.125rem; font-weight: 600; line-height: 1.4; margin: 0 0 8px 0; } .ds-card-body { color: var(--text-secondary, #8e8fa1); font-size: 0.875rem; line-height: 1.5; margin: 0; }"
+    },
+    {
+      "name": "Accent Badge",
+      "kind": "chip",
+      "refersTo": "badge-accent",
+      "description": "Brand or featured tag. Muted accent fill, full accent text.",
+      "html": "<span class=\"ds-badge-accent\">Premium</span>",
+      "css": ".ds-badge-accent { display: inline-flex; align-items: center; padding: 2px 8px; background: rgba(201, 162, 103, 0.10); color: var(--accent, #c9a267); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 0.75rem; font-weight: 500; line-height: 1.4; border-radius: 9999px; }"
+    },
+    {
+      "name": "Success Badge",
+      "kind": "chip",
+      "refersTo": "badge-success",
+      "description": "Status tag for positive state. Pattern repeats for warning, error, info.",
+      "html": "<span class=\"ds-badge-success\"><svg viewBox=\"0 0 16 16\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"3 8 7 12 13 4\"></polyline></svg>Active</span>",
+      "css": ".ds-badge-success { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; background: rgba(48, 164, 108, 0.10); color: var(--success, #30a46c); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 0.75rem; font-weight: 500; line-height: 1.4; border-radius: 9999px; }"
+    },
+    {
+      "name": "Active Sidebar Item",
+      "kind": "nav",
+      "refersTo": "nav-item-active",
+      "description": "The signature visual. Muted accent fill, gold text, 2px gold left border.",
+      "html": "<a href=\"#\" class=\"ds-nav-item-active\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\"></rect><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\"></rect><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\"></rect><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\"></rect></svg>Dashboard</a>",
+      "css": ".ds-nav-item-active { display: flex; align-items: center; gap: 12px; padding: 8px 16px; padding-left: 14px; background: rgba(201, 162, 103, 0.10); color: var(--accent, #c9a267); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 0.8125rem; font-weight: 500; line-height: 1.4; text-decoration: none; border-left: 2px solid var(--accent, #c9a267); border-radius: 0 6px 6px 0; }"
+    },
+    {
+      "name": "Tooltip",
+      "kind": "custom",
+      "refersTo": "tooltip",
+      "description": "Accent-tinted dark surface in dark mode, near-black warm in light mode. Caption-sized text, max 240px wide.",
+      "html": "<span class=\"ds-tooltip\" role=\"tooltip\">Cmd+K to open command palette</span>",
+      "css": ".ds-tooltip { display: inline-block; max-width: 240px; padding: 4px 8px; background: var(--tooltip-bg, #2a2b36); color: var(--tooltip-text, #e8e8ec); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 0.75rem; line-height: 1.4; border: 1px solid var(--tooltip-border, #3a3b48); border-radius: 6px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Firelight Codex",
+    "overview": "A dual-mode reference system for SaaS interfaces, built around a single warm gold thread that survives the journey between cool blue-black night and warm cream-parchment day. The system rejects SaaS-cliche dark-purple-gradients, neon glow accents, and indistinguishable 'professional' greys in favor of restraint with character: gold appears on roughly 10% of any screen, surrounded by architecture quiet enough to read at 2am and polished enough for a finance dashboard. The two themes are not a stylistic switch, they are different rooms in the same building. Dark is cool blue-black (#0c0d12), high-contrast, made for focused work. Light is warm cream-parchment (#f5f3ef), softer, made for daylight. The gold accent is the only thing that does not change identity between them; it deepens (#c9a267 to #a8843e) so it carries equal contrast in both. Toggling themes should feel like turning a coin, not flipping a switch. This is a codex, not a kit. Tokens are normative.",
+    "keyCharacteristics": [
+      "Dual-theme architecture controlled by data-theme on <html>; tokens swap, components don't change.",
+      "Single warm gold accent (#c9a267 dark / #a8843e light) used on <=10% of any screen.",
+      "Two type families: Cinzel (marketing display only) plus Inter (everything else).",
+      "8-point spacing grid, no arbitrary values.",
+      "Restrained motion: 150 to 400ms with ease, no bounce, no spring, exit faster than enter.",
+      "WCAG AA minimum, focus rings always visible, color is never the sole signal."
+    ],
+    "rules": [
+      { "name": "The 10% Rule", "body": "The signature gold appears on no more than 10% of any given screen. Its rarity is the point. Overuse dilutes it from a brand thread to a decorative pattern.", "section": "colors" },
+      { "name": "The Coin-Flip Rule", "body": "Toggling between themes should feel like turning a coin, not flipping a switch. Each mode has its own physical character (cool air vs. warm parchment); the gold thread is the only continuity.", "section": "colors" },
+      { "name": "The No-Black, No-White Rule", "body": "Dark mode never uses #000; light mode never uses #fff for text. All neutrals carry a hue undertone, cool blue in dark and warm taupe in light, so surfaces never feel sterile.", "section": "colors" },
+      { "name": "The Gold-Is-Not-A-Color Rule", "body": "Never use --accent as a data-viz series color. The status sequence (--status-1 through --status-5) is for data; gold is reserved for UI interaction.", "section": "colors" },
+      { "name": "The Two-Family Rule", "body": "Two type families exist in this system: Cinzel and Inter. Nothing else loads.", "section": "typography" },
+      { "name": "The Marketing-Only Cinzel Rule", "body": "Cinzel is forbidden inside product UI. No dashboards, no forms, no tables. If you find yourself reaching for it inside the app shell, the answer is bigger Inter, not Cinzel.", "section": "typography" },
+      { "name": "The 1.25-Ratio Rule", "body": "Adjacent steps in the type scale carry at least a 1.25x size ratio. Flat scales are forbidden.", "section": "typography" },
+      { "name": "The Tonal-First Rule", "body": "Prefer background-step contrast over shadows. A bg-card panel on a bg-primary page already feels lifted; do not pile a shadow on top.", "section": "elevation" },
+      { "name": "The Warm-Shadow Rule", "body": "Light mode never uses pure black shadows. All light-mode shadow rgba values use (80, 60, 20) so the cast color reads as parchment-shadow, not printer-toner.", "section": "elevation" },
+      { "name": "The Three-Step Rule", "body": "Shadow elevation has exactly three steps (sm / md / lg). No shadow-xl, no nested glows, no inner shadows for depth. Three is enough.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do reference every color, radius, shadow, and space via var(--token-name). Never hardcode hex, px, or rgba.",
+      "Do use the gold accent only for primary CTAs, active nav, focus rings, and brand marks. <=10% of any screen.",
+      "Do support both data-theme=\"dark\" and data-theme=\"light\" on every component. Components never read theme; they read tokens.",
+      "Do snap every margin, padding, and gap to a token from the 8-point grid (--space-2xs through --space-4xl).",
+      "Do put a visible <label> on every form input. Placeholder text supplements but never replaces.",
+      "Do use Lucide React for every icon: w-4 h-4 (buttons), w-5 h-5 (nav), w-6 h-6 (cards), w-12 h-12 (hero).",
+      "Do disable all motion under prefers-reduced-motion: reduce, animation-duration 0.01ms, shimmer stops entirely.",
+      "Do show a :focus-visible ring on every interactive element: outline 2px solid var(--accent), outline-offset 2px.",
+      "Do order multi-color chart series as --status-1, -2, -3, -4, -5 so series identity carries app-to-app."
+    ],
+    "donts": [
+      "Don't use #000 or #fff literals anywhere. Neutrals are tinted, cool blue-black or warm cream.",
+      "Don't use Cinzel inside product UI (dashboards, forms, tables, settings). Marketing surfaces only.",
+      "Don't use the gold accent as a data-viz series color, on decorative backgrounds, on body text, or on disabled states.",
+      "Don't use a colored side-stripe (border-left or border-right greater than 1px) anywhere except the single active-nav-item case.",
+      "Don't use bounce, spring, or elastic easing. ease only. Durations capped at 400ms.",
+      "Don't wrap a container around things by reflex. Cards are not the answer to where should this live; nested cards are always wrong.",
+      "Don't invent radii, shadows, or spacings. The scale is fixed: radius-sm/md/lg/xl/full, shadow-sm/md/lg, space-2xs through space-4xl.",
+      "Don't use color as the only signal of state. Pair every error / success / warning color with an icon, a label, or a pattern.",
+      "Don't open a modal as the default response to an interaction. Inline editing or a drawer is almost always the better answer.",
+      "Don't mix icon libraries or use emoji. Lucide React only."
+    ]
+  }
+}
