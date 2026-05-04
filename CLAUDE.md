@@ -125,7 +125,7 @@ Every margin, padding, and gap must use a token. No `p-[13px]` or `gap-[20px]`.
 These apply to ALL components without exception:
 
 1. **Focus visible:** `outline: 2px solid var(--accent)`, `outline-offset: 2px` on all interactive elements via `:focus-visible`
-2. **Color contrast:** Minimum 4.5:1 for normal text, 3:1 for large text (>= 18px or >= 14px bold)
+2. **Color contrast:** Minimum 4.5:1 for normal text, 3:1 for large text (>= 18px or >= 14px bold) and graphical objects. `--text-primary`, `--text-secondary`, and `--text-tertiary` all clear AA against `--bg-primary` in both themes. `--text-muted` clears only 3:1 and is reserved for graphical objects (icons, status dots) and decorative chrome. Never use it for placeholder, hint, ellipsis, or any functional text; route those to `--text-tertiary`.
 3. **Color independence:** Never convey meaning through color alone -- pair with icons, text, or patterns
 4. **Keyboard navigation:** Every interactive element reachable and operable via keyboard
 5. **ARIA landmarks:** `<nav>`, `<main>`, `<header>`, `<footer>`, `<aside>` used correctly
@@ -268,7 +268,7 @@ Every form input has a visible `<label>` -- never rely on placeholder alone.
 - Input: `role="combobox"`, `aria-expanded`, `aria-controls` pointing to listbox
 - Results: `role="listbox"`, each item `role="option"`, `aria-selected` on active
 - Keyboard: `Escape` closes, arrows navigate, `Enter` selects, focus trapped
-- Footer shows keyboard hints in `text-caption text-text-muted`
+- Footer shows keyboard hints in `text-caption text-text-tertiary`
 - Results grouped by category with group headers
 
 ### 19. Skeleton Loaders Match Content Layout
@@ -520,8 +520,8 @@ Add these to your app's `.gitignore` if not already present:
 | Radii | `rounded-ds-{size}` | `rounded-ds-sm`, `rounded-ds-md`, `rounded-ds-lg`, `rounded-ds-xl`, `rounded-ds-full` |
 | Shadows | `shadow-ds-{size}` | `shadow-ds-sm`, `shadow-ds-md`, `shadow-ds-lg` |
 | Spacing | `p-{size}`, `m-{size}`, `gap-{size}` | `p-xl`, `gap-lg`, `m-sm`, `p-2xs`, `gap-4xl` |
-| Font size | `text-{role}` | `text-h1`, `text-h2`, `text-h3`, `text-body`, `text-caption`, `text-overline`, `text-display-1` |
-| Font family | `font-sans`, `font-display` | `font-display` for Cinzel (marketing only) |
+| Font size | `text-{role}` | `text-h1`, `text-h2`, `text-h3`, `text-body`, `text-caption`, `text-overline`, `text-display-1`, `text-display-hero` |
+| Font family | `font-sans`, `font-display`, `font-mono` | `font-display` for Cinzel (marketing only); `font-mono` for code/kbd/hex values |
 | Z-index | `z-{level}` | `z-dropdown`, `z-sticky`, `z-drawer`, `z-overlay`, `z-modal`, `z-toast` |
 | Nav items | Active sidebar item | `bg-accent-muted text-accent border-l-2 border-accent` |
 | Nav items | Active top nav link | `text-accent border-b-2 border-accent` |
@@ -530,6 +530,9 @@ Add these to your app's `.gitignore` if not already present:
 | Toasts | Container | `fixed bottom-xl right-xl z-toast`, `aria-live="polite"` |
 | Icons | Sizes | `w-4 h-4` (btn), `w-5 h-5` (nav), `w-6 h-6` (card), `w-12 h-12` (hero) |
 | Tabs | Container + items | `role="tablist"`, `role="tab"`, `aria-selected`, arrow key nav |
+| Tabs | Vertical variant | `role="tablist" aria-orientation="vertical"`, active: `bg-accent-muted text-accent border-l-2 border-accent` |
+| Segmented control | Group + segments | `role="radiogroup"`, `role="radio"`, `aria-checked`, roving `tabindex` (selected `0`, others `-1`), Left/Right arrow nav |
+| Save bar | Container + status | `position: sticky; bottom: 0;` inside form panel, `role="status" aria-live="polite"`, `data-dirty` on parent shell drives status swap + button enable |
 | Pagination | Container | `aria-label="Pagination"`, `aria-current="page"` on active |
 | Avatars | Image | `rounded-full object-cover`, sizes `w-6`/`w-8`/`w-10`/`w-14` |
 | Tooltips | Container | `role="tooltip"`, `bg-tooltip-bg`, `border-tooltip-border`, `aria-describedby` |

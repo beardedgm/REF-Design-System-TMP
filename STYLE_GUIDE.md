@@ -86,9 +86,9 @@ All values are extracted directly from `globals.css`. Every token listed below i
 |-------|------|-------|----------|
 | `--text-primary` | `#e8e8ec` | `#1c1a16` | Headings, body text, primary content |
 | `--text-secondary` | `#8e8fa1` | `#5e5a50` | Supporting text, descriptions |
-| `--text-tertiary` | `#6b6c7e` | `#8a857a` | Placeholder text, disabled labels |
-| `--text-muted` | `#4e4f5e` | `#b0a99e` | Least prominent text, hints |
-| `--text-on-accent` | `#0c0d12` | `#ffffff` | Text placed on accent-colored backgrounds |
+| `--text-tertiary` | `#7a7b8a` | `#76705f` | Placeholder text, dense-table chrome, hints. Clears WCAG AA. |
+| `--text-muted` | `#65667a` | `#8e887d` | Decorative chrome, icons, dividers. Clears 3:1 only; not for functional text. |
+| `--text-on-accent` | `#0c0d12` | `#1c1a16` | Dark text on the gold pill in both themes (engraved-on-gold pattern, AA-pass against `--accent`) |
 
 ### Accent Colors
 
@@ -173,11 +173,13 @@ All values are extracted directly from `globals.css`. Every token listed below i
 |-------|-------|----------|
 | `--font-display` | `'Cinzel', serif` | Marketing display headings only |
 | `--font-sans` | `'Inter', system-ui, -apple-system, sans-serif` | All product UI text |
+| `--font-mono` | `'SF Mono', 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Menlo, Consolas, monospace` | Code blocks, inline code, swatch hex values |
 
 #### Type Scale
 
 | Level | Size | Weight | Tracking | Line Height | Font Family | Use Case |
 |-------|------|--------|----------|-------------|-------------|----------|
+| `display-hero` | `4.5rem` (72px) | 700 | `0.01em` | 1.05 | `--font-display` | Full-screen brand moments only (showcase hero, featured 404). Tighter tracking and line-height than display-1 because at 4rem+ the standard metrics feel airy. |
 | `display-1` | `3.25rem` (52px) | 700 | `-0.015em` | 1.1 | `--font-display` | Hero headlines, marketing splash |
 | `display-2` | `2.25rem` (36px) | 700 | `-0.015em` | 1.2 | `--font-display` | Secondary marketing headings |
 | `h1` | `1.75rem` (28px) | 600 | `-0.01em` | 1.3 | `--font-sans` | Page titles |
@@ -316,8 +318,8 @@ The system has no Tailwind preset. With Tailwind, reference tokens via arbitrary
 | `bg-bg-elevated` | `var(--bg-elevated)` | `#22232e` |
 | `text-text-primary` | `var(--text-primary)` | `#e8e8ec` |
 | `text-text-secondary` | `var(--text-secondary)` | `#8e8fa1` |
-| `text-text-tertiary` | `var(--text-tertiary)` | `#6b6c7e` |
-| `text-text-muted` | `var(--text-muted)` | `#4e4f5e` |
+| `text-text-tertiary` | `var(--text-tertiary)` | `#7a7b8a` |
+| `text-text-muted` | `var(--text-muted)` | `#65667a` |
 | `text-text-on-accent` | `var(--text-on-accent)` | `#0c0d12` |
 | `bg-accent` | `var(--accent)` | `#c9a267` |
 | `text-accent` | `var(--accent)` | `#c9a267` |
@@ -351,6 +353,7 @@ The system has no Tailwind preset. With Tailwind, reference tokens via arbitrary
 | `p-xl` / `m-xl` / `gap-xl` | `var(--space-xl)` | `24px` |
 | `p-2xl` / `m-2xl` / `gap-2xl` | `var(--space-2xl)` | `32px` |
 | `p-3xl` / `m-3xl` / `gap-3xl` | `var(--space-3xl)` | `48px` |
+| `text-display-hero` | `var(--text-display-hero)` | `4.5rem` |
 | `text-display-1` | `var(--text-display-1)` | `3.25rem` |
 | `text-h1` | `var(--text-h1)` | `1.75rem` |
 | `text-h2` | `var(--text-h2)` | `1.375rem` |
@@ -361,6 +364,7 @@ The system has no Tailwind preset. With Tailwind, reference tokens via arbitrary
 | `text-overline` | `var(--text-overline)` | `0.6875rem` |
 | `font-sans` | `var(--font-sans)` | Inter stack |
 | `font-display` | `var(--font-display)` | Cinzel stack |
+| `font-mono` | `var(--font-mono)` | Platform monospaced stack |
 | `z-dropdown` | `var(--z-dropdown)` | `50` |
 | `z-sticky` | `var(--z-sticky)` | `100` |
 | `z-overlay` | `var(--z-overlay)` | `900` |
@@ -7239,6 +7243,86 @@ function SegmentedControl() {
 
 ---
 
+### 4.7a Save Bar
+
+**When to use.** Settings pages, long forms, and any surface where users edit fields and need an explicit save step. The save bar persists at the bottom of its container, tracking dirty state and gating the Save action so users always know whether changes are pending. Pair with inline validation; never use as a substitute for it.
+
+**Anatomy.**
+
+| Part | Role |
+|------|------|
+| Container | `position: sticky; bottom: 0;` inside the form panel; `bg-bg-card` with a 1px top border |
+| Status (left) | Two states swapped via the parent's `data-dirty` attribute: clean (success icon + "Saved" copy) and dirty (warning icon + "Unsaved changes" copy) |
+| Actions (right) | Ghost or default "Discard" + primary "Save changes" button. Both disabled while clean. |
+
+**States.**
+
+| State | Status text | Status icon | Action buttons |
+|-------|-------------|-------------|----------------|
+| Clean | `text-text-secondary`, "Saved a moment ago" or "Saved" | `CheckCircle` in `text-success` | Disabled |
+| Dirty | `text-warning`, "Unsaved changes" | `CircleDot` in `text-warning` | Enabled |
+| Saving | Optional: spinner + "Saving..." | -- | Both disabled briefly |
+| Error | `text-error`, error message | `XCircle` in `text-error` | Save re-enabled, Discard available |
+
+**Accessibility.**
+
+- Status region uses `role="status"` + `aria-live="polite"` so screen readers announce dirty / clean transitions without stealing focus.
+- Action buttons are real `<button>`s with `type="button"`. Disabled state uses the native `disabled` attribute, not `aria-disabled`, so they cannot be activated by keyboard while clean.
+- Discard prompts the user explicitly when the change is destructive (lots of edits, long-running form). For low-stakes settings, an immediate revert is acceptable.
+
+**Plain CSS + HTML example.**
+
+```html
+<div class="settings-shell" data-dirty="false">
+  <!-- ... form panels ... -->
+  <div class="settings-save-bar">
+    <span class="save-status" role="status" aria-live="polite">
+      <svg class="save-icon save-icon--clean" aria-hidden="true">...</svg>
+      <svg class="save-icon save-icon--dirty" aria-hidden="true">...</svg>
+      <span class="save-status-clean">Saved a moment ago</span>
+      <span class="save-status-dirty">Unsaved changes</span>
+    </span>
+    <div class="save-actions">
+      <button type="button" disabled>Discard</button>
+      <button type="button" disabled>Save changes</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.settings-save-bar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-2xl);
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  z-index: 1;
+}
+.settings-shell[data-dirty="false"] .save-icon--dirty,
+.settings-shell[data-dirty="false"] .save-status-dirty { display: none; }
+.settings-shell[data-dirty="true"] .save-icon--clean,
+.settings-shell[data-dirty="true"] .save-status-clean { display: none; }
+.settings-shell[data-dirty="true"] .save-status-dirty { color: var(--warning); }
+</style>
+```
+
+The CSS uses an attribute selector on the parent shell so JavaScript only flips one attribute (`data-dirty="true"` / `"false"`), and CSS handles every visible swap. Keep dirty-tracking logic in JS minimal: one input/change listener on the shell, set the attribute, toggle button `disabled`. No virtual DOM diffing or per-field watching needed for the showcase pattern.
+
+**Do / Don't.**
+
+| Do | Don't |
+|----|-------|
+| Pair save bar with a clear status message (clean / dirty / saving / error) | Show only the action buttons with no status text |
+| Disable Discard and Save while the form is clean | Leave both enabled at all times |
+| Place the bar inside the form panel, scoped to the form | Make it a viewport-level sticky bar applied across pages |
+| Trigger save on explicit click only | Auto-save without user opt-in or visible confirmation |
+| Show the bar even on the first visit (clean state) | Hide the bar until the first edit, then make it appear |
+
+---
+
 ### 4.8 Sticky Section Header
 
 **When to use.** Long scrollable pages with distinct sections -- settings pages, long forms, data-heavy layouts, documentation. The header stays visible as the user scrolls through the section, providing persistent context.
@@ -7799,27 +7883,32 @@ Inline content blocks used within documentation, help text, and long-form conten
 #### Anatomy
 
 ```
-+-+--------------------------------------------+
-| | [Icon]  Title (bold)                        |
-| |  Body text describing the callout content.  |
-+-+--------------------------------------------+
-  ^-- 3px left border in semantic color
++----------------------------------------------+
+| [Icon]  Title (bold)                          |
+|  Body text describing the callout content.    |
++----------------------------------------------+
+  ^-- 1px full border + tinted background + leading icon, all in the variant color
 ```
 
-1. **Left border** -- 3px solid, colored by variant
-2. **Icon** -- variant-specific Lucide icon (`w-5 h-5`)
-3. **Title** -- bold label text (optional but recommended)
-4. **Body** -- body text, may contain inline formatting
+1. **Container** -- 1px full border in the variant color, `--{variant}-muted` background tint, `--radius-md`
+2. **Icon** -- variant-specific Lucide icon (`w-5 h-5`), in the variant color, leading the title
+3. **Title** -- bold label text in the variant color (optional but recommended)
+4. **Body** -- body text in `--text-secondary`, may contain inline formatting
+
+> **Why no side-stripe?** Colored `border-left`/`border-right` greater than 1px is on the
+> design system's absolute-bans list. Identity is carried by the leading icon plus the
+> tinted background, both of which read at a glance and survive RTL flipping. The single
+> permitted side-stripe in the system is the 2px gold edge on the active nav item, which
+> is a wayfinding marker, not a decoration.
 
 #### Variants
 
-| Variant | Border Color | Icon            | Use Case                   |
-|---------|-------------|-----------------|----------------------------|
-| Tip     | `--accent`  | `Lightbulb`     | Best practices, pro tips   |
-| Warning | `--warning` | `AlertTriangle` | Gotchas, caveats           |
-| Danger  | `--error`   | `AlertOctagon`  | Destructive / irreversible |
-| Info    | `--info`    | `Info`          | Additional context         |
-| Note    | `--border`  | `StickyNote`    | General side notes         |
+| Variant | Border + Title Color | Background Tint    | Icon            | Use Case                   |
+|---------|----------------------|--------------------|-----------------|----------------------------|
+| Tip     | `--success`          | `--success-muted`  | `Lightbulb`     | Best practices, pro tips   |
+| Warning | `--warning`          | `--warning-muted`  | `AlertTriangle` | Gotchas, caveats           |
+| Danger  | `--error`            | `--error-muted`    | `AlertOctagon`  | Destructive / irreversible |
+| Info    | `--info`             | `--info-muted`     | `Info`          | Additional context         |
 
 #### States
 
@@ -7830,32 +7919,30 @@ Callouts are static content blocks. They have no interactive states.
 - Use semantic HTML: a `<div>` or `<aside>` with an appropriate `role` is sufficient
 - The icon is decorative (`aria-hidden="true"`) -- the title carries the meaning
 - If the callout warns about a destructive action, pair with `role="note"` or include the word "Warning" in the title so screen readers convey urgency through text
+- Identity must not rely on color alone: the leading icon plus the title text both convey the variant
 
 #### Tailwind + React
 
 ```jsx
-import { Lightbulb, AlertTriangle, AlertOctagon, Info, StickyNote } from 'lucide-react';
+import { Lightbulb, AlertTriangle, AlertOctagon, Info } from 'lucide-react';
 
 const config = {
-  tip:     { icon: Lightbulb,     border: 'border-l-accent',  iconColor: 'text-accent' },
-  warning: { icon: AlertTriangle, border: 'border-l-warning', iconColor: 'text-warning' },
-  danger:  { icon: AlertOctagon,  border: 'border-l-error',   iconColor: 'text-error' },
-  info:    { icon: Info,          border: 'border-l-info',    iconColor: 'text-info' },
-  note:    { icon: StickyNote,    border: 'border-l-border',  iconColor: 'text-text-tertiary' },
+  tip:     { icon: Lightbulb,     bg: 'bg-success-muted', border: 'border-success', text: 'text-success' },
+  warning: { icon: AlertTriangle, bg: 'bg-warning-muted', border: 'border-warning', text: 'text-warning' },
+  danger:  { icon: AlertOctagon,  bg: 'bg-error-muted',   border: 'border-error',   text: 'text-error'   },
+  info:    { icon: Info,          bg: 'bg-info-muted',    border: 'border-info',    text: 'text-info'    },
 };
 
-function Callout({ variant = 'note', title, children }) {
-  const { icon: Icon, border, iconColor } = config[variant];
+function Callout({ variant = 'info', title, children }) {
+  const { icon: Icon, bg, border, text } = config[variant];
 
   return (
-    <aside className={`border-l-[3px] ${border} bg-bg-elevated rounded-ds-md p-lg`}>
-      <div className="flex items-center gap-sm mb-sm">
-        <Icon className={`w-5 h-5 shrink-0 ${iconColor}`} aria-hidden="true" />
-        {title && (
-          <span className="text-label text-text-primary">{title}</span>
-        )}
+    <aside className={`${bg} ${border} border rounded-ds-md p-lg`}>
+      <div className="flex items-center gap-sm mb-xs">
+        <Icon className={`w-4 h-4 shrink-0 ${text}`} aria-hidden="true" />
+        {title && <span className={`text-label ${text}`}>{title}</span>}
       </div>
-      <div className="text-body text-text-secondary pl-[28px]">
+      <div className="text-body text-text-secondary">
         {children}
       </div>
     </aside>
@@ -7867,11 +7954,11 @@ function Callout({ variant = 'note', title, children }) {
 
 ```html
 <aside class="callout callout--warning">
-  <div class="callout__header">
-    <svg class="callout__icon" width="20" height="20" aria-hidden="true">
+  <div class="callout__title">
+    <svg class="callout__icon" width="16" height="16" aria-hidden="true">
       <!-- AlertTriangle -->
     </svg>
-    <span class="callout__title">Warning</span>
+    Warning
   </div>
   <div class="callout__body">
     This action cannot be undone. Deleted items are permanently removed
@@ -7881,41 +7968,32 @@ function Callout({ variant = 'note', title, children }) {
 
 <style>
 .callout {
-  border-left: 3px solid;
-  background: var(--bg-elevated);
+  border: 1px solid;
   border-radius: var(--radius-md);
   padding: var(--space-lg);
+  font-size: var(--text-body);
 }
 
-.callout--tip     { border-left-color: var(--accent); }
-.callout--warning { border-left-color: var(--warning); }
-.callout--danger  { border-left-color: var(--error); }
-.callout--info    { border-left-color: var(--info); }
-.callout--note    { border-left-color: var(--border); }
+.callout--tip     { background: var(--success-muted); border-color: var(--success); }
+.callout--warning { background: var(--warning-muted); border-color: var(--warning); }
+.callout--danger  { background: var(--error-muted);   border-color: var(--error);   }
+.callout--info    { background: var(--info-muted);    border-color: var(--info);    }
 
-.callout__header {
+.callout__title {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  margin-bottom: var(--space-sm);
-}
-
-.callout--tip     .callout__icon { color: var(--accent); }
-.callout--warning .callout__icon { color: var(--warning); }
-.callout--danger  .callout__icon { color: var(--error); }
-.callout--info    .callout__icon { color: var(--info); }
-.callout--note    .callout__icon { color: var(--text-tertiary); }
-
-.callout__title {
-  font-size: var(--text-label);
+  margin-bottom: var(--space-xs);
   font-weight: var(--weight-label);
-  color: var(--text-primary);
 }
+
+.callout--tip     .callout__title { color: var(--success); }
+.callout--warning .callout__title { color: var(--warning); }
+.callout--danger  .callout__title { color: var(--error);   }
+.callout--info    .callout__title { color: var(--info);    }
 
 .callout__body {
-  font-size: var(--text-body);
   color: var(--text-secondary);
-  padding-left: 28px; /* icon width + gap */
 }
 </style>
 ```

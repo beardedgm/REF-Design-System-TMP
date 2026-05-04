@@ -9,8 +9,8 @@ colors:
   bg-elevated: "#22232e"
   text-primary: "#e8e8ec"
   text-secondary: "#8e8fa1"
-  text-tertiary: "#6b6c7e"
-  text-muted: "#4e4f5e"
+  text-tertiary: "#7a7b8a"
+  text-muted: "#65667a"
   text-on-accent: "#0c0d12"
   accent: "#c9a267"
   accent-hover: "#dbb57e"
@@ -40,6 +40,12 @@ colors:
   tooltip-border: "#3a3b48"
   tooltip-text: "#e8e8ec"
 typography:
+  display-hero:
+    fontFamily: "Cinzel, serif"
+    fontSize: "4.5rem"
+    fontWeight: 700
+    lineHeight: 1.05
+    letterSpacing: "0.01em"
   display-1:
     fontFamily: "Cinzel, serif"
     fontSize: "3.25rem"
@@ -227,9 +233,10 @@ The palette is built on two opposing neutral undertones, cool blue-black for nig
 - **Elevated** (`#22232e`): hover states, skeleton loader base.
 - **Text Primary** (`#e8e8ec`): headings, body, primary content.
 - **Text Secondary** (`#8e8fa1`): supporting text, descriptions.
-- **Text Tertiary** (`#6b6c7e`): placeholders, disabled labels.
-- **Text Muted** (`#4e4f5e`): least prominent. Hints, meta.
+- **Text Tertiary** (`#7a7b8a`): placeholders, hints, dense-table chrome. Clears WCAG AA on the page background.
+- **Text Muted** (`#65667a`): least prominent. Decorative chrome, icons, status dots. Clears 3:1 against bg-primary; never used for functional text.
 - **Border** (`#1f2029`): default dividers and card edges. **Border Hover** (`#2e2f3d`).
+- **Text on Accent** (`#0c0d12`): dark text on the gold pill, mirroring bg-primary so the CTA reads as struck-from-the-page.
 
 ### Neutral, Light theme (warm cream / parchment)
 - **Page** (`#f5f3ef`): cream undertone, body background.
@@ -238,7 +245,10 @@ The palette is built on two opposing neutral undertones, cool blue-black for nig
 - **Elevated** (`#f0ece6`): hover, skeleton.
 - **Text Primary** (`#1c1a16`): warm dark, not pure black.
 - **Text Secondary** (`#5e5a50`): warm graphite.
+- **Text Tertiary** (`#76705f`): warm slate, AA-pass.
+- **Text Muted** (`#8e887d`): warmest greige; decorative-only, clears 3:1.
 - **Border** (`#ddd8d0`): warm taupe.
+- **Text on Accent** (`#1c1a16`): dark text on gold in light mode too (the engraved-on-gold pattern). Clears AA against `--accent`. Light mode never uses pure white as a text fill.
 
 ### Semantic
 - **Error** (`#e5484d` dark / `#cd2b31` light): destructive actions, validation failures.
@@ -267,11 +277,13 @@ Used in this exact order across multi-color charts so series identity is consist
 
 **Display Font:** Cinzel (serif). *Marketing only.*
 **Body / UI Font:** Inter (with `system-ui, -apple-system, sans-serif` fallback). *Everything else.*
+**Mono Stack:** Platform monospaced fallback chain: `'SF Mono', 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Menlo, Consolas, monospace`. Used for code blocks, inline `<code>` runs, swatch hex values. Never loads as a webfont.
 
 **Character.** Cinzel is a Roman-inscriptional serif: angular, weighted, ceremonial. It appears on landing pages, hero headlines, pricing pages, and 4xx/5xx error status codes, moments where the brand earns a flourish. Inter does all the work everywhere else: dashboards, forms, tables, dialogs, settings. The contrast is intentional. Marketing is theatrical; product is plain.
 
 ### Hierarchy
 
+- **Display Hero** (Cinzel, 700, `4.5rem` / 72px, line-height 1.05, tracking `0.01em`): full-screen brand moments only. The showcase hero, the featured 404 status code. Tracking and line-height tighten at this scale because standard display-1 metrics feel airy at 4rem+.
 - **Display 1** (Cinzel, 700, `3.25rem` / 52px, line-height 1.1, tracking `-0.015em`): hero headlines, marketing splash, error-page status codes.
 - **Display 2** (Cinzel, 700, `2.25rem` / 36px, line-height 1.2, tracking `-0.015em`): secondary marketing headings.
 - **H1** (Inter, 600, `1.75rem` / 28px, line-height 1.3, tracking `-0.01em`): page titles in product UI.
